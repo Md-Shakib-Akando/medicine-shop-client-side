@@ -1,30 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
 import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { auth } from '../firebase.config';
 
 const Register = () => {
 
-    const { signInGoogle, createUser } = UseAuth();
+    const { signInGoogle, createUser, updateUserProfile, setUser } = UseAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
+
+    const [profilePic, SetProfilePic] = useState('')
 
     const {
         register,
         handleSubmit,
     } = useForm();
     const onSubmit = data => {
-        console.log(data);
+
         createUser(data.email, data.password)
             .then(result => {
                 console.log(result)
                 alert("Register is successful")
+                const userProfile = {
+                    displayName: data.name,
+                    photoURL: profilePic,
+                };
+                updateUserProfile(userProfile)
+                    .then(async () => {
+                        await auth.currentUser.reload();
+                        setUser({ ...auth.currentUser });
+
+                    });
                 navigate(from);
             }).catch(error => {
                 console.log(error.message)
             })
+    }
+    const handleUploadPhoto = async (e) => {
+        const image = e.target.files[0];
+        const formData = new FormData();
+        formData.append('image', image);
+        const imageUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_Image_Upload_Key}`
+        const res = await axios.post(imageUrl, formData)
+        SetProfilePic(res.data.data.url)
     }
     const handleGoogleLogin = () => {
         signInGoogle()
@@ -55,10 +77,10 @@ const Register = () => {
                         </label>
                         <input
                             type="text"
-                            name="name"
+
                             {...register('name', { required: true })}
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
-                            required
+
                         />
                     </div>
                     <div>
@@ -68,9 +90,9 @@ const Register = () => {
                         <input
                             type="file"
                             name="image"
-
+                            onChange={handleUploadPhoto}
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
-
+                            required
                         />
                     </div>
 
