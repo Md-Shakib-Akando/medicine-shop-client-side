@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router';
+import UseAuth from '../UseAuth';
+import { IoIosCloseCircle } from 'react-icons/io';
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
+
+    const { user } = UseAuth();
 
     const NavItem = <>
 
@@ -26,6 +30,8 @@ const Navbar = () => {
 
         return () => window.removeEventListener('resize', handleResize);
     }, []);
+
+
     return (
         <div className=''>
             <div className=' bg-blue-100/50 backdrop-blur-md w-full shadow-sm'>
@@ -45,11 +51,48 @@ const Navbar = () => {
                     <div className="navbar-end">
 
 
-                        <div className='hidden lg:flex'>
-                            <Link to='/login'>
-                                <button className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Join Us</button>
-                            </Link>
-                        </div>
+                        {
+                            user ?
+                                <div className=" relative hidden lg:flex justify-center items-center group w-[50px] sm:w-[70px] h-[70px]">
+
+                                    {
+                                        user &&
+
+                                        <div className="dropdown dropdown-end">
+                                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                                <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                    <img
+                                                        referrerPolicy="no-referrer"
+                                                        src={user?.photoURL || "/default-avatar.png"}
+                                                        alt="User Avatar"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm    dropdown-content bg-blue-100 rounded-box w-52 -left-20 ">
+                                                <li className=' text-lg  mt-2'><Link to="" className='text-lg'>Update Profile</Link></li>
+                                                <li className='   mt-2'><Link to="/dashBoard" className='text-lg'>Dashboard</Link></li>
+
+                                                <li className='text-lg  mt-2'><button className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Logout</button></li>
+                                            </ul>
+                                        </div>
+
+
+
+
+
+                                    }
+                                </div>
+
+                                :
+
+                                <div className='hidden lg:flex'>
+                                    <Link to='/login'>
+                                        <button className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Join Us</button>
+                                    </Link>
+                                </div>
+
+                        }
+
 
                         <button onClick={() => setOpen(true)} className="btn bg-[#1b1f2a]/10 outline-none border-none shadow-none backdrop-blur-md text-white lg:hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none"
@@ -70,14 +113,53 @@ const Navbar = () => {
                             <h2 className="text-xl font-semibold">Menu</h2>
                             <button onClick={() => setOpen(false)} className="text-2xl">&times;</button>
                         </div>
+                        <div className='flex justify-center items-center'>
+                            {
+                                user ?
+                                    <div className="relative flex justify-center items-center group w-[50px] sm:w-[70px] h-[70px]  ">
+
+                                        {
+                                            user &&
+
+                                            <div className="dropdown dropdown-end ">
+                                                <div tabIndex={0} role="button" className="btn btn-ghost   btn-circle avatar">
+                                                    <div className="w-10 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                                        <img
+                                                            referrerPolicy="no-referrer"
+                                                            src={user?.photoURL || "/default-avatar.png"}
+                                                            alt="User Avatar"
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm    dropdown-content bg-blue-200 rounded-box w-52 -left-20 ">
+                                                    <li className=' text-lg  mt-2'><Link to="" className='text-lg'>Update Profile</Link></li>
+                                                    <li className='   mt-2'><Link to="/dashBoard" className='text-lg'>Dashboard</Link></li>
+
+                                                    <li className='text-lg  mt-2'><button className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Logout</button></li>
+                                                </ul>
+                                            </div>
+
+
+
+
+
+                                        }
+                                    </div>
+
+                                    :
+
+                                    <div className='hidden lg:flex'>
+                                        <Link to='/login'>
+                                            <button className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Join Us</button>
+                                        </Link>
+                                    </div>
+
+                            }
+                        </div>
                         <ul className="space-y-10 text-center">
                             {NavItem}
                         </ul>
-                        <div className='lg:hidden  flex justify-center mt-10'>
-                            <Link to='/login'>
-                                <button className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Join Us</button>
-                            </Link>
-                        </div>
+
                     </div>
                 </div>
             )}
