@@ -1,8 +1,41 @@
 import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
+import UseAuth from '../UseAuth';
+import { useForm } from 'react-hook-form';
 
 const Login = () => {
+    const {
+        register,
+        handleSubmit,
+
+    } = useForm();
+    const { signInUser, signInGoogle } = UseAuth();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const from = location.state?.from?.pathname || '/';
+
+    const onSubmit = (data) => {
+        console.log(data)
+        signInUser(data.email, data.password)
+            .then(result => {
+                console.log(result)
+                alert("login successful")
+                navigate(from);
+            }).catch(error => {
+                console.log(error.message)
+            })
+    }
+    const handleGoogleLogin = () => {
+        signInGoogle()
+            .then((result) => {
+                const user = result.user
+                console.log(user)
+                navigate(from);
+            }).catch(error => {
+                console.log(error.message)
+            })
+    }
     return (
         <div >
             <div className="text-center">
@@ -14,7 +47,7 @@ const Login = () => {
                 </p>
             </div>
 
-            <form className="mt-8 space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
                 <div className="space-y-4">
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
@@ -24,7 +57,7 @@ const Login = () => {
                             <input
                                 type="email"
                                 name="email"
-
+                                {...register('email')}
                                 className="appearance-none block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
                                 required
                             />
@@ -40,7 +73,7 @@ const Login = () => {
                             <input
                                 type='password'
                                 name="password"
-
+                                {...register('password')}
                                 className="appearance-none block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
                                 required
                             />
@@ -91,7 +124,7 @@ const Login = () => {
 
                 <button
                     type="button"
-
+                    onClick={handleGoogleLogin}
                     className="flex  w-full items-center justify-center px-4 py-3 border border-[#00afb9]  text-[#00afb9]  rounded-lg hover:bg-[#00afb9]  cursor-pointer hover:text-white !rounded-button whitespace-nowrap"
                 >
                     <FcGoogle size={32} className='mr-5'></FcGoogle>

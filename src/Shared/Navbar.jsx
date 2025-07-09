@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink } from 'react-router';
+import { Link, NavLink, useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
 import { IoIosCloseCircle } from 'react-icons/io';
 
 const Navbar = () => {
+    const { user, logOut } = UseAuth();
+
+    const navigate = useNavigate();
     const [open, setOpen] = useState(false);
 
-    const { user } = UseAuth();
+
 
     const NavItem = <>
 
@@ -18,6 +21,20 @@ const Navbar = () => {
 
 
     </>
+
+
+
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                console.log('Logged out');
+                // Optionally redirect
+                navigate('/login');
+            })
+            .catch(err => {
+                console.error('Logout failed', err);
+            });
+    };
 
     useEffect(() => {
         const handleResize = () => {
@@ -72,7 +89,8 @@ const Navbar = () => {
                                                 <li className=' text-lg  mt-2'><Link to="" className='text-lg'>Update Profile</Link></li>
                                                 <li className='   mt-2'><Link to="/dashBoard" className='text-lg'>Dashboard</Link></li>
 
-                                                <li className='text-lg  mt-2'><button className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Logout</button></li>
+                                                <li className='text-lg  mt-2'><button
+                                                    onClick={handleLogOut} className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Logout</button></li>
                                             </ul>
                                         </div>
 
@@ -135,7 +153,8 @@ const Navbar = () => {
                                                     <li className=' text-lg  mt-2'><Link to="" className='text-lg'>Update Profile</Link></li>
                                                     <li className='   mt-2'><Link to="/dashBoard" className='text-lg'>Dashboard</Link></li>
 
-                                                    <li className='text-lg  mt-2'><button className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Logout</button></li>
+                                                    <li className='text-lg  mt-2'><button
+                                                        onClick={handleLogOut} className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Logout</button></li>
                                                 </ul>
                                             </div>
 
@@ -148,7 +167,7 @@ const Navbar = () => {
 
                                     :
 
-                                    <div className='hidden lg:flex'>
+                                    <div className=' flex lg:hidden'>
                                         <Link to='/login'>
                                             <button className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Join Us</button>
                                         </Link>
@@ -156,7 +175,7 @@ const Navbar = () => {
 
                             }
                         </div>
-                        <ul className="space-y-10 text-center">
+                        <ul className="space-y-7 mt-4 text-center">
                             {NavItem}
                         </ul>
 

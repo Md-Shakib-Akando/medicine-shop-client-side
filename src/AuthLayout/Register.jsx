@@ -2,13 +2,30 @@ import React from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
+import { useForm } from 'react-hook-form';
 
 const Register = () => {
 
-    const { signInGoogle } = UseAuth();
+    const { signInGoogle, createUser } = UseAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
+
+    const {
+        register,
+        handleSubmit,
+    } = useForm();
+    const onSubmit = data => {
+        console.log(data);
+        createUser(data.email, data.password)
+            .then(result => {
+                console.log(result)
+                alert("Register is successful")
+                navigate(from);
+            }).catch(error => {
+                console.log(error.message)
+            })
+    }
     const handleGoogleLogin = () => {
         signInGoogle()
             .then((result) => {
@@ -28,7 +45,7 @@ const Register = () => {
 
             </div>
 
-            <form className="mt-8 space-y-6">
+            <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
                 <div className="space-y-4">
 
 
@@ -39,7 +56,7 @@ const Register = () => {
                         <input
                             type="text"
                             name="name"
-
+                            {...register('name', { required: true })}
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
                             required
                         />
@@ -53,7 +70,7 @@ const Register = () => {
                             name="image"
 
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
-                            required
+
                         />
                     </div>
 
@@ -64,7 +81,7 @@ const Register = () => {
                         <input
                             type="email"
                             name="email"
-
+                            {...register('email', { required: true })}
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
                             required
                         />
@@ -78,7 +95,7 @@ const Register = () => {
                             <input
 
                                 name="password"
-
+                                {...register('password', { required: true, minLangth: 6 })}
                                 className="block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
                                 required
                             />
@@ -94,7 +111,7 @@ const Register = () => {
                             name="role"
 
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
-                            required
+
                         >
                             <option value="">Select a role</option>
                             <option value="patient">User</option>
