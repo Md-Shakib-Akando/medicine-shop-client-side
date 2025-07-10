@@ -7,17 +7,30 @@ import { PiFlagBanner } from 'react-icons/pi';
 import { MdLogout, MdPayment } from 'react-icons/md';
 import { FaUsers } from 'react-icons/fa';
 import { TbCategory, TbFileReport } from 'react-icons/tb';
+import axios from 'axios';
+import useRole from '../../Hooks/useRole';
+import LoadingSpinner from '../LoadingSpinner';
 
 const Sidebar = () => {
     const { user } = UseAuth();
+    const { role, isLoading } = useRole();
+
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     const location = useLocation();
+
+
+
+
+
     useEffect(() => {
         if (location.pathname.includes('/dashboard')) {
             setIsDrawerOpen(true);
         }
     }, [location]);
+
+    if (isLoading) return <LoadingSpinner></LoadingSpinner>
+
 
     return (
         <div>
@@ -53,7 +66,7 @@ const Sidebar = () => {
                     <div className='px-6 text-center'>
                         <h1>Name: {user?.displayName}</h1>
                         <h1>Email: {user?.email}</h1>
-                        <h1>Role: {user?.role}</h1>
+                        <h1>Role: {role}</h1>
                     </div>
                 </div>
 
@@ -63,10 +76,90 @@ const Sidebar = () => {
 
                 <div>
 
-                    <div>
+                    {role === 'admin' && (
 
+                        <div>
+
+                            <NavLink
+                                to="/dashBoard/adminHome"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                        : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
+                                }
+                            >
+                                <IoHomeOutline className="text-xl" />
+                                Admin Homepage
+                            </NavLink>
+                            <NavLink
+                                to="/dashBoard/manageUsers"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                        : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
+                                }
+                            >
+                                <FaUsers className="text-xl" />
+                                Manage Users
+                            </NavLink>
+                            <NavLink
+                                to="/dashBoard/manageCategory"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                        : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
+                                }
+                            >
+                                <TbCategory className="text-xl" />
+                                Manage Category
+                            </NavLink>
+                            <NavLink
+                                to="/dashBoard/paymentManage"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                        : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
+                                }
+                            >
+                                <MdPayment className="text-xl" />
+                                Payment management
+                            </NavLink>
+                            <NavLink
+                                to="/dashBoard/salesReport"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                        : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
+                                }
+                            >
+                                <TbFileReport className="text-xl" />
+                                Sales Report
+                            </NavLink>
+                            <NavLink
+                                to="/dashBoard/bannerAdvertise"
+                                className={({ isActive }) =>
+                                    isActive
+                                        ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                        : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
+                                }
+                            >
+                                <PiFlagBanner className="text-xl" />
+                                Manage banner Advertise
+                            </NavLink>
+                        </div>
+                    )}
+
+
+
+
+
+                </div>
+
+
+                {role === 'seller' && (
+                    <div>
                         <NavLink
-                            to="/dashBoard/adminHome"
+                            to="/dashBoard/sellerHome"
                             className={({ isActive }) =>
                                 isActive
                                     ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
@@ -74,32 +167,24 @@ const Sidebar = () => {
                             }
                         >
                             <IoHomeOutline className="text-xl" />
-                            Admin Homepage
+                            Seller Homepage
                         </NavLink>
+
+
                         <NavLink
-                            to="/dashBoard/manageUsers"
+                            to="/dashBoard/manageMedicine"
                             className={({ isActive }) =>
                                 isActive
                                     ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                     : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                             }
                         >
-                            <FaUsers className="text-xl" />
-                            Manage Users
+                            <BsEnvelopeOpenHeart className="text-xl" />
+                            Manage Medicines
                         </NavLink>
+
                         <NavLink
-                            to="/dashBoard/manageCategory"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
-                                    : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
-                            }
-                        >
-                            <TbCategory className="text-xl" />
-                            Manage Category
-                        </NavLink>
-                        <NavLink
-                            to="/dashBoard/paymentManage"
+                            to="/dashBoard/sellerPaymentManage"
                             className={({ isActive }) =>
                                 isActive
                                     ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
@@ -107,21 +192,10 @@ const Sidebar = () => {
                             }
                         >
                             <MdPayment className="text-xl" />
-                            Payment management
+                            Payment History
                         </NavLink>
                         <NavLink
-                            to="/dashBoard/salesReport"
-                            className={({ isActive }) =>
-                                isActive
-                                    ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
-                                    : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
-                            }
-                        >
-                            <TbFileReport className="text-xl" />
-                            Sales Report
-                        </NavLink>
-                        <NavLink
-                            to="/dashBoard/bannerAdvertise"
+                            to="/dashBoard/askForAdvertise"
                             className={({ isActive }) =>
                                 isActive
                                     ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
@@ -129,47 +203,17 @@ const Sidebar = () => {
                             }
                         >
                             <PiFlagBanner className="text-xl" />
-                            Manage banner Advertise
+                            Ask For Advertisement
                         </NavLink>
                     </div>
-
-                </div>
-
+                )}
 
 
 
 
-
-
-
-                <div>
+                {role === 'user' && (
                     <NavLink
-                        to="/dashBoard/sellerHome"
-                        className={({ isActive }) =>
-                            isActive
-                                ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
-                                : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
-                        }
-                    >
-                        <IoHomeOutline className="text-xl" />
-                        Seller Homepage
-                    </NavLink>
-
-
-                    <NavLink
-                        to="/dashBoard/manageMedicine"
-                        className={({ isActive }) =>
-                            isActive
-                                ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
-                                : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
-                        }
-                    >
-                        <BsEnvelopeOpenHeart className="text-xl" />
-                        Manage Medicines
-                    </NavLink>
-
-                    <NavLink
-                        to="/dashBoard/sellerPaymentManage"
+                        to="/dashBoard/paymentHistory"
                         className={({ isActive }) =>
                             isActive
                                 ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
@@ -177,35 +221,15 @@ const Sidebar = () => {
                         }
                     >
                         <MdPayment className="text-xl" />
-                        Payment History
+                        Payment history
                     </NavLink>
-                    <NavLink
-                        to="/dashBoard/askForAdvertise"
-                        className={({ isActive }) =>
-                            isActive
-                                ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
-                                : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
-                        }
-                    >
-                        <PiFlagBanner className="text-xl" />
-                        Ask For Advertisement
-                    </NavLink>
-                </div>
+                )}
 
 
 
 
-                <NavLink
-                    to="/dashBoard/paymentHistory"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
-                            : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
-                    }
-                >
-                    <MdPayment className="text-xl" />
-                    Payment history
-                </NavLink>
+
+
 
 
 
