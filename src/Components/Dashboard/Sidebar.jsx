@@ -66,10 +66,10 @@ const Sidebar = () => {
                     <div>
 
                         <NavLink
-                            to="/dashboard/adminhomepage"
+                            to="/dashBoard/adminHome"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                    ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                     : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                             }
                         >
@@ -77,10 +77,10 @@ const Sidebar = () => {
                             Admin Homepage
                         </NavLink>
                         <NavLink
-                            to="/dashboard/manageusers"
+                            to="/dashBoard/manageUsers"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                    ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                     : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                             }
                         >
@@ -88,10 +88,10 @@ const Sidebar = () => {
                             Manage Users
                         </NavLink>
                         <NavLink
-                            to="/dashboard/managecategory"
+                            to="/dashBoard/manageCategory"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                    ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                     : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                             }
                         >
@@ -99,10 +99,10 @@ const Sidebar = () => {
                             Manage Category
                         </NavLink>
                         <NavLink
-                            to="/dashboard/paymentmanagement"
+                            to="/dashBoard/paymentManage"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                    ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                     : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                             }
                         >
@@ -110,10 +110,10 @@ const Sidebar = () => {
                             Payment management
                         </NavLink>
                         <NavLink
-                            to="/dashboard/salesreport"
+                            to="/dashBoard/salesReport"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                    ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                     : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                             }
                         >
@@ -121,10 +121,10 @@ const Sidebar = () => {
                             Sales Report
                         </NavLink>
                         <NavLink
-                            to="/dashboard/managebanner"
+                            to="/dashBoard/bannerAdvertise"
                             className={({ isActive }) =>
                                 isActive
-                                    ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                    ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                     : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                             }
                         >
@@ -144,10 +144,10 @@ const Sidebar = () => {
 
                 <div>
                     <NavLink
-                        to="/dashboard/sellerhomepage"
+                        to="/dashBoard/sellerHome"
                         className={({ isActive }) =>
                             isActive
-                                ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                 : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                         }
                     >
@@ -157,10 +157,10 @@ const Sidebar = () => {
 
 
                     <NavLink
-                        to="/dashboard/managemedicines"
+                        to="/dashBoard/manageMedicine"
                         className={({ isActive }) =>
                             isActive
-                                ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                 : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                         }
                     >
@@ -169,10 +169,10 @@ const Sidebar = () => {
                     </NavLink>
 
                     <NavLink
-                        to="/dashboard/paymenthistory"
+                        to="/dashBoard/sellerPaymentManage"
                         className={({ isActive }) =>
                             isActive
-                                ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                 : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                         }
                     >
@@ -180,10 +180,10 @@ const Sidebar = () => {
                         Payment History
                     </NavLink>
                     <NavLink
-                        to="/dashboard/askforadvertisement"
+                        to="/dashBoard/askForAdvertise"
                         className={({ isActive }) =>
                             isActive
-                                ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                                 : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                         }
                     >
@@ -196,10 +196,10 @@ const Sidebar = () => {
 
 
                 <NavLink
-                    to="/dashboard/userpaymenthistory"
+                    to="/dashBoard/paymentHistory"
                     className={({ isActive }) =>
                         isActive
-                            ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                            ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                             : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                     }
                 >
@@ -216,7 +216,7 @@ const Sidebar = () => {
                     to="/updateprofile"
                     className={({ isActive }) =>
                         isActive
-                            ? "text-black  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                            ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
                             : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
                     }
                 >

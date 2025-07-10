@@ -15,14 +15,41 @@ const Register = () => {
     const from = location.state?.from?.pathname || '/';
 
     const [profilePic, SetProfilePic] = useState('')
+    const [loading, setLoading] = useState(false);
+
 
     const {
         register,
         handleSubmit,
         formState: { errors }
     } = useForm();
-    const onSubmit = data => {
 
+    const handleUploadPhoto = async (e) => {
+        setLoading(true);  // upload শুরু
+        const image = e.target.files[0];
+        const formData = new FormData();
+        formData.append('image', image);
+        const imageUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_Image_Upload_Key}`;
+
+        try {
+            const res = await axios.post(imageUrl, formData);
+            SetProfilePic(res.data.data.url);  // URL state-এ রাখো
+        } catch (err) {
+            console.error("Image upload failed:", err);
+        } finally {
+            setLoading(false);  // upload শেষ
+        }
+    };
+
+    const onSubmit = data => {
+        if (loading || !profilePic) {
+            Swal.fire({
+                icon: "warning",
+                title: "Please wait for the image to finish uploading.",
+                showConfirmButton: true,
+            });
+            return;
+        }
         createUser(data.email, data.password)
             .then(result => {
 
@@ -70,26 +97,37 @@ const Register = () => {
                 console.log(error.message);
             });
     }
-    const handleUploadPhoto = async (e) => {
-        const image = e.target.files[0];
-        const formData = new FormData();
-        formData.append('image', image);
-        const imageUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_Image_Upload_Key}`
-        const res = await axios.post(imageUrl, formData)
-        SetProfilePic(res.data.data.url)
-    }
+
     const handleGoogleLogin = () => {
         signInGoogle()
             .then((result) => {
                 const user = result.user
                 console.log(user)
-                Swal.fire({
+                const userBody = {
+                    userName: user.displayName || "Google User",
+                    userEmail: user.email,
+                    userphoto: user.photoURL,
+                    userRole: "user",
+                };
 
-                    icon: "success",
-                    title: "LogIn successful.",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                axios.post('http://localhost:5000/users', userBody)
+                    .then(res => {
+
+                        if (res.data.insertedId) {
+                            Swal.fire({
+
+                                icon: "success",
+                                title: "Your account is created",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            navigate(from);
+                        }
+
+                    })
+                    .catch(error => {
+                        console.error("Error saving user to DB:", error);
+                    });
                 navigate(from);
             }).catch(error => {
                 console.log(error.message)

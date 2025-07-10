@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 
 const Login = () => {
     const {
@@ -20,14 +21,32 @@ const Login = () => {
 
         signInUser(data.email, data.password)
             .then(result => {
+                const user = result.user
+                const userBody = {
+                    userName: user.displayName || "Google User",
+                    userEmail: user.email,
+                    userphoto: user.photoURL,
+                    userRole: "user",
+                };
 
-                Swal.fire({
+                axios.post('http://localhost:5000/users', userBody)
+                    .then(res => {
 
-                    icon: "success",
-                    title: "LogIn successful.",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
+                        if (res.data.insertedId) {
+                            Swal.fire({
+
+                                icon: "success",
+                                title: "Your account is created",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            navigate(from);
+                        }
+
+                    })
+                    .catch(error => {
+                        console.error("Error saving user to DB:", error);
+                    });
                 navigate(from);
             }).catch(error => {
                 console.log(error.message)
