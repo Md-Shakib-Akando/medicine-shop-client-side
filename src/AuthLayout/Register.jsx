@@ -5,6 +5,7 @@ import UseAuth from '../UseAuth';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { auth } from '../firebase.config';
+import Swal from 'sweetalert2';
 
 const Register = () => {
 
@@ -18,27 +19,56 @@ const Register = () => {
     const {
         register,
         handleSubmit,
+        formState: { errors }
     } = useForm();
     const onSubmit = data => {
 
         createUser(data.email, data.password)
             .then(result => {
-                console.log(result)
-                alert("Register is successful")
+
+
                 const userProfile = {
                     displayName: data.name,
                     photoURL: profilePic,
                 };
+
                 updateUserProfile(userProfile)
                     .then(async () => {
                         await auth.currentUser.reload();
                         setUser({ ...auth.currentUser });
 
+
+                        const userBody = {
+                            userName: data.name,
+                            userEmail: data.email,
+                            userphoto: profilePic,
+                            userRole: data.role
+                        };
+
+                        axios.post('http://localhost:5000/users', userBody)
+                            .then(res => {
+
+                                if (res.data.insertedId) {
+                                    Swal.fire({
+
+                                        icon: "success",
+                                        title: "Your account is created",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    navigate(from);
+                                }
+
+                            })
+                            .catch(error => {
+                                console.error("Error saving user to DB:", error);
+                            });
+
                     });
-                navigate(from);
-            }).catch(error => {
-                console.log(error.message)
             })
+            .catch(error => {
+                console.log(error.message);
+            });
     }
     const handleUploadPhoto = async (e) => {
         const image = e.target.files[0];
@@ -53,6 +83,13 @@ const Register = () => {
             .then((result) => {
                 const user = result.user
                 console.log(user)
+                Swal.fire({
+
+                    icon: "success",
+                    title: "LogIn successful.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 navigate(from);
             }).catch(error => {
                 console.log(error.message)
@@ -78,10 +115,11 @@ const Register = () => {
                         <input
                             type="text"
 
-                            {...register('name', { required: true })}
+                            {...register('name', { required: true, minLength: 3 })}
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
 
                         />
+                        {errors.name && <span className='text-red-800 pt-3'>Name must be 3+ characters</span>}
                     </div>
                     <div>
                         <label className="block text-sm font-medium text-gray-700">
@@ -107,6 +145,7 @@ const Register = () => {
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
                             required
                         />
+                        {errors.email && <span className='text-red-800 pt-3'>Email is required</span>}
                     </div>
 
                     <div>
@@ -121,6 +160,7 @@ const Register = () => {
                                 className="block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
                                 required
                             />
+                            {errors.password?.type === "minLength" && <p className='text-red-800 pt-3'>Password must be 6+ characters</p>}
 
                         </div>
                     </div>
@@ -131,13 +171,13 @@ const Register = () => {
                         </label>
                         <select
                             name="role"
-
+                            {...register("role", { required: true })}
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
 
                         >
                             <option value="">Select a role</option>
-                            <option value="patient">User</option>
-                            <option value="doctor">Seller</option>
+                            <option value="user">User</option>
+                            <option value="seller">Seller</option>
 
                         </select>
                     </div>

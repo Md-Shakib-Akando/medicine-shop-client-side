@@ -3,6 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
 import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 
 const Login = () => {
     const {
@@ -16,11 +17,17 @@ const Login = () => {
     const from = location.state?.from?.pathname || '/';
 
     const onSubmit = (data) => {
-        console.log(data)
+
         signInUser(data.email, data.password)
             .then(result => {
-                console.log(result)
-                alert("login successful")
+
+                Swal.fire({
+
+                    icon: "success",
+                    title: "LogIn successful.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 navigate(from);
             }).catch(error => {
                 console.log(error.message)
@@ -31,6 +38,13 @@ const Login = () => {
             .then((result) => {
                 const user = result.user
                 console.log(user)
+                Swal.fire({
+
+                    icon: "success",
+                    title: "LogIn successful.",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 navigate(from);
             }).catch(error => {
                 console.log(error.message)
