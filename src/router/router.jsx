@@ -17,12 +17,7 @@ export const router = createBrowserRouter([
                 index: true,
                 Component: Home,
             },
-            {
-                path: 'dashBoard',
-                element: (
-                    <PrivateRoute><DashBoard></DashBoard></PrivateRoute>
-                )
-            }
+
         ]
     },
     {
@@ -39,6 +34,17 @@ export const router = createBrowserRouter([
                 Component: Register,
             },
 
+        ]
+    },
+    {
+        path: '/dashBoard',
+        element: (
+            <PrivateRoute><DashBoard></DashBoard></PrivateRoute>
+        ),
+        children: [
+            {
+
+            }
         ]
     }
 ]);
