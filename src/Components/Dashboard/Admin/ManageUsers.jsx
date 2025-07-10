@@ -1,9 +1,21 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 const ManageUsers = () => {
     const [users, setUsers] = useState([]);
     const currentUserRole = 'admin';
+    const handleRoleChange = (id, newRole) => {
+        axios.put(`http://localhost:5000/users/${id}/role`, { role: newRole })
+            .then(res => {
+
+                setUsers(prevUsers => prevUsers.map(user =>
+                    user._id === id ? { ...user, userRole: newRole } : user
+                ));
+                toast.success(`Role changed to ${newRole}`);
+            })
+            .catch(err => console.error(err));
+    };
     useEffect(() => {
         axios.get('http://localhost:5000/users')
             .then(res => setUsers(res.data))
@@ -35,14 +47,14 @@ const ManageUsers = () => {
                                                 {user.userRole === 'user' ? (
                                                     <button
                                                         className="btn btn-sm btn-success"
-                                                    // onClick={() => handleRoleChange(user._id, 'seller')}
+                                                        onClick={() => handleRoleChange(user._id, 'seller')}
                                                     >
                                                         Make Seller
                                                     </button>
                                                 ) : (
                                                     <button
                                                         className="btn btn-sm btn-warning"
-                                                    // onClick={() => handleRoleChange(user._id, 'user')}
+                                                        onClick={() => handleRoleChange(user._id, 'user')}
                                                     >
                                                         Make User
                                                     </button>
@@ -56,6 +68,7 @@ const ManageUsers = () => {
                     </tbody>
                 </table>
             </div>
+            <ToastContainer position="top-right" reverseOrder={false} />
         </div>
     );
 };
