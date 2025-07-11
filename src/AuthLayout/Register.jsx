@@ -25,7 +25,7 @@ const Register = () => {
     } = useForm();
 
     const handleUploadPhoto = async (e) => {
-        setLoading(true);  // upload শুরু
+        setLoading(true);
         const image = e.target.files[0];
         const formData = new FormData();
         formData.append('image', image);
@@ -33,11 +33,11 @@ const Register = () => {
 
         try {
             const res = await axios.post(imageUrl, formData);
-            SetProfilePic(res.data.data.url);  // URL state-এ রাখো
+            SetProfilePic(res.data.data.url);
         } catch (err) {
             console.error("Image upload failed:", err);
         } finally {
-            setLoading(false);  // upload শেষ
+            setLoading(false);
         }
     };
 
@@ -115,20 +115,28 @@ const Register = () => {
 
                         if (res.data.insertedId) {
                             Swal.fire({
-
                                 icon: "success",
                                 title: "Your account is created",
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                            navigate(from);
+                        } else {
+                            Swal.fire({
+                                icon: "success",
+                                title: "login successful",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                         }
 
+                        navigate(from);
                     })
                     .catch(error => {
                         console.error("Error saving user to DB:", error);
                     });
-                navigate(from);
+
+
+
             }).catch(error => {
                 console.log(error.message)
             })

@@ -7,7 +7,7 @@ import { PiFlagBanner } from 'react-icons/pi';
 import { MdLogout, MdPayment } from 'react-icons/md';
 import { FaUsers } from 'react-icons/fa';
 import { TbCategory, TbFileReport } from 'react-icons/tb';
-import axios from 'axios';
+
 import useRole from '../../Hooks/useRole';
 import LoadingSpinner from '../LoadingSpinner';
 
@@ -33,7 +33,7 @@ const Sidebar = () => {
 
 
     return (
-        <div>
+        <div className='fixed z-50'>
 
             <button
                 className="text-2xl p-2 fixed top-0 left-2 z-50 lg:hidden"
@@ -233,27 +233,29 @@ const Sidebar = () => {
 
 
 
-                <div className="divider mb-2 xl:mb-14"></div>
+                <div className=' fixed bottom-0 left-0  w-full'>
+                    <div className="divider mb-2 xl:mb-14"></div>
 
 
-                <NavLink
-                    to="/updateprofile"
-                    className={({ isActive }) =>
-                        isActive
-                            ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
-                            : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
-                    }
-                >
-                    <IoSettingsSharp className="text-xl" />
-                    Profile
-                </NavLink>
-                <button
+                    <NavLink
+                        to="/dashBoard/updateProfile"
+                        className={({ isActive }) =>
+                            isActive
+                                ? "text-white  flex items-center pl-3 font-bold rounded-md mx-5 py-2 justify-start mb-5 gap-3 bg-[#00afb9]  border-secondary"
+                                : "flex items-center justify-start py-2 hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 gap-3 mb-5"
+                        }
+                    >
+                        <IoSettingsSharp className="text-xl" />
+                        Profile
+                    </NavLink>
+                    <button
 
-                    className={"flex items-center w-[87%]  justify-start hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 py-2 gap-3 mb-5"}
-                >
-                    <MdLogout className="text-xl" />
-                    Logout
-                </button>
+                        className={"flex items-center w-[87%]  justify-start hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 py-2 gap-3 mb-5"}
+                    >
+                        <MdLogout className="text-xl" />
+                        Logout
+                    </button>
+                </div>
 
             </div>
         </div>

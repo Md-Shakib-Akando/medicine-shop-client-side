@@ -17,6 +17,7 @@ import ManageMedicine from "../Components/Dashboard/Seller/ManageMedicine";
 import PaymentHistory from "../Components/Dashboard/User/PaymentHistory";
 import ManagePayment from "../Components/Dashboard/Seller/ManagePayment";
 import ManageUsers from "../Components/Dashboard/Admin/ManageUsers";
+import UpdateProfile from "../Components/Profile/UpdateProfile";
 
 
 export const router = createBrowserRouter([
@@ -28,9 +29,15 @@ export const router = createBrowserRouter([
                 index: true,
                 Component: Home,
             },
+            {
+                path: 'updateProfile',
+                Component: UpdateProfile,
+            }
+
 
         ]
     },
+
     {
         path: '/',
         Component: AuthLayout,
@@ -54,56 +61,60 @@ export const router = createBrowserRouter([
         ),
         children: [
             {
-                path: '/dashBoard/adminHome',
+                path: 'adminHome',
                 Component: AdminHome,
             },
             {
-                path: '/dashBoard/manageUsers',
+                path: 'manageUsers',
                 Component: ManageUsers,
             },
 
             {
-                path: '/dashBoard/bannerAdvertise',
+                path: 'bannerAdvertise',
                 Component: BannerAdvertise,
             },
             {
-                path: '/dashBoard/paymentManage',
+                path: 'paymentManage',
                 Component: PaymentManage,
             },
 
             {
-                path: '/dashBoard/manageCategory',
+                path: 'manageCategory',
                 Component: ManageCategory,
             },
 
             {
-                path: '/dashBoard/salesReport',
+                path: 'salesReport',
                 Component: SalesReport,
             },
 
             {
-                path: '/dashBoard/sellerHome',
+                path: 'sellerHome',
                 Component: SellerHome,
             },
 
 
 
             {
-                path: '/dashBoard/askForAdvertise',
+                path: 'askForAdvertise',
                 Component: AskForAdvertisement,
             },
             {
-                path: '/dashBoard/sellerPaymentManage',
+                path: 'sellerPaymentManage',
                 Component: ManagePayment,
             },
             {
-                path: '/dashBoard/manageMedicine',
+                path: 'manageMedicine',
                 Component: ManageMedicine,
             },
             {
-                path: '/dashBoard/paymentHistory',
+                path: 'paymentHistory',
                 Component: PaymentHistory,
             },
+            {
+                path: 'updateProfile',
+                Component: UpdateProfile,
+            }
 
         ]
     }

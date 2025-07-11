@@ -21,7 +21,29 @@ const Login = () => {
 
         signInUser(data.email, data.password)
             .then(result => {
+
+                Swal.fire({
+
+                    icon: "success",
+                    title: "login successful",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+
+                navigate(from);
+            })
+            .catch(error => {
+                console.error("Error saving user to DB:", error);
+            });
+
+
+    }
+    const handleGoogleLogin = () => {
+        signInGoogle()
+            .then((result) => {
                 const user = result.user
+                console.log(user)
                 const userBody = {
                     userName: user.displayName || "Google User",
                     userEmail: user.email,
@@ -34,37 +56,29 @@ const Login = () => {
 
                         if (res.data.insertedId) {
                             Swal.fire({
-
                                 icon: "success",
                                 title: "Your account is created",
                                 showConfirmButton: false,
                                 timer: 1500
                             });
-                            navigate(from);
+                        } else {
+                            Swal.fire({
+                                icon: "success",
+                                title: "login successful",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
                         }
 
+
+                        navigate(from);
                     })
                     .catch(error => {
                         console.error("Error saving user to DB:", error);
                     });
-                navigate(from);
-            }).catch(error => {
-                console.log(error.message)
-            })
-    }
-    const handleGoogleLogin = () => {
-        signInGoogle()
-            .then((result) => {
-                const user = result.user
-                console.log(user)
-                Swal.fire({
 
-                    icon: "success",
-                    title: "LogIn successful.",
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                navigate(from);
+
+
             }).catch(error => {
                 console.log(error.message)
             })
