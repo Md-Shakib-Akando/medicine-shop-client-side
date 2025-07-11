@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, NavLink, useLocation } from 'react-router';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router';
 import UseAuth from '../../UseAuth';
 import { IoClose, IoHomeOutline, IoMenu, IoSettingsSharp } from 'react-icons/io5';
 import { BsEnvelopeOpenHeart } from 'react-icons/bs';
@@ -10,18 +10,35 @@ import { TbCategory, TbFileReport } from 'react-icons/tb';
 
 import useRole from '../../Hooks/useRole';
 import LoadingSpinner from '../LoadingSpinner';
+import Swal from 'sweetalert2';
 
 const Sidebar = () => {
-    const { user } = UseAuth();
+    const { user, logOut } = UseAuth();
     const { role, isLoading } = useRole();
 
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
     const location = useLocation();
+    const navigate = useNavigate();
 
 
 
-
+    const handleLogOut = () => {
+        logOut()
+            .then(() => {
+                console.log('Logged out');
+                Swal.fire({
+                    icon: "success",
+                    title: "Log Out Success",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                navigate('/login');
+            })
+            .catch(err => {
+                console.error('Logout failed', err);
+            });
+    };
 
     useEffect(() => {
         if (location.pathname.includes('/dashboard')) {
@@ -249,7 +266,7 @@ const Sidebar = () => {
                         Profile
                     </NavLink>
                     <button
-
+                        onClick={handleLogOut}
                         className={"flex items-center w-[87%]  justify-start hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md mx-5 border border-gray-300 pl-3 py-2 gap-3 mb-5"}
                     >
                         <MdLogout className="text-xl" />

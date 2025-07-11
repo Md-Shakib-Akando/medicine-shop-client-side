@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
-import { IoIosCloseCircle } from 'react-icons/io';
+import Swal from 'sweetalert2';
+
 
 const Navbar = () => {
     const { user, logOut } = UseAuth();
@@ -28,7 +29,12 @@ const Navbar = () => {
         logOut()
             .then(() => {
                 console.log('Logged out');
-                // Optionally redirect
+                Swal.fire({
+                    icon: "success",
+                    title: "Log Out Success",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
                 navigate('/login');
             })
             .catch(err => {
