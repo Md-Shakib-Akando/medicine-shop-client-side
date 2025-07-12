@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import UseAuth from '../../../UseAuth';
+import Swal from 'sweetalert2';
 
 const ManageMedicine = () => {
     const { user } = UseAuth();
@@ -64,6 +65,43 @@ const ManageMedicine = () => {
             toast.success('Failed to add medicine');
         }
     };
+
+    const handleDelete = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.delete(`http://localhost:5000/medicines/${id}`)
+                    .then(res => {
+                        if (res.data.deletedCount > 0) {
+
+
+
+                            Swal.fire(
+                                'Deleted!',
+                                'Your medicine has been deleted.',
+                                'success'
+                            );
+                            setMedicines(prev => prev.filter(m => m._id !== id));
+                        }
+                    })
+                    .catch(() => {
+                        Swal.fire(
+                            'Error!',
+                            'Something went wrong while deleting.',
+                            'error'
+                        );
+                    });
+            }
+        });
+    };
+
     useEffect(() => {
         if (user.email) {
             axios.get(`http://localhost:5000/medicines?email=${user.email}`)
@@ -130,7 +168,7 @@ const ManageMedicine = () => {
                                         <button className="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:cursor-pointer transition">
                                             Update
                                         </button>
-                                        <button className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700 hover:cursor-pointer transition">
+                                        <button onClick={() => handleDelete(medicine._id)} className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700 hover:cursor-pointer transition">
                                             Delete
                                         </button>
 
