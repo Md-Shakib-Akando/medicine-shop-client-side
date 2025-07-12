@@ -18,6 +18,7 @@ import PaymentHistory from "../Components/Dashboard/User/PaymentHistory";
 import ManagePayment from "../Components/Dashboard/Seller/ManagePayment";
 import ManageUsers from "../Components/Dashboard/Admin/ManageUsers";
 import UpdateProfile from "../Components/Profile/UpdateProfile";
+import Shop from "../Pages/Shop";
 
 
 export const router = createBrowserRouter([
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
             {
                 index: true,
                 Component: Home,
+            },
+            {
+                path: 'shop',
+                Component: Shop,
             },
             {
                 path: 'updateProfile',

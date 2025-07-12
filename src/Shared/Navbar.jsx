@@ -91,7 +91,7 @@ const Navbar = () => {
                                                     />
                                                 </div>
                                             </div>
-                                            <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm    dropdown-content bg-blue-100 rounded-box w-52 -left-20 ">
+                                            <ul tabIndex={0} className="mt-3 z-50 p-2 shadow menu menu-sm    dropdown-content bg-blue-100 rounded-box w-52 -left-20 ">
                                                 <li className=' text-lg  mt-2'><Link to="/updateProfile" className='text-lg'>Update Profile</Link></li>
                                                 <li className='   mt-2'><Link to="/dashBoard" className='text-lg'>Dashboard</Link></li>
 
