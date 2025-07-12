@@ -1,12 +1,16 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
+import UseAuth from '../../../UseAuth';
 
 const ManageMedicine = () => {
+    const { user } = UseAuth();
+
     const [showModal, setShowModal] = useState(false);
     const [medicinePhoto, setMedicinePhoto] = useState('')
     const [loading, setLoading] = useState(false);
+    const [medicines, setMedicines] = useState([]);
 
     const {
         register,
@@ -44,7 +48,8 @@ const ManageMedicine = () => {
                 company: data.company,
                 massUnit: data.massUnit,
                 price: parseFloat(data.price),
-                discount: parseFloat(data.discount || 0)
+                discount: parseFloat(data.discount || 0),
+                userEmail: user.email
             };
 
             const res = await axios.post('http://localhost:5000/medicines', medicineData);
@@ -59,6 +64,16 @@ const ManageMedicine = () => {
             toast.success('Failed to add medicine');
         }
     };
+    useEffect(() => {
+        if (user.email) {
+            axios.get(`http://localhost:5000/medicines?email=${user.email}`)
+                .then(res => {
+                    setMedicines(res.data)
+                }).catch(error => {
+                    console.log(error);
+                })
+        }
+    }, [user.email])
 
     return (
         <div className=" mx-auto p-6">
@@ -79,35 +94,51 @@ const ManageMedicine = () => {
                             <th className="px-4 py-3 border border-gray-300">Item Name</th>
                             <th className="px-4 py-3 border border-gray-300">Generic Name</th>
                             <th className="px-4 py-3 border border-gray-300">Category</th>
-                            <th className="px-4 py-3 border border-gray-300">Company</th>
+
                             <th className="px-4 py-3 border border-gray-300">Mass Unit</th>
                             <th className="px-4 py-3 border border-gray-300">Price</th>
                             <th className="px-4 py-3 border border-gray-300">Discount (%)</th>
-                            <th className="px-4 py-3 border border-gray-300">Description</th>
+                            <th className="px-4 py-3 border border-gray-300">Action</th>
                         </tr>
                     </thead>
                     <tbody>
+                        {
+                            medicines.map(medicine => (
+                                <tr
+                                    key={medicine._id}
+                                    className="hover:bg-blue-100 cursor-pointer transition-colors"
+                                >
+                                    <td className="px-4 py-2 border border-gray-300">
+                                        <img
+                                            src={medicine.image || undefined}
+                                            alt='medicineImage'
+                                            className="w-12 h-12 object-cover rounded-full"
+                                        />
+                                    </td>
+                                    <td className="px-4 py-2 border border-gray-300">{medicine.itemName}</td>
+                                    <td className="px-4 py-2 border border-gray-300">{medicine.genericName}</td>
+                                    <td className="px-4 py-2 border border-gray-300">{medicine.category}</td>
 
-                        <tr
-                            key=''
-                            className="hover:bg-blue-100 cursor-pointer transition-colors"
-                        >
-                            <td className="px-4 py-2 border border-gray-300">
-                                <img
-                                    src=''
-                                    alt=''
-                                    className="w-12 h-12 object-cover rounded"
-                                />
-                            </td>
-                            <td className="px-4 py-2 border border-gray-300">{ }</td>
-                            <td className="px-4 py-2 border border-gray-300">{ }</td>
-                            <td className="px-4 py-2 border border-gray-300">{ }</td>
-                            <td className="px-4 py-2 border border-gray-300"></td>
-                            <td className="px-4 py-2 border border-gray-300">{ }</td>
-                            <td className="px-4 py-2 border border-gray-300">${ }</td>
-                            <td className="px-4 py-2 border border-gray-300">{ }</td>
-                            <td className="px-4 py-2 border border-gray-300">{ }</td>
-                        </tr>
+                                    <td className="px-4 text-center py-2 border border-gray-300">{medicine.massUnit}</td>
+                                    <td className="px-4 py-2 text-center border border-gray-300">${medicine.price}</td>
+                                    <td className="px-4 text-center py-2 border border-gray-300">{medicine.discount}%</td>
+                                    <td className="px-4 py-2 text-center space-x-5 border border-gray-300">
+
+                                        <button className="px-2 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 hover:cursor-pointer  transition">
+                                            View
+                                        </button>
+                                        <button className="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:cursor-pointer transition">
+                                            Update
+                                        </button>
+                                        <button className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700 hover:cursor-pointer transition">
+                                            Delete
+                                        </button>
+
+                                    </td>
+                                </tr>
+                            ))
+                        }
+
 
                     </tbody>
                 </table>
@@ -163,6 +194,7 @@ const ManageMedicine = () => {
                                     type="file"
                                     accept="image/*"
                                     onChange={handleUploadPhoto}
+                                    required
                                     className="w-full border rounded px-3 py-2"
                                 />
                             </div>
@@ -195,7 +227,7 @@ const ManageMedicine = () => {
                                 <label className="block mb-1 font-medium">Item Mass Unit *</label>
                                 <input
                                     type="text"
-                                    {...register('MassUnit', { required: true })}
+                                    {...register('massUnit', { required: true })}
                                     placeholder='eg.. 500mg or 200ml'
                                     className="w-full border rounded px-3 py-2"
                                 />
