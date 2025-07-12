@@ -9,7 +9,7 @@ const DashBoard = () => {
 
             <Sidebar></Sidebar>
 
-            <div className='flex-1  '>
+            <div className='flex-1  lg:ml-80 mt-5'>
                 <div className='p-5'>
 
                     <Outlet></Outlet>

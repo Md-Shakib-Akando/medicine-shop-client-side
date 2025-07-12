@@ -66,7 +66,7 @@ const Sidebar = () => {
             >
 
                 <Link to={'/'}>
-                    <div className="flex bg-blue-100 mx-auto py-2 justify-center items-center mb-8 gap-1">
+                    <div className="flex bg-blue-100 mx-auto pt-7 pb-3 justify-center items-center mb-8 gap-1">
                         <img className="sm:w-[60px] w-[40px] rounded-full" src='/logo.png' alt="Logo" />
                         <h1 className="font-bold">Medicine Shop</h1>
                     </div>
