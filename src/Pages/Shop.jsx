@@ -1,12 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { RxCross2 } from "react-icons/rx";
+import { RxCross2, RxEyeOpen } from "react-icons/rx";
 
 const Shop = () => {
     const [medicines, setMedicines] = useState([]);
     const [sortedMedicines, setSortedMedicines] = useState([]);
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortOrder, setSortOrder] = useState('');
+
+
+
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
+
+    const totalPages = Math.ceil(sortedMedicines.length / itemsPerPage);
+    const paginatedMedicines = sortedMedicines.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
 
     useEffect(() => {
         axios.get('http://localhost:5000/medicines')
@@ -18,32 +32,71 @@ const Shop = () => {
     }, []);
 
     useEffect(() => {
-        if (!selectedCategory) {
-            setSortedMedicines(medicines);
-        } else {
-            const filtered = medicines.filter(med => med.category === selectedCategory);
-            setSortedMedicines(filtered);
+        let filtered = medicines;
+
+
+        if (searchTerm.trim() !== '') {
+            const lowerSearch = searchTerm.toLowerCase();
+            filtered = filtered.filter(med =>
+                (med.itemName && med.itemName.toLowerCase().includes(lowerSearch)) ||
+                (med.genericName && med.genericName.toLowerCase().includes(lowerSearch)) ||
+                (med.company && med.company.toLowerCase().includes(lowerSearch)) ||
+                (med.category && med.category.toLowerCase().includes(lowerSearch))
+            );
         }
-    }, [selectedCategory, medicines]);
+
+
+        if (sortOrder === 'asc') {
+            filtered = filtered.slice().sort((a, b) => a.price - b.price);
+        } else if (sortOrder === 'desc') {
+            filtered = filtered.slice().sort((a, b) => b.price - a.price);
+        }
+
+        setSortedMedicines(filtered);
+        setCurrentPage(1);
+    }, [medicines, searchTerm, sortOrder]);
+
 
     return (
         <div className="max-w-11/12 min-h-[calc(100vh-367px)] mx-auto p-6">
-            <div className="mb-4 flex justify-end">
-                <label className="mr-2 font-medium">Sort by Category:</label>
-                <select
-                    value={selectedCategory}
-                    onChange={e => setSelectedCategory(e.target.value)}
-                    className="border rounded px-3 py-1"
-                >
-                    <option value="">All</option>
-                    <option value="Capsule">Capsule</option>
-                    <option value="Tablet">Tablet</option>
-                    <option value="Syrup">Syrup</option>
-                    <option value="Injection">Injection</option>
-                </select>
+            <div className="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
+                <p className="mb-4 font-semibold text-lg text-gray-700">
+                    Total Medicines: {medicines.length}
+                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                    <label className="mr-2 font-medium">Search:</label>
+                    <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={e => {
+                            setSearchTerm(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                        placeholder="Search item, generic name, company, category"
+                        className="border rounded px-3 py-1 w-full sm:w-auto"
+                    />
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                    <label className="mr-2 font-medium">Sort by Price:</label>
+                    <select
+                        value={sortOrder}
+                        onChange={e => {
+                            setSortOrder(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                        className="border rounded px-3 py-1 w-full sm:w-auto"
+                    >
+                        <option value="">All</option>
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
             </div>
 
-            <div className=" ">
+
+
+            <div className="overflow-x-auto">
                 <table className="table w-full ">
                     <thead>
                         <tr className="bg-[#00afb9] text-white " >
@@ -57,7 +110,7 @@ const Shop = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {sortedMedicines.map(med => (
+                        {paginatedMedicines.map(med => (
                             <tr
                                 key={med._id}
                                 className="hover:bg-blue-100 transition-colors duration-200"
@@ -80,16 +133,16 @@ const Shop = () => {
                                 <td className="text-center">
                                     <div className="inline-flex space-x-2 flex-wrap justify-center">
                                         <button
-                                            className="btn btn-sm btn-success whitespace-nowrap"
+                                            className="btn btn-sm bg-[#00afb9] text-white  whitespace-nowrap"
                                         >
                                             Select
                                         </button>
                                         <button
-                                            className="btn btn-sm btn-primary whitespace-nowrap"
+                                            className="btn btn-sm bg-blue-600 whitespace-nowrap"
                                             onClick={() => setDetailModalMedicine(med)}
                                             title="View Details"
                                         >
-                                            &#128065;
+                                            <RxEyeOpen size={20} className='text-white'></RxEyeOpen>
                                         </button>
                                     </div>
                                 </td>
@@ -97,6 +150,36 @@ const Shop = () => {
                         ))}
                     </tbody>
                 </table>
+
+                {totalPages > 0 && (
+                    <div className="flex justify-center mt-6 space-x-2">
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                            className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-300  hover:cursor-pointer' : 'bg-[#00afb9] text-white  hover:cursor-pointer'}`}
+                        >
+                            Prev
+                        </button>
+
+                        {[...Array(totalPages)].map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => setCurrentPage(index + 1)}
+                                className={`px-3 py-1 rounded ${currentPage === index + 1 ? 'bg-[#00afb9] text-white  hover:cursor-pointer' : 'bg-gray-200  hover:cursor-pointer'}`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-300  hover:cursor-pointer' : 'bg-[#00afb9] text-white  hover:cursor-pointer'}`}
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
             </div>
 
             {detailModalMedicine && (
@@ -142,7 +225,7 @@ const Shop = () => {
 
                             </div>
                             <button
-                                className="btn btn-sm btn-success whitespace-nowrap"
+                                className="btn btn-sm bg-[#00afb9] text-white  whitespace-nowrap"
                             >
                                 Select
                             </button>

@@ -17,6 +17,14 @@ const ManageMedicine = () => {
     const [showUpdateModal, setShowUpdateModal] = useState(false)
     const [updateMedicinePhoto, setUpdateMedicinePhoto] = useState('');
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+
+    const totalPages = Math.ceil(medicines.length / itemsPerPage);
+    const paginatedMedicines = medicines.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
 
 
@@ -182,79 +190,107 @@ const ManageMedicine = () => {
     }, [user.email])
 
     return (
-        <div className=" mx-auto p-6">
+        <div className=" mx-auto px-6">
             <h2 className="text-3xl text-[#00afb9] text-center font-bold mb-6">Manage Medicines</h2>
 
             <button
                 onClick={() => setShowModal(true)}
-                className='bg-[#00afb9]  text-white rounded-md py-2 px-4 hover:cursor-pointer mb-3'
+                className='bg-[#00afb9]  text-white rounded-md py-2 px-4 hover:cursor-pointer my-3'
             >
                 Add Medicine
             </button>
 
             <div className="overflow-x-auto">
-                <table className="min-w-full border border-gray-300 rounded-md overflow-hidden">
-                    <thead className="bg-gray-100 ">
-                        <tr >
-                            <th className="px-4 py-3 border border-gray-300">Image</th>
-                            <th className="px-4 py-3 border border-gray-300">Item Name</th>
-                            <th className="px-4 py-3 border border-gray-300">Generic Name</th>
-                            <th className="px-4 py-3 border border-gray-300">Category</th>
-
-                            <th className="px-4 py-3 border border-gray-300">Mass Unit</th>
-                            <th className="px-4 py-3 border border-gray-300">Price</th>
-                            <th className="px-4 py-3 border border-gray-300">Discount (%)</th>
-                            <th className="px-4 py-3 border border-gray-300">Action</th>
+                <table className="table w-full ">
+                    <thead>
+                        <tr className="bg-[#00afb9] text-white " >
+                            <th className='text-lg p-5'>Image</th>
+                            <th className='text-lg p-5'>Item Name</th>
+                            <th className='text-lg p-5'>Category</th>
+                            <th className='text-lg p-5'>Price</th>
+                            <th className='text-lg p-5 text-center'>Discount (%)</th>
+                            <th className='text-lg p-5 text-center'>Mass Unit</th>
+                            <th className="text-center text-lg p-5">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            medicines.map(medicine => (
-                                <tr
-                                    key={medicine._id}
-                                    className="hover:bg-blue-100 cursor-pointer transition-colors"
-                                >
-                                    <td className="px-4 py-2 border border-gray-300">
-                                        <img
-                                            src={medicine.image || undefined}
-                                            alt='medicineImage'
-                                            className="w-12 h-12 object-cover rounded-full"
-                                        />
-                                    </td>
-                                    <td className="px-4 py-2 border border-gray-300">{medicine.itemName}</td>
-                                    <td className="px-4 py-2 border border-gray-300">{medicine.genericName}</td>
-                                    <td className="px-4 py-2 border border-gray-300">{medicine.category}</td>
-
-                                    <td className="px-4 text-center py-2 border border-gray-300">{medicine.massUnit}</td>
-                                    <td className="px-4 py-2 text-center border border-gray-300">${medicine.price}</td>
-                                    <td className="px-4 text-center py-2 border border-gray-300">{medicine.discount}%</td>
-                                    <td className="px-4 py-2 text-center space-x-5 border border-gray-300">
-
+                        {paginatedMedicines.map(med => (
+                            <tr
+                                key={med._id}
+                                className="hover:bg-blue-100 transition-colors duration-200"
+                            >
+                                <td>
+                                    <div className="avatar">
+                                        <div className="rounded-full w-12 h-12">
+                                            <img
+                                                src={med.image || 'https://via.placeholder.com/40'}
+                                                alt={med.itemName}
+                                            />
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{med.itemName}</td>
+                                <td>{med.category}</td>
+                                <td>${med.price.toFixed(2)}</td>
+                                <td className='text-center'>{med.discount}%</td>
+                                <td className='text-center'>{med.massUnit}</td>
+                                <td className="text-center">
+                                    <div className="inline-flex space-x-2 flex-wrap justify-center">
                                         <button
-                                            onClick={() => setDetailModalMedicine(medicine)}
+                                            onClick={() => setDetailModalMedicine(med)}
                                             className="px-2 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 hover:cursor-pointer  transition">
                                             View
                                         </button>
                                         <button onClick={() => {
-                                            setUpdateMedicine(medicine)
+                                            setUpdateMedicine(med)
                                             setShowUpdateModal(true)
                                         }
                                         } className="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:cursor-pointer transition">
                                             Update
                                         </button>
-                                        <button onClick={() => handleDelete(medicine._id)} className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700 hover:cursor-pointer transition">
+                                        <button onClick={() => handleDelete(med._id)} className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700 hover:cursor-pointer transition">
                                             Delete
                                         </button>
-
-                                    </td>
-                                </tr>
-                            ))
-                        }
-
-
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
+
+                {totalPages > 0 && (
+                    <div className="flex justify-center mt-6 space-x-2">
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                            disabled={currentPage === 1}
+                            className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-300' : 'bg-[#00afb9] text-white'}`}
+                        >
+                            Prev
+                        </button>
+
+                        {[...Array(totalPages)].map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => setCurrentPage(index + 1)}
+                                className={`px-3 py-1 rounded ${currentPage === index + 1 ? 'bg-[#00afb9] text-white' : 'bg-gray-200'}`}
+                            >
+                                {index + 1}
+                            </button>
+                        ))}
+
+                        <button
+                            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                            disabled={currentPage === totalPages}
+                            className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-300' : 'bg-[#00afb9] text-white'}`}
+                        >
+                            Next
+                        </button>
+                    </div>
+                )}
+
+
             </div>
+
 
 
             {

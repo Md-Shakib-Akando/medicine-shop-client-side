@@ -57,7 +57,7 @@ const Navbar = () => {
 
     return (
         <div className=''>
-            <div className=' bg-blue-100/50 backdrop-blur-md w-full shadow-sm'>
+            <div className='fixed top-0 z-50 bg-blue-100/50 backdrop-blur-md w-full shadow-sm'>
                 <div className="navbar  md:max-w-11/12   mx-auto  py-3 ">
                     <div className="navbar-start">
                         <Link className='flex items-center ' to='/'><img className='h-[50px] md:h-[70px] ' src="/logo.png" alt="" /> <span className='text-lg md:text-2xl font-bold'>Medicine Shop</span></Link>
