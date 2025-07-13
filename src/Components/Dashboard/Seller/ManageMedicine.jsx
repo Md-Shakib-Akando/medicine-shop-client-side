@@ -17,14 +17,19 @@ const ManageMedicine = () => {
     const [showUpdateModal, setShowUpdateModal] = useState(false)
     const [updateMedicinePhoto, setUpdateMedicinePhoto] = useState('');
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [sortOrder, setSortOrder] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [sortedMedicines, setSortedMedicines] = useState([]);
+
     const itemsPerPage = 10;
 
-    const totalPages = Math.ceil(medicines.length / itemsPerPage);
-    const paginatedMedicines = medicines.slice(
+    const totalPages = Math.ceil(sortedMedicines.length / itemsPerPage);
+    const paginatedMedicines = sortedMedicines.slice(
         (currentPage - 1) * itemsPerPage,
         currentPage * itemsPerPage
     );
+
 
 
 
@@ -183,22 +188,84 @@ const ManageMedicine = () => {
             axios.get(`http://localhost:5000/medicines?email=${user.email}`)
                 .then(res => {
                     setMedicines(res.data)
+                    setSortedMedicines(res.data);
                 }).catch(error => {
                     console.log(error);
                 })
         }
     }, [user.email])
 
+    useEffect(() => {
+        let filtered = medicines;
+
+
+        if (searchTerm.trim() !== '') {
+            const lowerSearch = searchTerm.toLowerCase();
+            filtered = filtered.filter(med =>
+                (med.itemName && med.itemName.toLowerCase().includes(lowerSearch)) ||
+                (med.genericName && med.genericName.toLowerCase().includes(lowerSearch)) ||
+                (med.company && med.company.toLowerCase().includes(lowerSearch)) ||
+                (med.category && med.category.toLowerCase().includes(lowerSearch))
+            );
+        }
+
+
+        if (sortOrder === 'asc') {
+            filtered = filtered.slice().sort((a, b) => a.price - b.price);
+        } else if (sortOrder === 'desc') {
+            filtered = filtered.slice().sort((a, b) => b.price - a.price);
+        }
+
+        setSortedMedicines(filtered);
+        setCurrentPage(1);
+    }, [medicines, searchTerm, sortOrder]);
+
     return (
         <div className=" mx-auto px-6">
             <h2 className="text-3xl text-[#00afb9] text-center font-bold mb-6">Manage Medicines</h2>
+            <div className="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
+                <p className="mb-4 font-semibold text-lg text-gray-700">
+                    Total Medicines: {medicines.length}
+                </p>
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                    <label className="mr-2 font-medium">Search:</label>
+                    <input
+                        type="text"
+                        value={searchTerm}
+                        onChange={e => {
+                            setSearchTerm(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                        placeholder="Search item, generic name, company, category"
+                        className="border rounded px-3 py-1 w-full sm:w-auto"
+                    />
+                </div>
 
-            <button
-                onClick={() => setShowModal(true)}
-                className='bg-[#00afb9]  text-white rounded-md py-2 px-4 hover:cursor-pointer my-3'
-            >
-                Add Medicine
-            </button>
+                <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
+                    <label className="mr-2 font-medium">Sort by Price:</label>
+                    <select
+                        value={sortOrder}
+                        onChange={e => {
+                            setSortOrder(e.target.value);
+                            setCurrentPage(1);
+                        }}
+                        className="border rounded px-3 py-1 w-full sm:w-auto"
+                    >
+                        <option value="">All</option>
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+                <div>
+                    <button
+                        onClick={() => setShowModal(true)}
+                        className='bg-[#00afb9]  text-white rounded-md py-2 px-4 hover:cursor-pointer my-3'
+                    >
+                        Add Medicine
+                    </button>
+                </div>
+            </div>
+
 
             <div className="overflow-x-auto">
                 <table className="table w-full ">

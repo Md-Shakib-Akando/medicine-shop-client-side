@@ -13,7 +13,7 @@ const Shop = () => {
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 6;
+    const itemsPerPage = 10;
 
     const totalPages = Math.ceil(sortedMedicines.length / itemsPerPage);
     const paginatedMedicines = sortedMedicines.slice(
