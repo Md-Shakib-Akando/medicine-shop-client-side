@@ -440,6 +440,8 @@ const ManageMedicine = () => {
                                         <option value="Tablet">Tablet</option>
                                         <option value="Syrup">Syrup</option>
                                         <option value="Injection">Injection</option>
+                                        <option value="Powder">Powder</option>
+                                        <option value="Drops">Drops</option>
                                     </select>
                                 </div>
 
