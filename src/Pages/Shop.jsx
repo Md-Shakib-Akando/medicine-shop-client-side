@@ -102,7 +102,9 @@ const Shop = () => {
                         <tr className="bg-[#00afb9] text-white " >
                             <th className='text-lg p-5'>Image</th>
                             <th className='text-lg p-5'>Item Name</th>
+                            <th className='text-lg p-5'>Generic Name</th>
                             <th className='text-lg p-5'>Category</th>
+                            <th className='text-lg p-5'>Company</th>
                             <th className='text-lg p-5'>Price</th>
                             <th className='text-lg p-5 text-center'>Discount (%)</th>
                             <th className='text-lg p-5 text-center'>Mass Unit</th>
@@ -126,12 +128,14 @@ const Shop = () => {
                                     </div>
                                 </td>
                                 <td>{med.itemName}</td>
+                                <td>{med.genericName}</td>
                                 <td>{med.category}</td>
+                                <td>{med.company}</td>
                                 <td>${med.price.toFixed(2)}</td>
                                 <td className='text-center'>{med.discount}%</td>
                                 <td className='text-center'>{med.massUnit}</td>
                                 <td className="text-center">
-                                    <div className="inline-flex space-x-2 flex-wrap justify-center">
+                                    <div className="inline-flex space-x-2  justify-center">
                                         <button
                                             className="btn btn-sm bg-[#00afb9] text-white  whitespace-nowrap"
                                         >

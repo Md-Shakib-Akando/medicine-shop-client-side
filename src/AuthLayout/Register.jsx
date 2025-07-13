@@ -59,7 +59,7 @@ const Register = () => {
                     photoURL: profilePic,
                 };
 
-                updateUserProfile(userProfile)
+                updateUserProfile(data.name, profilePic)
                     .then(async () => {
                         await auth.currentUser.reload();
                         setUser({ ...auth.currentUser });
@@ -160,7 +160,7 @@ const Register = () => {
                         </label>
                         <input
                             type="text"
-
+                            name='name'
                             {...register('name', { required: true, minLength: 3 })}
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"
 
@@ -200,7 +200,7 @@ const Register = () => {
                         </label>
                         <div className="mt-1 relative">
                             <input
-
+                                type='password'
                                 name="password"
                                 {...register('password', { required: true, minLangth: 6 })}
                                 className="block w-full px-3 py-2 border border-gray-300 !rounded-button shadow-sm placeholder-gray-400 focus:outline-none focus:ring-[#00afb9] focus:border-[#00afb9]"

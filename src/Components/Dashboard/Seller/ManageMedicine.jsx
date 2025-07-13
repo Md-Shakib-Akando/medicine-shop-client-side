@@ -273,7 +273,10 @@ const ManageMedicine = () => {
                         <tr className="bg-[#00afb9] text-white " >
                             <th className='text-lg p-5'>Image</th>
                             <th className='text-lg p-5'>Item Name</th>
+                            <th className='text-lg p-5'>Generic Name</th>
                             <th className='text-lg p-5'>Category</th>
+                            <th className='text-lg p-5'>Company</th>
+
                             <th className='text-lg p-5'>Price</th>
                             <th className='text-lg p-5 text-center'>Discount (%)</th>
                             <th className='text-lg p-5 text-center'>Mass Unit</th>
@@ -281,47 +284,61 @@ const ManageMedicine = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {paginatedMedicines.map(med => (
-                            <tr
-                                key={med._id}
-                                className="hover:bg-blue-100 transition-colors duration-200"
-                            >
-                                <td>
-                                    <div className="avatar">
-                                        <div className="rounded-full w-12 h-12">
-                                            <img
-                                                src={med.image || 'https://via.placeholder.com/40'}
-                                                alt={med.itemName}
-                                            />
-                                        </div>
-                                    </div>
-                                </td>
-                                <td>{med.itemName}</td>
-                                <td>{med.category}</td>
-                                <td>${med.price.toFixed(2)}</td>
-                                <td className='text-center'>{med.discount}%</td>
-                                <td className='text-center'>{med.massUnit}</td>
-                                <td className="text-center">
-                                    <div className="inline-flex space-x-2 flex-wrap justify-center">
-                                        <button
-                                            onClick={() => setDetailModalMedicine(med)}
-                                            className="px-2 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 hover:cursor-pointer  transition">
-                                            View
-                                        </button>
-                                        <button onClick={() => {
-                                            setUpdateMedicine(med)
-                                            setShowUpdateModal(true)
-                                        }
-                                        } className="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:cursor-pointer transition">
-                                            Update
-                                        </button>
-                                        <button onClick={() => handleDelete(med._id)} className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700 hover:cursor-pointer transition">
-                                            Delete
-                                        </button>
-                                    </div>
+                        {paginatedMedicines.length == 0 ? (
+
+                            <tr>
+                                <td colSpan="9" className="text-center text-xl py-8 text-gray-500">
+                                    No Medicine Found
                                 </td>
                             </tr>
-                        ))}
+
+                        ) : (
+                            paginatedMedicines.map(med => (
+                                <tr
+                                    key={med._id}
+                                    className="hover:bg-blue-100 transition-colors duration-200"
+                                >
+                                    <td>
+                                        <div className="avatar">
+                                            <div className="rounded-full w-12 h-12">
+                                                <img
+                                                    src={med.image || 'https://via.placeholder.com/40'}
+                                                    alt={med.itemName}
+                                                />
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{med.itemName}</td>
+                                    <td>{med.genericName}</td>
+                                    <td>{med.category}</td>
+                                    <td>{med.company}</td>
+                                    <td>${med.price.toFixed(2)}</td>
+                                    <td className='text-center'>{med.discount}%</td>
+                                    <td className='text-center'>{med.massUnit}</td>
+                                    <td className="text-center">
+                                        <div className="inline-flex space-x-2  justify-center">
+                                            <button
+                                                onClick={() => setDetailModalMedicine(med)}
+                                                className="px-2 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 hover:cursor-pointer  transition">
+                                                View
+                                            </button>
+                                            <button onClick={() => {
+                                                setUpdateMedicine(med)
+                                                setShowUpdateModal(true)
+                                            }
+                                            } className="px-2 py-1 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 hover:cursor-pointer transition">
+                                                Update
+                                            </button>
+                                            <button onClick={() => handleDelete(med._id)} className="px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-700 hover:cursor-pointer transition">
+                                                Delete
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))
+                        )
+
+                        }
                     </tbody>
                 </table>
 
