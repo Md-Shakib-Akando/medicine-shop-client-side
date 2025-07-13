@@ -10,50 +10,57 @@ const ManageCategory = () => {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
-    const onSubmit = (data) => {
+    const onSubmit = async (data) => {
         if (!data.image[0]) return;
+
         setUploading(true);
 
-        const formData = new FormData();
-        formData.append('image', data.image[0]);
+        try {
 
-        const imgbbApi = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_Image_Upload_Key}`;
+            const formData = new FormData();
+            formData.append('image', data.image[0]);
 
-        axios.post(imgbbApi, formData)
-            .then(res => {
-                const imageUrl = res.data.data.url;
+            const imgbbApi = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_Image_Upload_Key}`;
+            const uploadRes = await axios.post(imgbbApi, formData);
+            const imageUrl = uploadRes.data.data.url;
 
-                const newCategory = {
-                    name: data.category,
-                    image: imageUrl
-                };
 
-                return axios.post('http://localhost:5000/categories', newCategory);
-            })
-            .then(res => {
-                if (res.data.insertedId) {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Category added successfully!',
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                    reset();
-                    setShowModal(false);
-                }
-            })
-            .catch(error => {
-                console.error("Error during category creation:", error);
+            const newCategory = {
+                name: data.category,
+                image: imageUrl,
+            };
+
+            const categoryRes = await axios.post('http://localhost:5000/categories', newCategory);
+
+            if (categoryRes.data.insertedId) {
+
+                setCategories(prev => [
+                    ...prev,
+                    { _id: categoryRes.data.insertedId, ...newCategory }
+                ]);
+
                 Swal.fire({
-                    icon: 'error',
-                    title: 'Failed to add category!',
-                    text: error.message || "Unknown error"
+                    icon: 'success',
+                    title: 'Category added successfully!',
+                    showConfirmButton: false,
+                    timer: 1500,
                 });
-            })
-            .finally(() => {
-                setUploading(false);
+
+                reset();
+                setShowModal(false);
+            }
+        } catch (error) {
+            console.error("Error during category creation:", error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to add category!',
+                text: error.message || "Unknown error",
             });
+        } finally {
+            setUploading(false);
+        }
     };
+
 
     useEffect(() => {
         axios.get('http://localhost:5000/categories')
