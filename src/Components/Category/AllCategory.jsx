@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
+import Swal from 'sweetalert2';
 
 const AllCategory = () => {
     const [categories, setCategories] = useState([]);
@@ -13,11 +14,12 @@ const AllCategory = () => {
             .catch(err => console.error(err));
     }, []);
 
+
     return (
         <>
-            <div className='max-w-11/12 mx-auto'>
-                <h1 className='text-center font-bold text-3xl my-5'>Shop by Category</h1>
-                <div className=" px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-5">
+            <div className='max-w-11/12 mx-auto mt-15'>
+                <h1 className='text-center font-bold text-3xl md:text-5xl my-5'>Shop by Category</h1>
+                <div className=" px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-6 gap-5">
                     {categories.map(category => (
                         <Link key={category._id}>
                             <div
