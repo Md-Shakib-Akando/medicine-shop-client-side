@@ -57,10 +57,12 @@ const DiscountMedicine = () => {
                                 <div className="card-body -mt-7">
                                     <div className='flex justify-between'>
                                         <h2 className="card-title font-bold">{med.itemName}</h2>
-                                        <p className="text-gray-900 text-[17px] font-bold">
-                                            ${(med.price - (med.price * med.discount / 100)).toFixed(2)}
-                                            <span className="text-[17px] line-through text-gray-500 ml-2">${med.price}</span>
-                                        </p>
+                                        <div>
+                                            <p className="text-gray-900 text-[17px] font-bold">
+                                                ${(med.price - (med.price * med.discount / 100)).toFixed(2)}
+                                                <span className="text-[17px] line-through text-gray-500 ml-2">${med.price}</span>
+                                            </p>
+                                        </div>
                                     </div>
                                     <p className='font-medium text-[15px] truncate'>Company: <span className='font-normal'>{med.company}</span></p>
                                     <p className='font-medium text-[15px]'>Category: <span className='font-normal'>{med.category}</span></p>
