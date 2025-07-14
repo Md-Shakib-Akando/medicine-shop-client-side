@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { RxCross2, RxEyeOpen } from "react-icons/rx";
+import { useNavigate } from 'react-router';
+import UseAuth from '../UseAuth';
 
 const Shop = () => {
+    const { user } = UseAuth();
     const [medicines, setMedicines] = useState([]);
     const [sortedMedicines, setSortedMedicines] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('');
-
+    const navigate = useNavigate();
 
 
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
@@ -143,7 +146,13 @@ const Shop = () => {
                                         </button>
                                         <button
                                             className="btn btn-sm bg-blue-600 whitespace-nowrap"
-                                            onClick={() => setDetailModalMedicine(med)}
+                                            onClick={() => {
+                                                if (!user) {
+                                                    navigate('/login');
+                                                } else {
+                                                    setDetailModalMedicine(med);
+                                                }
+                                            }}
                                             title="View Details"
                                         >
                                             <RxEyeOpen size={20} className='text-white'></RxEyeOpen>
@@ -217,7 +226,10 @@ const Shop = () => {
                                     <p><span className="text-gray-900 font-semibold">Category:</span> {detailModalMedicine.category}</p>
                                     <p><span className="text-gray-900 font-semibold">Company:</span> {detailModalMedicine.company}</p>
                                     <p><span className="text-gray-900 font-semibold">Mass Unit:</span> {detailModalMedicine.massUnit}</p>
-                                    <p><span className="text-gray-900 font-semibold">Price:</span> ${detailModalMedicine.price.toFixed(2)}</p>
+                                    <p className="text-gray-900 text-[17px] font-bold">
+                                        Price : ${(detailModalMedicine.price - (detailModalMedicine.price * detailModalMedicine.discount / 100)).toFixed(2)}
+                                        <span className="text-[15px] line-through text-gray-500 ml-1">${detailModalMedicine.price}</span>
+                                    </p>
                                     <p><span className="text-gray-900 font-semibold">Discount:</span> {detailModalMedicine.discount}%</p>
                                 </div>
 

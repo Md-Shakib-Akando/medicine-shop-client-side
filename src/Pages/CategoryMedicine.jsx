@@ -1,98 +1,98 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { useParams, useNavigate } from 'react-router';
+import { RxCross2, RxEyeOpen } from 'react-icons/rx';
 
+import Swal from 'sweetalert2';
+import UseAuth from '../UseAuth';
 
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import { useNavigate } from 'react-router';
-import UseAuth from '../../../UseAuth';
-import { RxCross2 } from 'react-icons/rx';
-
-const DiscountMedicine = () => {
-    const { user } = UseAuth();
-    const [discountMedicines, setDiscountMedicines] = useState([]);
-    const [detailModalMedicine, setDetailModalMedicine] = useState(null);
+const CategoryMedicine = () => {
+    const { name } = useParams();
     const navigate = useNavigate();
+    const { user } = UseAuth();
+
+    const [medicines, setMedicines] = useState([]);
+    const [detailModalMedicine, setDetailModalMedicine] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/medicines')
+        axios.get(`http://localhost:5000/medicines/category/${name}`)
             .then(res => {
-                const discounted = res.data.filter(med => med.discount && med.discount > 0);
-                setDiscountMedicines(discounted);
+                setMedicines(res.data);
             })
             .catch(err => console.error(err));
-    }, []);
+    }, [name]);
 
     return (
-        <div className='bg-base-200 my-10 p-7'>
-            <div className='max-w-11/12 mx-auto'>
-                <h1 className='text-center font-bold text-3xl md:text-5xl my-10'>Discount Products</h1>
-
-                <Swiper
-                    modules={[Navigation, Pagination, A11y]}
-                    navigation
-
-                    className="w-full  mx-auto px-4"
-                    spaceBetween={20}
-                    slidesPerView={1}
-                    breakpoints={{
-                        640: { slidesPerView: 1 },
-                        768: { slidesPerView: 2 },
-                        1024: { slidesPerView: 3 },
-                        1280: { slidesPerView: 4 },
-                    }}
-                >
-                    {discountMedicines.map((med) => (
-                        <SwiperSlide key={med._id}>
-                            <div className="card bg-base-100 shadow-sm w-full h-full">
-                                <figure className='relative p-5'>
-                                    <img
-                                        src={med.image}
-                                        className='h-[250px] w-full object-cover rounded-md'
-                                        alt="discountMedicine"
-                                    />
-                                    {med.discount && (
-                                        <span className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs rounded">
-                                            {med.discount}% OFF
-                                        </span>
-                                    )}
-                                </figure>
-                                <div className="card-body -mt-7">
-                                    <div className='flex justify-between'>
-                                        <h2 className="card-title font-bold">{med.itemName}</h2>
-                                        <div>
-                                            <p className="text-gray-900 text-[17px] font-bold">
-                                                ${(med.price - (med.price * med.discount / 100)).toFixed(2)}
-                                                <span className="text-[17px] line-through text-gray-500 ml-2">${med.price}</span>
-                                            </p>
+        <div className="max-w-11/12 min-h-[calc(100vh-367px)] mx-auto p-4">
+            <h1 className="text-3xl font-bold text-center my-6">Medicines in: {name}</h1>
+            <div className="overflow-x-auto">
+                <table className="table w-full">
+                    <thead>
+                        <tr className="bg-[#00afb9] text-white">
+                            <th className='text-lg p-5'>Image</th>
+                            <th className='text-lg p-5'>Item Name</th>
+                            <th className='text-lg p-5'>Generic Name</th>
+                            <th className='text-lg p-5'>Category</th>
+                            <th className='text-lg p-5'>Company</th>
+                            <th className='text-lg p-5'>Price</th>
+                            <th className='text-lg p-5 text-center'>Discount (%)</th>
+                            <th className='text-lg p-5 text-center'>Mass Unit</th>
+                            <th className="text-center text-lg p-5">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {medicines.map(med => (
+                            <tr
+                                key={med._id}
+                                className="hover:bg-blue-100 transition-colors duration-200"
+                            >
+                                <td>
+                                    <div className="avatar">
+                                        <div className="rounded-full w-12 h-12">
+                                            <img
+                                                src={med.image || 'https://via.placeholder.com/40'}
+                                                alt={med.itemName}
+                                            />
                                         </div>
                                     </div>
-                                    <p className='font-medium text-[15px] truncate'>Company: <span className='font-normal'>{med.company}</span></p>
-                                    <p className='font-medium text-[15px]'>Category: <span className='font-normal'>{med.category}</span></p>
-
-                                    <div className="card-actions justify-end mt-4">
+                                </td>
+                                <td>{med.itemName}</td>
+                                <td>{med.genericName || 'N/A'}</td>
+                                <td>{med.category}</td>
+                                <td>{med.company}</td>
+                                <td>${med.price.toFixed(2)}</td>
+                                <td className='text-center'>{med.discount || 0}%</td>
+                                <td className='text-center'>{med.massUnit || 'N/A'}</td>
+                                <td className="text-center">
+                                    <div className="inline-flex space-x-2 justify-center">
+                                        <button className="btn btn-sm bg-[#00afb9] text-white whitespace-nowrap">
+                                            Select
+                                        </button>
                                         <button
-
-                                            className='btn text-md bg-[#00afb9] text-white '>Select</button>
-                                        <button
+                                            className="btn btn-sm bg-blue-600 whitespace-nowrap"
                                             onClick={() => {
                                                 if (!user) {
                                                     navigate('/login');
                                                 } else {
                                                     setDetailModalMedicine(med);
+
                                                 }
                                             }}
-                                            className='btn text-md bg-[#00afb9] text-white '>View</button>
+                                            title="View Details"
+                                        >
+                                            <RxEyeOpen size={20} className="text-white" />
+                                        </button>
                                     </div>
-                                </div>
-                            </div>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                {medicines.length === 0 && (
+                    <p className="text-center py-10">No medicines found in this category.</p>
+                )}
+
 
                 {detailModalMedicine && (
                     <div className="fixed inset-0 bg-black/80 bg-opacity-70 flex justify-center items-center z-50 p-6">
@@ -153,4 +153,4 @@ const DiscountMedicine = () => {
     );
 };
 
-export default DiscountMedicine;
+export default CategoryMedicine;

@@ -19,6 +19,7 @@ import ManagePayment from "../Components/Dashboard/Seller/ManagePayment";
 import ManageUsers from "../Components/Dashboard/Admin/ManageUsers";
 import UpdateProfile from "../Components/Profile/UpdateProfile";
 import Shop from "../Pages/Shop";
+import CategoryMedicine from "../Pages/CategoryMedicine";
 
 
 export const router = createBrowserRouter([
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
             {
                 path: 'updateProfile',
                 Component: UpdateProfile,
+            },
+            {
+                path: 'category/:name',
+                Component: CategoryMedicine,
             }
 
 
