@@ -4,11 +4,15 @@ import { RxCross2 } from 'react-icons/rx';
 import UseAuth from '../UseAuth';
 import { useNavigate } from 'react-router';
 
+import { ToastContainer } from 'react-toastify';
+import { handleSelect } from '../Hooks/Select';
+
 const LatestMedicine = () => {
     const { user } = UseAuth();
     const [latestMedicine, setLatestMedicine] = useState([]);
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
     const navigate = useNavigate();
+    const [userRole, setUserRole] = useState('');
 
     useEffect(() => {
         axios.get('http://localhost:5000/medicines/latest')
@@ -18,6 +22,15 @@ const LatestMedicine = () => {
                 console.log(error.message);
             });
     }, []);
+    useEffect(() => {
+        if (user?.email) {
+            axios.get(`http://localhost:5000/users/role/${user.email}`)
+                .then(res => setUserRole(res.data.userRole))
+                .catch(console.error);
+        }
+    }, [user]);
+
+
 
     return (
         <div className='max-w-11/12 mx-auto my-15'>
@@ -66,7 +79,15 @@ const LatestMedicine = () => {
                             <p className='font-medium text-[15px]'>Category: <span className='font-normal'>{med.category}</span></p>
 
                             <div className="mt-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                                <button className='btn text-lg bg-[#00afb9] text-white w-full'>Select</button>
+                                {userRole === 'user' && (
+                                    <button
+                                        onClick={() => handleSelect(med, user, navigate)}
+                                        className='btn text-lg bg-[#00afb9] text-white w-full'
+                                    >
+                                        Select
+                                    </button>
+                                )}
+
                             </div>
                         </div>
 
@@ -131,6 +152,7 @@ const LatestMedicine = () => {
                     </div>
                 )}
             </div>
+            <ToastContainer position="top-right" reverseOrder={false} />
         </div>
     );
 };

@@ -2,13 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
 import Swal from 'sweetalert2';
-
+import axios from 'axios';
+import { FaCartPlus } from "react-icons/fa";
 
 const Navbar = () => {
     const { user, logOut } = UseAuth();
 
     const navigate = useNavigate();
     const [open, setOpen] = useState(false);
+    const [role, setRole] = useState('');
+    const [cartCount, setCartCount] = useState(0);
+
+
+
 
 
 
@@ -21,7 +27,10 @@ const Navbar = () => {
 
 
 
+
     </>
+
+
 
 
 
@@ -54,6 +63,33 @@ const Navbar = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
+    useEffect(() => {
+        if (user?.email) {
+            axios.get(`http://localhost:5000/users/role/${user.email}`)
+                .then(res => setRole(res.data.userRole))
+                .catch(console.error);
+        }
+    }, [user]);
+
+    useEffect(() => {
+        const fetchCartCount = () => {
+            if (user?.email) {
+                axios.get(`http://localhost:5000/cart/${user.email}`)
+                    .then(res => setCartCount(res.data.length))
+                    .catch(console.error);
+            } else {
+                setCartCount(0);
+            }
+        };
+
+        fetchCartCount();
+
+        const handler = () => fetchCartCount();
+
+        window.addEventListener('cart-updated', handler);
+        return () => window.removeEventListener('cart-updated', handler);
+    }, [user]);
+
 
     return (
         <div className=''>
@@ -71,8 +107,19 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <div className="navbar-end">
-
+                    <div className="navbar-end space-x-2">
+                        {
+                            role === 'user' && (
+                                <NavLink to='/cart' className="relative inline-block">
+                                    <FaCartPlus size={28} />
+                                    <span
+                                        className="absolute -top-2 -right-2 bg-[#00afb9] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none"
+                                    >
+                                        {cartCount}
+                                    </span>
+                                </NavLink>
+                            )
+                        }
 
                         {
                             user ?
@@ -138,6 +185,7 @@ const Navbar = () => {
                             <button onClick={() => setOpen(false)} className="text-2xl">&times;</button>
                         </div>
                         <div className='flex justify-center items-center'>
+
                             {
                                 user ?
                                     <div className="relative flex justify-center items-center group w-[50px] sm:w-[70px] h-[70px]  ">
