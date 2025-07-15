@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { RxCross2, RxEyeOpen } from 'react-icons/rx';
 
-import Swal from 'sweetalert2';
+
 import UseAuth from '../UseAuth';
+import { handleSelect } from '../Hooks/Select';
+import { ToastContainer } from 'react-toastify';
 
 const CategoryMedicine = () => {
     const { name } = useParams();
@@ -65,7 +67,9 @@ const CategoryMedicine = () => {
                                 <td className='text-center'>{med.massUnit || 'N/A'}</td>
                                 <td className="text-center">
                                     <div className="inline-flex space-x-2 justify-center">
-                                        <button className="btn btn-sm bg-[#00afb9] text-white whitespace-nowrap">
+                                        <button
+                                            onClick={() => handleSelect(med, user, navigate)}
+                                            className="btn btn-sm bg-[#00afb9] text-white whitespace-nowrap">
                                             Select
                                         </button>
                                         <button
@@ -102,7 +106,7 @@ const CategoryMedicine = () => {
                                 className="absolute top-5 right-5 text-4xl font-extrabold text-gray-600 hover:text-gray-900 transition"
                                 aria-label="Close modal"
                             >
-                                <RxCross2 />
+                                <RxCross2 size={20} />
                             </button>
 
                             <div className="flex flex-col justify-center items-center md:space-x-12">
@@ -140,6 +144,7 @@ const CategoryMedicine = () => {
 
                                 </div>
                                 <button
+                                    onClick={() => handleSelect(detailModalMedicine, user, navigate)}
                                     className="btn btn-sm bg-[#00afb9] text-white  whitespace-nowrap"
                                 >
                                     Select
@@ -149,6 +154,7 @@ const CategoryMedicine = () => {
                     </div>
                 )}
             </div>
+            <ToastContainer position="top-right" reverseOrder={false} />
         </div>
     );
 };

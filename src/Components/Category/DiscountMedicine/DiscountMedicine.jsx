@@ -11,6 +11,7 @@ import 'swiper/css/scrollbar';
 import { useNavigate } from 'react-router';
 import UseAuth from '../../../UseAuth';
 import { RxCross2 } from 'react-icons/rx';
+import { handleSelect } from '../../../Hooks/Select';
 
 const DiscountMedicine = () => {
     const { user } = UseAuth();
@@ -76,7 +77,7 @@ const DiscountMedicine = () => {
 
                                     <div className="card-actions justify-end mt-4">
                                         <button
-
+                                            onClick={() => handleSelect(med, user, navigate)}
                                             className='btn text-md bg-[#00afb9] text-white '>Select</button>
                                         <button
                                             onClick={() => {
@@ -102,7 +103,7 @@ const DiscountMedicine = () => {
                                 className="absolute top-5 right-5 text-4xl font-extrabold text-gray-600 hover:text-gray-900 transition"
                                 aria-label="Close modal"
                             >
-                                <RxCross2 />
+                                <RxCross2 size={20} />
                             </button>
 
                             <div className="flex flex-col justify-center items-center md:space-x-12">
@@ -140,6 +141,7 @@ const DiscountMedicine = () => {
 
                                 </div>
                                 <button
+                                    onClick={() => handleSelect(detailModalMedicine, user, navigate)}
                                     className="btn btn-sm bg-[#00afb9] text-white  whitespace-nowrap"
                                 >
                                     Select
