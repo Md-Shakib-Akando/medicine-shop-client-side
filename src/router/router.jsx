@@ -20,6 +20,7 @@ import ManageUsers from "../Components/Dashboard/Admin/ManageUsers";
 import UpdateProfile from "../Components/Profile/UpdateProfile";
 import Shop from "../Pages/Shop";
 import CategoryMedicine from "../Pages/CategoryMedicine";
+import Cart from "../Pages/Cart";
 
 
 export const router = createBrowserRouter([
@@ -42,6 +43,10 @@ export const router = createBrowserRouter([
             {
                 path: 'category/:name',
                 Component: CategoryMedicine,
+            },
+            {
+                path: 'cart',
+                Component: Cart,
             }
 
 
