@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import UseAuth from '../UseAuth';
 import axios from 'axios';
-
+import { FiMinus, FiPlus } from "react-icons/fi";
 import { RxCross2 } from 'react-icons/rx';
 
 const Cart = () => {
@@ -29,6 +29,17 @@ const Cart = () => {
         }
     };
 
+    const handleIncrease = (id) => {
+        setCart(cart.map(item =>
+            item._id === id ? { ...item, quantity: (item.quantity || 1) + 1 } : item
+        ));
+    };
+
+    const handleDecrease = (id) => {
+        setCart(cart.map(item =>
+            item._id === id ? { ...item, quantity: Math.max((item.quantity || 1) - 1, 1) } : item
+        ));
+    };
 
     useEffect(() => {
         if (user?.email) {
@@ -76,7 +87,7 @@ const Cart = () => {
                                     <tr key={item._id} className="hover:bg-blue-50">
                                         <td>
                                             <div className="p-2 bg-gray-200 rounded-full hover:bg-red-200 cursor-pointer inline-flex items-center justify-center">
-                                                <button onClick={() => deleteItem(item._id)}>
+                                                <button onClick={() => deleteItem(item._id)} className='hover:cursor-pointer'>
                                                     <RxCross2 size={18} className="text-black" />
                                                 </button>
                                             </div>
@@ -86,9 +97,9 @@ const Cart = () => {
                                         <td>${item.price.toFixed(2)}</td>
                                         <td>
                                             <div className="flex items-center gap-2">
-                                                <button className="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded font-bold">-</button>
+                                                <button onClick={() => handleDecrease(item._id)} className="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded font-bold hover:cursor-pointer"><FiMinus /></button>
                                                 <span className="min-w-[20px] text-center">{item.quantity || 1}</span>
-                                                <button className="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded font-bold">+</button>
+                                                <button onClick={() => handleIncrease(item._id)} className="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded font-bold hover:cursor-pointer"><FiPlus /> </button>
                                             </div>
                                         </td>
                                         <td className="text-end">
