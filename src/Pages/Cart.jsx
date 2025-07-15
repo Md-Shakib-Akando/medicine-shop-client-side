@@ -3,9 +3,32 @@ import { Link } from 'react-router';
 import UseAuth from '../UseAuth';
 import axios from 'axios';
 
+import { RxCross2 } from 'react-icons/rx';
+
 const Cart = () => {
     const { user } = UseAuth();
     const [cart, setCart] = useState([]);
+
+    const clearAllCarts = async () => {
+        try {
+            await axios.delete(`http://localhost:5000/cart/clear/${user.email}`);
+            setCart([]);
+            window.dispatchEvent(new Event('cart-updated'));
+        } catch (error) {
+            console.error("Failed to clear cart:", error);
+        }
+    };
+
+    const deleteItem = async (id) => {
+        try {
+            await axios.delete(`http://localhost:5000/cart/${id}`);
+            setCart(prev => prev.filter(item => item._id !== id));
+            window.dispatchEvent(new Event('cart-updated'));
+        } catch (error) {
+            console.error("Failed to delete item:", error);
+        }
+    };
+
 
     useEffect(() => {
         if (user?.email) {
@@ -28,7 +51,7 @@ const Cart = () => {
     return (
         <div className="overflow-x-auto min-h-screen max-w-7xl mx-auto px-4 py-8">
             <div className="flex justify-end mb-6">
-                <button className="bg-[#008c94] text-white py-2 px-6 rounded-md hover:cursor-pointer">
+                <button onClick={clearAllCarts} className="bg-[#008c94] text-white py-2 px-6 rounded-md hover:cursor-pointer">
                     Clear All
                 </button>
             </div>
@@ -39,7 +62,7 @@ const Cart = () => {
                     <table className="table w-full">
                         <thead>
                             <tr className="text-lg uppercase bg-[#00afb9] text-white">
-                                <th>#</th>
+                                <th> </th>
                                 <th>Name</th>
                                 <th>Company</th>
                                 <th>Price</th>
@@ -49,9 +72,15 @@ const Cart = () => {
                         </thead>
                         <tbody>
                             {
-                                cart.map((item, index) => (
+                                cart.map((item) => (
                                     <tr key={item._id} className="hover:bg-blue-50">
-                                        <td>{index + 1}</td>
+                                        <td>
+                                            <div className="p-2 bg-gray-200 rounded-full hover:bg-red-200 cursor-pointer inline-flex items-center justify-center">
+                                                <button onClick={() => deleteItem(item._id)}>
+                                                    <RxCross2 size={18} className="text-black" />
+                                                </button>
+                                            </div>
+                                        </td>
                                         <td>{item.itemName}</td>
                                         <td>{item.company}</td>
                                         <td>${item.price.toFixed(2)}</td>
