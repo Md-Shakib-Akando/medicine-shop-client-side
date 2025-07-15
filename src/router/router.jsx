@@ -21,6 +21,8 @@ import UpdateProfile from "../Components/Profile/UpdateProfile";
 import Shop from "../Pages/Shop";
 import CategoryMedicine from "../Pages/CategoryMedicine";
 import Cart from "../Pages/Cart";
+import CheckOut from "../Pages/CheckOut";
+import Invoice from "../Components/Dashboard/Payment/Invoice";
 
 
 export const router = createBrowserRouter([
@@ -47,6 +49,14 @@ export const router = createBrowserRouter([
             {
                 path: 'cart',
                 Component: Cart,
+            },
+            {
+                path: 'checkOut',
+                Component: CheckOut,
+            },
+            {
+                path: 'invoice/:transactionId',
+                Component: Invoice,
             }
 
 

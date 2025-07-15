@@ -29,17 +29,39 @@ const Cart = () => {
         }
     };
 
-    const handleIncrease = (id) => {
-        setCart(cart.map(item =>
+    const handleIncrease = async (id) => {
+        const updatedCart = cart.map(item =>
             item._id === id ? { ...item, quantity: (item.quantity || 1) + 1 } : item
-        ));
+        );
+        setCart(updatedCart);
+
+        const changedItem = updatedCart.find(item => item._id === id);
+        try {
+            await axios.patch(`http://localhost:5000/cart/${id}`, {
+                quantity: changedItem.quantity
+            });
+        } catch (error) {
+            console.error('Failed to update quantity:', error);
+        }
     };
 
-    const handleDecrease = (id) => {
-        setCart(cart.map(item =>
+
+    const handleDecrease = async (id) => {
+        const updatedCart = cart.map(item =>
             item._id === id ? { ...item, quantity: Math.max((item.quantity || 1) - 1, 1) } : item
-        ));
+        );
+        setCart(updatedCart);
+
+        const changedItem = updatedCart.find(item => item._id === id);
+        try {
+            await axios.patch(`http://localhost:5000/cart/${id}`, {
+                quantity: changedItem.quantity
+            });
+        } catch (error) {
+            console.error('Failed to update quantity:', error);
+        }
     };
+
 
     useEffect(() => {
         if (user?.email) {
@@ -60,7 +82,7 @@ const Cart = () => {
     }, 0);
 
     return (
-        <div className="overflow-x-auto min-h-screen max-w-7xl mx-auto px-4 py-8">
+        <div className="overflow-x-auto min-h-screen max-w-10/12 mx-auto px-4 py-8">
             <div className="flex justify-end mb-6">
                 <button onClick={clearAllCarts} className="bg-[#008c94] text-white py-2 px-6 rounded-md hover:cursor-pointer">
                     Clear All
