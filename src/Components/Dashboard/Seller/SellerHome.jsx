@@ -59,10 +59,10 @@ const SellerHome = () => {
         <div className="p-6 max-w-7xl mx-auto">
             <h2 className="text-3xl font-semibold mb-6">Seller Dashboard</h2>
 
-            {/* Cards */}
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
 
-                {/* Total Revenue */}
+
                 <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-blue-500">
                     <div className="bg-blue-500 text-white p-3 rounded-full">
                         <FaDollarSign size={24} />
@@ -73,7 +73,7 @@ const SellerHome = () => {
                     </div>
                 </div>
 
-                {/* Paid Total */}
+
                 <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-green-500">
                     <div className="bg-green-500 text-white p-3 rounded-full">
                         <FaMoneyBillWave size={24} />
@@ -84,7 +84,7 @@ const SellerHome = () => {
                     </div>
                 </div>
 
-                {/* Pending Total */}
+
                 <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-yellow-500">
                     <div className="bg-yellow-500 text-white p-3 rounded-full">
                         <FaClock size={24} />
@@ -96,7 +96,7 @@ const SellerHome = () => {
                 </div>
             </div>
 
-            {/* Chart */}
+
             <div className="bg-white rounded-xl shadow-md w-full">
                 <h3 className="text-xl font-semibold mb-4 text-center">Sales Overview</h3>
 

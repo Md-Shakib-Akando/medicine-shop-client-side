@@ -9,8 +9,9 @@ const AdminHome = () => {
     const [salesData, setSalesData] = useState({
         totalRevenue: 0,
         totalPendingAmount: 0,
-        pendingOrdersCount: 0,
-        totalOrdersCount: 0,
+
+        totalPaid: 0,
+        totalPaymentsCount: 0,
     });
 
     useEffect(() => {
@@ -28,15 +29,18 @@ const AdminHome = () => {
                 .filter(p => p.status?.toLowerCase() === 'pending')
                 .reduce((sum, p) => sum + p.price, 0);
 
-            const pendingOrdersCount = payments.filter(p => p.status?.toLowerCase() === 'pending').length;
 
-            const totalOrdersCount = payments.length;
+            const totalPaid = payments
+                .filter(p => p.status?.toLowerCase() === 'approved' || p.status?.toLowerCase() === 'paid')
+                .reduce((sum, p) => sum + p.price, 0);
 
+            const totalPaymentsCount = payments.length;
             setSalesData({
                 totalRevenue,
                 totalPendingAmount,
-                pendingOrdersCount,
-                totalOrdersCount,
+
+                totalPaid,
+                totalPaymentsCount
             });
         } catch (err) {
             console.error('Error fetching sales data:', err);
@@ -46,9 +50,10 @@ const AdminHome = () => {
 
     const chartData = [
         { name: 'Total Revenue', value: salesData.totalRevenue },
+        { name: 'Total Paid', value: salesData.totalPaid },
         { name: 'Total Pending Amount', value: salesData.totalPendingAmount },
-        { name: 'Pending Orders', value: salesData.pendingOrdersCount },
-        { name: 'Total Orders', value: salesData.totalOrdersCount },
+
+        { name: 'Total Payments', value: salesData.totalPaymentsCount },
     ];
 
     return (
@@ -66,6 +71,15 @@ const AdminHome = () => {
                         <p className="text-2xl font-bold text-gray-800">${salesData.totalRevenue.toFixed(2)}</p>
                     </div>
                 </div>
+                <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-blue-500">
+                    <div className="bg-blue-500 text-white p-3 rounded-full">
+                        <FaDollarSign size={24} />
+                    </div>
+                    <div>
+                        <h4 className="text-gray-600 text-sm">Total Paid</h4>
+                        <p className="text-2xl font-bold text-gray-800">${salesData.totalPaid.toFixed(2)}</p>
+                    </div>
+                </div>
 
                 <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-yellow-500">
                     <div className="bg-yellow-500 text-white p-3 rounded-full">
@@ -78,15 +92,7 @@ const AdminHome = () => {
                 </div>
 
 
-                <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-red-500">
-                    <div className="bg-red-500 text-white p-3 rounded-full">
-                        <FaShoppingCart size={24} />
-                    </div>
-                    <div>
-                        <h4 className="text-gray-600 text-sm">Pending Orders</h4>
-                        <p className="text-2xl font-bold text-gray-800">{salesData.pendingOrdersCount}</p>
-                    </div>
-                </div>
+
 
 
                 <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-green-500">
@@ -94,8 +100,8 @@ const AdminHome = () => {
                         <FaReceipt size={24} />
                     </div>
                     <div>
-                        <h4 className="text-gray-600 text-sm">Total Orders</h4>
-                        <p className="text-2xl font-bold text-gray-800">{salesData.totalOrdersCount}</p>
+                        <h4 className="text-gray-600 text-sm">Total Payments</h4>
+                        <p className="text-2xl font-bold text-gray-800">{salesData.totalPaymentsCount}</p>
                     </div>
                 </div>
             </div>
