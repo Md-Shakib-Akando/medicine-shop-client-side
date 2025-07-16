@@ -14,6 +14,8 @@ const CheckOutForm = ({ totalPrice, cart }) => {
     const { user } = UseAuth();
     const navigate = useNavigate();
 
+
+
     useEffect(() => {
         if (totalPrice > 0) {
             axios.post('http://localhost:5000/create-payment-intent', { subTotal: totalPrice })
@@ -74,7 +76,7 @@ const CheckOutForm = ({ totalPrice, cart }) => {
                 cartIds: cart.map(item => item._id),
                 name: cart.map(item => item.itemName),
                 image: cart.map(item => item.image),
-
+                sellerEmail: cart.map(item => item.sellerEmail),
                 menuItemIds: cart.map(item => item.cartId),
                 status: 'Pending',
             };

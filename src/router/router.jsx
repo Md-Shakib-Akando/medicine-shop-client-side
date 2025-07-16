@@ -23,6 +23,7 @@ import CategoryMedicine from "../Pages/CategoryMedicine";
 import Cart from "../Pages/Cart";
 import CheckOut from "../Pages/CheckOut";
 import Invoice from "../Components/Dashboard/Payment/Invoice";
+import DashHome from "../Components/Dashboard/DashHome";
 
 
 export const router = createBrowserRouter([
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
             <PrivateRoute><DashBoard></DashBoard></PrivateRoute>
         ),
         children: [
+            {
+                index: true,
+                Component: DashHome,
+            },
             {
                 path: 'adminHome',
                 Component: AdminHome,

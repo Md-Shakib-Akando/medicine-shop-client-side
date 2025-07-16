@@ -18,6 +18,7 @@ export const handleSelect = async (medicine, user, navigate) => {
         discount: medicine.discount,
         company: medicine.company,
         category: medicine.category,
+        sellerEmail: medicine.userEmail,
         quantity: 1,
         selectedAt: new Date().toISOString()
     };

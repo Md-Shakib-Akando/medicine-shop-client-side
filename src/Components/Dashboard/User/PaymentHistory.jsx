@@ -28,6 +28,7 @@ const PaymentHistory = () => {
                             <tr className="bg-[#00afb9] text-white">
                                 <th className="text-lg p-5">#</th>
                                 <th className="text-lg p-5">Transaction ID</th>
+                                <th className="text-lg p-5">Total Item</th>
                                 <th className="text-lg p-5">Date</th>
                                 <th className="text-lg p-5">Amount</th>
                                 <th className="text-lg p-5">Status</th>
@@ -37,15 +38,26 @@ const PaymentHistory = () => {
                             {payments.map((payment, index) => (
                                 <tr key={payment._id} className="hover:bg-blue-100 transition">
                                     <td className="p-5">{index + 1}</td>
+
                                     <td className="p-5">{payment.transactionId}</td>
+                                    <td className="p-5 ">{payment.name?.length || 0}</td>
                                     <td className="p-5">
                                         {new Date(payment.date).toLocaleDateString()}
                                     </td>
                                     <td className="p-5">${payment.price}</td>
                                     <td className="p-5">
-                                        <span className={`px-3 py-1 rounded text-white font-semibold text-sm ${payment.status === 'paid' ? 'bg-green-500' : 'bg-yellow-500'}`}>
-                                            {payment.status}
+                                        <span
+                                            className={`px-3 py-1 rounded text-white font-semibold text-sm ${payment.status.toLowerCase() === 'approved'
+                                                    ? 'bg-green-500'
+                                                    : payment.status.toLowerCase() === 'pending'
+                                                        ? 'bg-yellow-500'
+                                                        : 'bg-gray-500'
+                                                }`}
+                                        >
+                                            {payment.status.toLowerCase() === 'approved' ? 'Paid' : payment.status}
                                         </span>
+
+
                                     </td>
                                 </tr>
                             ))}
