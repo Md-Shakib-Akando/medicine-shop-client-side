@@ -3,6 +3,7 @@ import axios from 'axios';
 import { RxCross2, RxEyeOpen } from "react-icons/rx";
 import { useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
+import { handleSelect } from '../Hooks/Select';
 
 const Shop = () => {
     const { user } = UseAuth();
@@ -14,8 +15,10 @@ const Shop = () => {
 
 
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
+    const [userRole, setUserRole] = useState('');
 
     const [currentPage, setCurrentPage] = useState(1);
+
     const itemsPerPage = 10;
 
     const totalPages = Math.ceil(sortedMedicines.length / itemsPerPage);
@@ -58,6 +61,13 @@ const Shop = () => {
         setSortedMedicines(filtered);
         setCurrentPage(1);
     }, [medicines, searchTerm, sortOrder]);
+    useEffect(() => {
+        if (user?.email) {
+            axios.get(`http://localhost:5000/users/role/${user.email}`)
+                .then(res => setUserRole(res.data.userRole))
+                .catch(console.error);
+        }
+    }, [user]);
 
 
     return (
@@ -139,11 +149,16 @@ const Shop = () => {
                                 <td className='text-center'>{med.massUnit}</td>
                                 <td className="text-center">
                                     <div className="inline-flex space-x-2  justify-center">
-                                        <button
-                                            className="btn btn-sm bg-[#00afb9] text-white  whitespace-nowrap"
-                                        >
-                                            Select
-                                        </button>
+                                        <div>
+                                            {userRole === 'user' && (
+                                                <button
+                                                    onClick={() => handleSelect(med, user, navigate)}
+                                                    className='btn text-sm bg-[#00afb9] text-white '
+                                                >
+                                                    Select
+                                                </button>
+                                            )}
+                                        </div>
                                         <button
                                             className="btn btn-sm bg-blue-600 whitespace-nowrap"
                                             onClick={() => {
@@ -240,11 +255,16 @@ const Shop = () => {
 
 
                             </div>
-                            <button
-                                className="btn btn-sm bg-[#00afb9] text-white  whitespace-nowrap"
-                            >
-                                Select
-                            </button>
+                            <div>
+                                {userRole === 'user' && (
+                                    <button
+                                        onClick={() => handleSelect(detailModalMedicine, user, navigate)}
+                                        className='btn text-lg bg-[#00afb9] text-white '
+                                    >
+                                        Select
+                                    </button>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>

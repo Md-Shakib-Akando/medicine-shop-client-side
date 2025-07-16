@@ -142,11 +142,14 @@ const LatestMedicine = () => {
 
 
                                 </div>
-                                <button
-                                    className="btn btn-sm bg-[#00afb9] text-white  whitespace-nowrap"
-                                >
-                                    Select
-                                </button>
+                                {userRole === 'user' && (
+                                    <button
+                                        onClick={() => handleSelect(detailModalMedicine, user, navigate)}
+                                        className='btn text-lg bg-[#00afb9] text-white '
+                                    >
+                                        Select
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

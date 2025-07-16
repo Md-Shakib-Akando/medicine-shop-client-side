@@ -15,6 +15,15 @@ const CategoryMedicine = () => {
 
     const [medicines, setMedicines] = useState([]);
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
+    const [userRole, setUserRole] = useState('');
+
+    useEffect(() => {
+        if (user?.email) {
+            axios.get(`http://localhost:5000/users/role/${user.email}`)
+                .then(res => setUserRole(res.data.userRole))
+                .catch(console.error);
+        }
+    }, [user]);
 
     useEffect(() => {
         axios.get(`http://localhost:5000/medicines/category/${name}`)
@@ -66,14 +75,17 @@ const CategoryMedicine = () => {
                                 <td className='text-center'>{med.discount || 0}%</td>
                                 <td className='text-center'>{med.massUnit || 'N/A'}</td>
                                 <td className="text-center">
-                                    <div className="inline-flex space-x-2 justify-center">
+                                    <div className="inline-flex space-x-2 justify-center items-center">
+                                        {userRole === 'user' && (
+                                            <button
+                                                onClick={() => handleSelect(med, user, navigate)}
+                                                className='btn  bg-[#00afb9] text-white '
+                                            >
+                                                Select
+                                            </button>
+                                        )}
                                         <button
-                                            onClick={() => handleSelect(med, user, navigate)}
-                                            className="btn btn-sm bg-[#00afb9] text-white whitespace-nowrap">
-                                            Select
-                                        </button>
-                                        <button
-                                            className="btn btn-sm bg-blue-600 whitespace-nowrap"
+                                            className="btn btn-sm bg-blue-600 whitespace-nowrap px-4 py-[19px]"
                                             onClick={() => {
                                                 if (!user) {
                                                     navigate('/login');
@@ -84,7 +96,7 @@ const CategoryMedicine = () => {
                                             }}
                                             title="View Details"
                                         >
-                                            <RxEyeOpen size={20} className="text-white" />
+                                            <RxEyeOpen size={24} className="text-white " />
                                         </button>
                                     </div>
                                 </td>
@@ -143,12 +155,14 @@ const CategoryMedicine = () => {
 
 
                                 </div>
-                                <button
-                                    onClick={() => handleSelect(detailModalMedicine, user, navigate)}
-                                    className="btn btn-sm bg-[#00afb9] text-white  whitespace-nowrap"
-                                >
-                                    Select
-                                </button>
+                                {userRole === 'user' && (
+                                    <button
+                                        onClick={() => handleSelect(detailModalMedicine, user, navigate)}
+                                        className='btn text-lg bg-[#00afb9] text-white '
+                                    >
+                                        Select
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>

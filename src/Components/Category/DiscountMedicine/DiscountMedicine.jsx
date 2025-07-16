@@ -18,6 +18,15 @@ const DiscountMedicine = () => {
     const [discountMedicines, setDiscountMedicines] = useState([]);
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
     const navigate = useNavigate();
+    const [userRole, setUserRole] = useState('');
+
+    useEffect(() => {
+        if (user?.email) {
+            axios.get(`http://localhost:5000/users/role/${user.email}`)
+                .then(res => setUserRole(res.data.userRole))
+                .catch(console.error);
+        }
+    }, [user]);
 
     useEffect(() => {
         axios.get('http://localhost:5000/medicines')
@@ -76,9 +85,14 @@ const DiscountMedicine = () => {
                                     <p className='font-medium text-[15px]'>Category: <span className='font-normal'>{med.category}</span></p>
 
                                     <div className="card-actions justify-end mt-4">
-                                        <button
-                                            onClick={() => handleSelect(med, user, navigate)}
-                                            className='btn text-md bg-[#00afb9] text-white '>Select</button>
+                                        {userRole === 'user' && (
+                                            <button
+                                                onClick={() => handleSelect(med, user, navigate)}
+                                                className='btn text-lg bg-[#00afb9] text-white '
+                                            >
+                                                Select
+                                            </button>
+                                        )}
                                         <button
                                             onClick={() => {
                                                 if (!user) {
@@ -140,12 +154,14 @@ const DiscountMedicine = () => {
 
 
                                 </div>
-                                <button
-                                    onClick={() => handleSelect(detailModalMedicine, user, navigate)}
-                                    className="btn btn-sm bg-[#00afb9] text-white  whitespace-nowrap"
-                                >
-                                    Select
-                                </button>
+                                {userRole === 'user' && (
+                                    <button
+                                        onClick={() => handleSelect(detailModalMedicine, user, navigate)}
+                                        className='btn text-lg bg-[#00afb9] text-white '
+                                    >
+                                        Select
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
