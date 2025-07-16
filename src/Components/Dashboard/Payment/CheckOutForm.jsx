@@ -70,12 +70,14 @@ const CheckOutForm = ({ totalPrice, cart }) => {
             console.log("Cart data before sending to server:", cart)
             const payment = {
                 email: user?.email,
-                price: totalPrice,
+                totalprice: totalPrice,
+                price: cart.map(item => item.price),
                 transactionId: paymentIntent.id,
                 date: new Date(),
                 cartIds: cart.map(item => item._id),
                 name: cart.map(item => item.itemName),
                 image: cart.map(item => item.image),
+                quantity: cart.map(item => item.quantity),
                 sellerEmail: cart.map(item => item.sellerEmail),
                 menuItemIds: cart.map(item => item.cartId),
                 status: 'Pending',
