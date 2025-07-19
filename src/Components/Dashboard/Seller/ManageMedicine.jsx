@@ -5,6 +5,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import UseAuth from '../../../UseAuth';
 import Swal from 'sweetalert2';
 import { RxCross2 } from 'react-icons/rx';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const ManageMedicine = () => {
     const { user } = UseAuth();
@@ -21,6 +22,7 @@ const ManageMedicine = () => {
     const [sortOrder, setSortOrder] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [sortedMedicines, setSortedMedicines] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
     const itemsPerPage = 10;
 
@@ -36,7 +38,7 @@ const ManageMedicine = () => {
     const {
         register,
         handleSubmit,
-
+        reset
     } = useForm();
 
     const handleUploadPhoto = async (e) => {
@@ -48,6 +50,7 @@ const ManageMedicine = () => {
 
         try {
             const res = await axios.post(imageUrl, formData);
+            console.log('Image uploaded:', res.data.data.url);
             setMedicinePhoto(res.data.data.url);
         } catch (err) {
             console.error("Image upload failed:", err);
@@ -55,6 +58,7 @@ const ManageMedicine = () => {
             setLoading(false);
         }
     };
+
 
     const addMedicine = async (data) => {
         try {
@@ -73,12 +77,13 @@ const ManageMedicine = () => {
                 userEmail: user.email
             };
 
-            const res = await axios.post('http://localhost:5000/medicines', medicineData);
+            const res = await axiosSecure.post('/medicines', medicineData);
             if (res.data.insertedId) {
                 toast.success('Medicine Added Successful');
 
                 setMedicines(prev => [...prev, medicineData]);
                 setShowModal(false);
+                reset();
             }
         } catch (err) {
             console.error(err);
@@ -98,7 +103,7 @@ const ManageMedicine = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/medicines/${id}`)
+                axiosSecure.delete(`/medicines/${id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
 
@@ -142,7 +147,7 @@ const ManageMedicine = () => {
             image: imageToUse
         };
 
-        axios.put(`http://localhost:5000/medicines/${updateMedicine._id}`, updatedData)
+        axiosSecure.put(`/medicines/${updateMedicine._id}`, updatedData)
             .then((res) => {
                 if (res.data.modifiedCount > 0) {
                     toast.success('Medicine updated successfully');
@@ -182,18 +187,13 @@ const ManageMedicine = () => {
         }
     };
 
-
     useEffect(() => {
-        if (user.email) {
-            axios.get(`http://localhost:5000/medicines?email=${user.email}`)
-                .then(res => {
-                    setMedicines(res.data)
-                    setSortedMedicines(res.data);
-                }).catch(error => {
-                    console.log(error);
-                })
-        }
-    }, [user.email])
+        if (!user?.email) return;
+
+        axiosSecure.get(`/medicines/seller/${user.email}`)
+            .then(res => setMedicines(res.data))
+            .catch(err => console.error(err));
+    }, [user?.email, axiosSecure]);
 
     useEffect(() => {
         let filtered = medicines;
@@ -219,6 +219,11 @@ const ManageMedicine = () => {
         setSortedMedicines(filtered);
         setCurrentPage(1);
     }, [medicines, searchTerm, sortOrder]);
+    useEffect(() => {
+        if (showUpdateModal && updateMedicine) {
+            reset(updateMedicine);
+        }
+    }, [showUpdateModal, updateMedicine, reset]);
 
     return (
         <div className=" mx-auto px-6">
@@ -293,9 +298,9 @@ const ManageMedicine = () => {
                             </tr>
 
                         ) : (
-                            paginatedMedicines.map(med => (
+                            paginatedMedicines.map((med, index) => (
                                 <tr
-                                    key={med._id}
+                                    key={med._id || index}
                                     className="hover:bg-blue-100 transition-colors duration-200"
                                 >
                                     <td>
@@ -531,7 +536,7 @@ const ManageMedicine = () => {
                                     <label className="block mb-1 font-medium">Item Name *</label>
                                     <input
                                         type="text"
-                                        defaultValue={updateMedicine.itemName}
+
                                         placeholder="Item name"
                                         {...register('itemName', { required: true })}
                                         className="w-full border px-3 py-2 rounded"
@@ -542,7 +547,7 @@ const ManageMedicine = () => {
                                     <label className="block mb-1 font-medium">Generic Name</label>
                                     <input
                                         type="text"
-                                        defaultValue={updateMedicine.genericName}
+
                                         placeholder="Generic name"
                                         {...register('genericName', { required: true })}
                                         className="w-full border px-3 py-2 rounded"
@@ -554,7 +559,7 @@ const ManageMedicine = () => {
                                     <textarea
                                         placeholder="Short description"
                                         rows={3}
-                                        defaultValue={updateMedicine.description}
+
                                         {...register('description', { required: true })}
                                         className="w-full border px-3 py-2 rounded"
                                     ></textarea>
@@ -574,7 +579,7 @@ const ManageMedicine = () => {
 
                                 <div>
                                     <label className="block mb-1 font-medium">Medicine Category *</label>
-                                    <select defaultValue={updateMedicine.category} {...register('category', { required: true })} className="w-full border px-3 py-2 rounded">
+                                    <select  {...register('category', { required: true })} className="w-full border px-3 py-2 rounded">
                                         <option value="">Select Category</option>
                                         <option value="Capsule">Capsule</option>
                                         <option value="Tablet">Tablet</option>
@@ -585,7 +590,7 @@ const ManageMedicine = () => {
 
                                 <div>
                                     <label className="block mb-1 font-medium">Medicine Company *</label>
-                                    <select defaultValue={updateMedicine.company} {...register('company', { required: true })} className="w-full border px-3 py-2 rounded">
+                                    <select {...register('company', { required: true })} className="w-full border px-3 py-2 rounded">
                                         <option value="">Select Company</option>
                                         <option value="ACI Pharmaceuticals Limited.">ACI Pharmaceuticals Limited.</option>
                                         <option value="ACME Laboratories Ltd.">ACME Laboratories Ltd.</option>
@@ -600,7 +605,7 @@ const ManageMedicine = () => {
                                     <label className="block mb-1 font-medium">Item Mass Unit *</label>
                                     <input
                                         type="text"
-                                        defaultValue={updateMedicine.massUnit}
+
                                         {...register('massUnit', { required: true })}
                                         placeholder='eg.. 500mg or 200ml'
                                         className="w-full border rounded px-3 py-2"
@@ -611,7 +616,7 @@ const ManageMedicine = () => {
                                     <label className="block mb-1 font-medium">Per Unit Price *</label>
                                     <input
                                         type="number"
-                                        defaultValue={updateMedicine.price}
+
                                         {...register('price', { required: true })}
                                         min="0"
                                         step="0.01"
@@ -624,7 +629,7 @@ const ManageMedicine = () => {
                                     <label className="block mb-1 font-medium">Discount Percentage</label>
                                     <input
                                         type="number"
-                                        defaultValue={updateMedicine.discount}
+
                                         {...register('discount')}
                                         min="0"
                                         max="100"

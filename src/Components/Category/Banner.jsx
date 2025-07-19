@@ -3,17 +3,24 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, Autoplay } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import axios from 'axios';
+
 import { Link } from 'react-router';
+import UseAuth from '../../UseAuth';
+import useAxiosSecure from '../../Hooks/UseAxiosSecure';
 
 const Banner = () => {
+
     const [ads, setAds] = useState([]);
+    const axiosSecure = useAxiosSecure();
+
+    const approvedAds = ads.filter(ad => ad.status === 'approved');
 
     useEffect(() => {
-        axios.get('http://localhost:5000/advertisements/approved')
+        axiosSecure.get('/advertisements',
+        )
             .then(res => setAds(res.data))
             .catch(err => console.error(err));
-    }, []);
+    }, [axiosSecure]);
 
     return (
         <div className=" mx-auto rounded-lg overflow-hidden shadow-lg h-[70vh]">
@@ -25,7 +32,7 @@ const Banner = () => {
                 slidesPerView={1}
                 className="h-full"
             >
-                {ads.map(ad => (
+                {approvedAds.map(ad => (
                     <SwiperSlide key={ad._id} className="relative h-[70vh] w-full">
 
                         <div className="relative h-full w-full">

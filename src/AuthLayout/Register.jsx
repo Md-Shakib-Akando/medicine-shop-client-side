@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { auth } from '../firebase.config';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../Hooks/UseAxiosSecure';
 
 const Register = () => {
 
@@ -16,7 +17,7 @@ const Register = () => {
 
     const [profilePic, SetProfilePic] = useState('')
     const [loading, setLoading] = useState(false);
-
+    const axiosSecure = useAxiosSecure();
 
     const {
         register,
@@ -72,7 +73,7 @@ const Register = () => {
                             userRole: data.role
                         };
 
-                        axios.post('http://localhost:5000/users', userBody)
+                        axiosSecure.post('/users', userBody)
                             .then(res => {
 
                                 if (res.data.insertedId) {
@@ -110,7 +111,7 @@ const Register = () => {
                     userRole: "user",
                 };
 
-                axios.post('http://localhost:5000/users', userBody)
+                axiosSecure.post('/users', userBody)
                     .then(res => {
 
                         if (res.data.insertedId) {

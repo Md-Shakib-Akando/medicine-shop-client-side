@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
+import UseAuth from '../../../UseAuth';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const PaymentManage = () => {
     const [payments, setPayments] = useState([]);
     const [loading, setLoading] = useState(false);
+    const { user } = UseAuth();
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         setLoading(true);
-        axios.get('http://localhost:5000/payments')
+        axiosSecure.get('/payments')
             .then(res => {
                 setPayments(res.data);
             })
@@ -17,10 +21,10 @@ const PaymentManage = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, []);
+    }, [user, axiosSecure]);
 
     const handleApprove = (id) => {
-        axios.patch(`http://localhost:5000/payments/${id}`, { status: 'Approved' })
+        axiosSecure.patch(`/payments/${id}`, { status: 'Approved' })
             .then(() => {
                 setPayments(prev =>
                     prev.map(payment => payment._id === id ? { ...payment, status: 'Approved' } : payment)
@@ -58,7 +62,7 @@ const PaymentManage = () => {
                                     <td className="p-4 border border-gray-300">{payment.email}</td>
                                     <td className="p-4 border border-gray-300">{payment.transactionId}</td>
                                     <td className="p-4 border border-gray-300 text-center">{payment.name?.length || 0}</td>
-                                    <td className="p-4 border border-gray-300">${payment.price}</td>
+                                    <td className="p-4 border border-gray-300">${payment.totalprice}</td>
                                     <td className="p-4 border border-gray-300">
                                         {new Date(payment.date).toLocaleDateString()}
                                     </td>

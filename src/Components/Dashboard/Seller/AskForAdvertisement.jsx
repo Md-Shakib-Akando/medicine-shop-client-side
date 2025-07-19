@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import UseAuth from '../../../UseAuth';
 import Swal from 'sweetalert2';
 import { toast, ToastContainer } from 'react-toastify';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 
 const AskForAdvertisement = () => {
@@ -12,6 +13,7 @@ const AskForAdvertisement = () => {
     const [imageFile, setImageFile] = useState(null);
     const { user } = UseAuth();
     const [ads, setAds] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,7 +31,7 @@ const AskForAdvertisement = () => {
             const imgbbKey = import.meta.env.VITE_Image_Upload_Key;
             const imgbbRes = await axios.post(
                 `https://api.imgbb.com/1/upload?key=${imgbbKey}`,
-                formData
+                formData,
             );
 
             const imageUrl = imgbbRes.data.data.url;
@@ -44,7 +46,7 @@ const AskForAdvertisement = () => {
                 createdAt: new Date()
             };
 
-            const res = await axios.post('http://localhost:5000/advertisements', adData);
+            const res = await axiosSecure.post('/advertisements', adData);
 
 
             setAds(prev => [...prev, { ...adData, _id: res.data.insertedId }]);
@@ -69,7 +71,7 @@ const AskForAdvertisement = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/advertisements/${id}`)
+                axiosSecure.delete(`/advertisements/${id}`)
 
                     .then(res => {
                         if (res.data.deletedCount > 0) {
@@ -102,11 +104,11 @@ const AskForAdvertisement = () => {
     useEffect(() => {
         if (!user?.email) return;
 
-        axios.get(`http://localhost:5000/advertisements/seller/${user.email}`)
+        axiosSecure.get(`/advertisements/seller/${user.email}`)
             .then(res => setAds(res.data))
             .catch(console.error)
 
-    }, [user?.email]);
+    }, [user?.email, user, axiosSecure]);
 
     return (
         <div>

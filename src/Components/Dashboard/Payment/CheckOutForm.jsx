@@ -1,8 +1,9 @@
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import axios from 'axios';
+
 import { useState, useEffect } from 'react';
 import UseAuth from '../../../UseAuth';
 import { useNavigate } from 'react-router';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const CheckOutForm = ({ totalPrice, cart }) => {
     const [error, setError] = useState('');
@@ -13,16 +14,17 @@ const CheckOutForm = ({ totalPrice, cart }) => {
     const elements = useElements();
     const { user } = UseAuth();
     const navigate = useNavigate();
+    const axiosSecure = useAxiosSecure();
 
 
 
     useEffect(() => {
         if (totalPrice > 0) {
-            axios.post('http://localhost:5000/create-payment-intent', { subTotal: totalPrice })
+            axiosSecure.post('/create-payment-intent', { subTotal: totalPrice })
                 .then(res => setClientSecret(res.data.clientSecret))
                 .catch(err => console.error('Failed to get client secret:', err));
         }
-    }, [totalPrice]);
+    }, [totalPrice, user, axiosSecure]);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -84,7 +86,7 @@ const CheckOutForm = ({ totalPrice, cart }) => {
             };
 
             try {
-                const res = await axios.post('http://localhost:5000/payments', payment);
+                const res = await axiosSecure.post('/payments', payment);
                 if (res.data?.paymentResult?.insertedId) {
                     navigate(`/invoice/${paymentIntent.id}`);
                 } else {

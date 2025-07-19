@@ -5,10 +5,12 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 
 import { useForm } from 'react-hook-form';
+import useAxiosSecure from '../../Hooks/UseAxiosSecure';
 
 const UpdateProfile = () => {
     const { user, setUser, updateUserProfile } = UseAuth();
     const { role } = useRole();
+    const axiosSecure = useAxiosSecure();
 
     const imgUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_Image_Upload_Key}`
 
@@ -34,7 +36,7 @@ const UpdateProfile = () => {
                 displayName: data.name,
                 photoURL: photoURL
             });
-            await axios.patch(`http://localhost:5000/users/${user.email}`, {
+            await axiosSecure.patch(`/users/${user.email}`, {
                 userName: data.name,
                 userphoto: photoURL
             });

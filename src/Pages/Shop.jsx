@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { RxCross2, RxEyeOpen } from "react-icons/rx";
 import { useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
 import { handleSelect } from '../Hooks/Select';
+import useAxiosSecure from '../Hooks/UseAxiosSecure';
+import { ToastContainer } from 'react-toastify';
 
 const Shop = () => {
     const { user } = UseAuth();
@@ -12,6 +13,7 @@ const Shop = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('');
     const navigate = useNavigate();
+    const axiosSecure = useAxiosSecure();
 
 
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
@@ -29,13 +31,13 @@ const Shop = () => {
 
 
     useEffect(() => {
-        axios.get('http://localhost:5000/medicines')
+        axiosSecure.get('/medicines',)
             .then(res => {
                 setMedicines(res.data);
                 setSortedMedicines(res.data);
             })
             .catch(err => console.error(err));
-    }, []);
+    }, [axiosSecure]);
 
     useEffect(() => {
         let filtered = medicines;
@@ -63,11 +65,11 @@ const Shop = () => {
     }, [medicines, searchTerm, sortOrder]);
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/users/role/${user.email}`)
+            axiosSecure.get(`/users/role/${user.email}`)
                 .then(res => setUserRole(res.data.userRole))
                 .catch(console.error);
         }
-    }, [user]);
+    }, [user, axiosSecure]);
 
 
     return (
@@ -152,7 +154,7 @@ const Shop = () => {
                                         <div>
                                             {userRole === 'user' && (
                                                 <button
-                                                    onClick={() => handleSelect(med, user, navigate)}
+                                                    onClick={() => handleSelect(med, user, navigate, axiosSecure)}
                                                     className='btn text-sm bg-[#00afb9] text-white '
                                                 >
                                                     Select
@@ -258,7 +260,7 @@ const Shop = () => {
                             <div>
                                 {userRole === 'user' && (
                                     <button
-                                        onClick={() => handleSelect(detailModalMedicine, user, navigate)}
+                                        onClick={() => handleSelect(detailModalMedicine, user, navigate, axiosSecure)}
                                         className='btn text-lg bg-[#00afb9] text-white '
                                     >
                                         Select
@@ -270,7 +272,7 @@ const Shop = () => {
                 </div>
             )}
 
-
+            <ToastContainer position="top-right" reverseOrder={false} />
         </div>
     );
 };

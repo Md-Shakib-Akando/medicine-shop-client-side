@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import { FaDollarSign, FaClock, FaMoneyBillWave } from 'react-icons/fa';
 import {
     BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
 } from 'recharts';
 import UseAuth from '../../../UseAuth';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const SellerHome = () => {
     const { user } = UseAuth();
+    const axiosSecure = useAxiosSecure();
 
     const [salesData, setSalesData] = useState({
         totalRevenue: 0,
@@ -24,29 +26,31 @@ const SellerHome = () => {
 
     const fetchSellerData = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/payments');
+            const res = await axiosSecure.get('/payments');
             const payments = res.data;
 
-            const sellerPayments = payments.filter(p =>
-                Array.isArray(p.sellerEmail) &&
-                p.sellerEmail.some(email => email.toLowerCase() === user.email.toLowerCase())
-            );
+            const sellerPayments = payments.filter(p => {
+                if (Array.isArray(p.sellerEmail)) {
+                    return p.sellerEmail.includes(user.email);
+                } else {
+                    return p.sellerEmail === user.email;
+                }
+            });
 
-            const totalRevenue = sellerPayments.reduce((sum, p) => sum + p.price, 0);
-
+            const totalRevenue = sellerPayments.reduce((sum, p) => sum + (p.totalprice || 0), 0);
             const paidTotal = sellerPayments
-                .filter(p => typeof p.status === 'string' && p.status.toLowerCase() === 'approved')
-                .reduce((sum, p) => sum + p.price, 0);
-
+                .filter(p => p.status === 'Approved')
+                .reduce((sum, p) => sum + (p.totalprice || 0), 0);
             const pendingTotal = sellerPayments
-                .filter(p => typeof p.status === 'string' && p.status.toLowerCase() === 'pending')
-                .reduce((sum, p) => sum + p.price, 0);
+                .filter(p => p.status === 'Pending')
+                .reduce((sum, p) => sum + (p.totalprice || 0), 0);
 
             setSalesData({ totalRevenue, paidTotal, pendingTotal });
         } catch (err) {
             console.error('Error fetching seller data:', err);
         }
     };
+
 
 
     const chartData = [

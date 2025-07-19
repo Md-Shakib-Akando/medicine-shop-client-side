@@ -1,9 +1,12 @@
-import axios from "axios";
+
 import { toast } from "react-toastify";
 
 
 
-export const handleSelect = async (medicine, user, navigate) => {
+
+
+export const handleSelect = async (medicine, user, navigate, axiosSecure) => {
+
     if (!user) {
         navigate('/login');
         return;
@@ -23,8 +26,9 @@ export const handleSelect = async (medicine, user, navigate) => {
         selectedAt: new Date().toISOString()
     };
 
+
     try {
-        const res = await axios.post('http://localhost:5000/cart', selected);
+        const res = await axiosSecure.post('/cart', selected);
         if (res.data.insertedId) {
             toast.success('Added to cart');
             window.dispatchEvent(new Event('cart-updated'));

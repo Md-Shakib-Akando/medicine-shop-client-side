@@ -3,23 +3,24 @@ import { useParams } from "react-router";
 import { jsPDF } from "jspdf";
 import invoiceLogo from '/logo.png';
 import UseAuth from "../../../UseAuth";
-import axios from "axios";
+
+import useAxiosSecure from "../../../Hooks/UseAxiosSecure";
 
 const Invoice = () => {
     const { user } = UseAuth();
     const { transactionId } = useParams();
     const [invoiceData, setInvoiceData] = useState(null);
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
-        axios
-            .get(`http://localhost:5000/invoice/payment/${transactionId}`)
+        axiosSecure.get(`/invoice/payment/${transactionId}`)
             .then((res) => {
                 setInvoiceData(res.data);
             })
             .catch((err) => {
                 console.error("Error loading invoice:", err);
             });
-    }, [transactionId]);
+    }, [transactionId, user, axiosSecure]);
 
     if (!invoiceData) {
         return (
@@ -212,7 +213,7 @@ const Invoice = () => {
                     className="uppercase bg-[#008c94] hover:bg-[#00727a] py-2 px-5 text-white font-bold rounded-lg transition"
                     onClick={handleDownloadPDF}
                 >
-                    Pdf Download
+                    Print
                 </button>
             </div>
         </div>

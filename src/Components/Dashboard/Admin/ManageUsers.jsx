@@ -1,12 +1,16 @@
-import axios from 'axios';
+
 import React, { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
+import UseAuth from '../../../UseAuth';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const ManageUsers = () => {
+    const { user } = UseAuth();
     const [users, setUsers] = useState([]);
+    const axiosSecure = useAxiosSecure();
     const currentUserRole = 'admin';
     const handleRoleChange = (id, newRole) => {
-        axios.put(`http://localhost:5000/users/${id}/role`, { role: newRole })
+        axiosSecure.put(`/users/${id}/role`, { role: newRole })
             .then(res => {
 
                 setUsers(prevUsers => prevUsers.map(user =>
@@ -17,10 +21,10 @@ const ManageUsers = () => {
             .catch(err => console.error(err));
     };
     useEffect(() => {
-        axios.get('http://localhost:5000/users')
+        axiosSecure.get('/users')
             .then(res => setUsers(res.data))
             .catch(err => console.error(err));
-    }, []);
+    }, [user, axiosSecure]);
     return (
         <div className="p-4">
             <h2 className="text-2xl font-bold mb-4">Manage Users</h2>

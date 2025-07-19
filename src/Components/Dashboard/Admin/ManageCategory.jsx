@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import UseAuth from '../../../UseAuth';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const ManageCategory = () => {
     const [showModal, setShowModal] = useState(false);
     const [uploading, setUploading] = useState(false);
     const [categories, setCategories] = useState([]);
+    const { user } = UseAuth();
+    const axiosSecure = useAxiosSecure();
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
 
@@ -30,7 +34,7 @@ const ManageCategory = () => {
                 image: imageUrl,
             };
 
-            const categoryRes = await axios.post('http://localhost:5000/categories', newCategory);
+            const categoryRes = await axiosSecure.post('/categories', newCategory);
 
             if (categoryRes.data.insertedId) {
 
@@ -72,7 +76,7 @@ const ManageCategory = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then(result => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/categories/${id}`)
+                axiosSecure.delete(`/categories/${id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
                             setCategories(prev => prev.filter(cat => cat._id !== id));
@@ -95,10 +99,10 @@ const ManageCategory = () => {
 
 
     useEffect(() => {
-        axios.get('http://localhost:5000/categories')
+        axiosSecure.get('/categories')
             .then(res => setCategories(res.data))
             .catch(err => console.error(err));
-    }, []);
+    }, [user, axiosSecure]);
 
     return (
         <div>

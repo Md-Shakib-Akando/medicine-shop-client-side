@@ -1,34 +1,44 @@
-import axios from 'axios';
+
 import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
+import UseAuth from '../../../UseAuth';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const BannerAdvertise = () => {
+    const { user } = UseAuth();
     const [ads, setAds] = useState([]);
 
+    const axiosSecure = useAxiosSecure();
+
     useEffect(() => {
-        axios.get('http://localhost:5000/advertisements')
+        axiosSecure.get('/advertisements',)
             .then(res => setAds(res.data))
             .catch(err => console.error(err));
-    }, []);
+    }, [user, axiosSecure]);
 
     const handleToggle = async (id, currentStatus) => {
         try {
-            await axios.patch(`http://localhost:5000/advertisements/${id}`, {
-                status: !currentStatus
+            const newStatus = currentStatus === 'approved' ? 'pending' : 'approved';
+
+            await axiosSecure.patch(`/advertisements/${id}`, {
+                status: newStatus
             });
 
-            toast.success(` ${!currentStatus ? 'Approved' : 'Removed from'} Slider`);
+            toast.success(`${newStatus === 'approved' ? 'Approved to Slider' : 'Removed from Slider'}`);
 
             setAds(prev =>
                 prev.map(ad =>
-                    ad._id === id ? { ...ad, status: !currentStatus } : ad
+                    ad._id === id ? { ...ad, status: newStatus } : ad
                 )
+
             );
+
         } catch (error) {
-            console.log(error.message)
+            console.log(error.message);
             toast.error('Failed to update advertisement status');
         }
     };
+
 
     return (
         <div className="p-4">
@@ -57,11 +67,11 @@ const BannerAdvertise = () => {
                                 <td className="p-3 text-center">
                                     <button
                                         onClick={() => handleToggle(ad._id, ad.status)}
-                                        className={`px-3 py-1 rounded text-white ${ad.status ? 'bg-red-500' : 'bg-green-500'
-                                            }`}
+                                        className={`px-3 py-1 rounded text-white ${ad.status === 'approved' ? 'bg-red-500' : 'bg-green-500'}`}
                                     >
-                                        {ad.status ? 'Remove from Slide' : 'Add to Slide'}
+                                        {ad.status === 'approved' ? 'Remove from Slide' : 'Add to Slide'}
                                     </button>
+
                                 </td>
                             </tr>
                         ))}

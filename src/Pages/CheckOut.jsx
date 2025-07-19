@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import UseAuth from '../UseAuth';
-import axios from 'axios';
+
 import { Elements } from '@stripe/react-stripe-js';
 import { loadStripe } from '@stripe/stripe-js';
 import CheckOutForm from '../Components/Dashboard/Payment/CheckOutForm';
+import useAxiosSecure from '../Hooks/UseAxiosSecure';
 
 const stripePromise = loadStripe(import.meta.env.VITE_payment_key);
 const CheckOut = () => {
     const { user } = UseAuth();
     const [cart, setCart] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
 
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/cart/${user.email}`)
+            axiosSecure.get(`/cart/${user.email}`)
                 .then((res) => setCart(res.data))
                 .catch((err) => console.error("Cart fetch error:", err));
         }
-    }, [user]);
+    }, [user, axiosSecure]);
 
     const totalPrice = cart.reduce((acc, item) => {
         const quantity = item.quantity || 1;

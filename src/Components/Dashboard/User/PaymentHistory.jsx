@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import UseAuth from '../../../UseAuth';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 
 const PaymentHistory = () => {
     const { user } = UseAuth();
     const [payments, setPayments] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/payments/history/${user.email}`)
+            axiosSecure.get(`/payments/history/${user.email}`)
                 .then(res => setPayments(res.data))
                 .catch(err => console.error('Error fetching payments:', err));
         }
-    }, [user]);
+    }, [user, axiosSecure]);
 
     return (
         <div className="max-w-11/12 mx-auto p-6">
@@ -44,14 +45,14 @@ const PaymentHistory = () => {
                                     <td className="p-5">
                                         {new Date(payment.date).toLocaleDateString()}
                                     </td>
-                                    <td className="p-5">${payment.price}</td>
+                                    <td className="p-5">${payment.totalprice}</td>
                                     <td className="p-5">
                                         <span
                                             className={`px-3 py-1 rounded text-white font-semibold text-sm ${payment.status.toLowerCase() === 'approved'
-                                                    ? 'bg-green-500'
-                                                    : payment.status.toLowerCase() === 'pending'
-                                                        ? 'bg-yellow-500'
-                                                        : 'bg-gray-500'
+                                                ? 'bg-green-500'
+                                                : payment.status.toLowerCase() === 'pending'
+                                                    ? 'bg-yellow-500'
+                                                    : 'bg-gray-500'
                                                 }`}
                                         >
                                             {payment.status.toLowerCase() === 'approved' ? 'Paid' : payment.status}

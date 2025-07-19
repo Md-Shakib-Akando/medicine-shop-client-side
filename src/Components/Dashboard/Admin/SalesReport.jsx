@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import { CSVLink } from 'react-csv';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import UseAuth from '../../../UseAuth';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const SalesReport = () => {
     const [payments, setPayments] = useState([]);
@@ -14,6 +16,8 @@ const SalesReport = () => {
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
 
+    const axiosSecure = useAxiosSecure();
+
     useEffect(() => {
         fetchPayments();
     }, []);
@@ -21,7 +25,7 @@ const SalesReport = () => {
     const fetchPayments = async () => {
         setLoading(true);
         try {
-            const res = await axios.get('http://localhost:5000/payments');
+            const res = await axiosSecure.get('/payments');
             setPayments(res.data);
             setFilteredPayments(res.data);
         } catch (error) {
@@ -55,7 +59,7 @@ const SalesReport = () => {
         { label: 'Medicine Names', key: 'name' },
         { label: 'Seller Emails', key: 'sellerEmail' },
         { label: 'Buyer Email', key: 'email' },
-        { label: 'Total Price', key: 'price' },
+        { label: 'Total Price', key: 'totalprice' },
         { label: 'Date', key: 'date' },
         { label: 'Status', key: 'status' },
     ];
@@ -67,7 +71,7 @@ const SalesReport = () => {
                 'Medicine Names': p.name?.join(', '),
                 'Seller Emails': [...new Set(p.sellerEmail)].join(', '),
                 'Buyer Email': p.email,
-                'Total Price': p.price,
+                'Total Price': p.totalprice,
                 'Date': new Date(p.date).toLocaleDateString(),
                 'Status': p.status,
             }))
@@ -96,7 +100,7 @@ const SalesReport = () => {
             p.name?.join(', '),
             [...new Set(p.sellerEmail)].join(', '),
             p.email,
-            `$${p.price.toFixed(2)}`,
+            `$${Number(p.totalprice || 0).toFixed(2)}`,
             new Date(p.date).toLocaleDateString(),
             p.status,
         ]);
@@ -198,7 +202,7 @@ const SalesReport = () => {
                                 </td>
                                 <td className="p-4 border border-gray-300">{[...new Set(payment.sellerEmail)].join(', ')}</td>
                                 <td className="p-4 border border-gray-300">{payment.email}</td>
-                                <td className="p-4 border border-gray-300">${payment.price}</td>
+                                <td className="p-4 border border-gray-300">${payment.totalprice}</td>
                                 <td className="p-4 border border-gray-300">{new Date(payment.date).toLocaleDateString()}</td>
                                 <td className={`p-4 border border-gray-300 font-semibold text-white text-center ${payment.status.toLowerCase() === 'approved'
                                     ? 'bg-green-600'

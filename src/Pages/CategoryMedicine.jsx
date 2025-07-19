@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { RxCross2, RxEyeOpen } from 'react-icons/rx';
@@ -7,6 +7,7 @@ import { RxCross2, RxEyeOpen } from 'react-icons/rx';
 import UseAuth from '../UseAuth';
 import { handleSelect } from '../Hooks/Select';
 import { ToastContainer } from 'react-toastify';
+import useAxiosSecure from '../Hooks/UseAxiosSecure';
 
 const CategoryMedicine = () => {
     const { name } = useParams();
@@ -16,22 +17,23 @@ const CategoryMedicine = () => {
     const [medicines, setMedicines] = useState([]);
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
     const [userRole, setUserRole] = useState('');
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/users/role/${user.email}`)
+            axiosSecure.get(`/users/role/${user.email}`)
                 .then(res => setUserRole(res.data.userRole))
                 .catch(console.error);
         }
-    }, [user]);
+    }, [user, axiosSecure]);
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/medicines/category/${name}`)
+        axiosSecure.get(`/medicines/category/${name}`)
             .then(res => {
                 setMedicines(res.data);
             })
             .catch(err => console.error(err));
-    }, [name]);
+    }, [name, axiosSecure]);
 
     return (
         <div className="max-w-11/12 min-h-[calc(100vh-367px)] mx-auto p-4">
@@ -78,7 +80,7 @@ const CategoryMedicine = () => {
                                     <div className="inline-flex space-x-2 justify-center items-center">
                                         {userRole === 'user' && (
                                             <button
-                                                onClick={() => handleSelect(med, user, navigate)}
+                                                onClick={() => handleSelect(med, user, navigate, axiosSecure)}
                                                 className='btn  bg-[#00afb9] text-white '
                                             >
                                                 Select
@@ -157,7 +159,7 @@ const CategoryMedicine = () => {
                                 </div>
                                 {userRole === 'user' && (
                                     <button
-                                        onClick={() => handleSelect(detailModalMedicine, user, navigate)}
+                                        onClick={() => handleSelect(detailModalMedicine, user, navigate, axiosSecure)}
                                         className='btn text-lg bg-[#00afb9] text-white '
                                     >
                                         Select

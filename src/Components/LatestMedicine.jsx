@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import React, { useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
 import UseAuth from '../UseAuth';
@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router';
 
 import { ToastContainer } from 'react-toastify';
 import { handleSelect } from '../Hooks/Select';
+import useAxiosSecure from '../Hooks/UseAxiosSecure';
 
 const LatestMedicine = () => {
     const { user } = UseAuth();
@@ -13,22 +14,23 @@ const LatestMedicine = () => {
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
     const navigate = useNavigate();
     const [userRole, setUserRole] = useState('');
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
-        axios.get('http://localhost:5000/medicines/latest')
+        axiosSecure.get('/medicines/latest')
             .then(res => {
                 setLatestMedicine(res.data);
             }).catch(error => {
                 console.log(error.message);
             });
-    }, []);
+    }, [axiosSecure]);
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/users/role/${user.email}`)
+            axiosSecure.get(`/users/role/${user.email}`)
                 .then(res => setUserRole(res.data.userRole))
                 .catch(console.error);
         }
-    }, [user]);
+    }, [axiosSecure, user?.email]);
 
 
 
@@ -81,7 +83,7 @@ const LatestMedicine = () => {
                             <div className="mt-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
                                 {userRole === 'user' && (
                                     <button
-                                        onClick={() => handleSelect(med, user, navigate)}
+                                        onClick={() => handleSelect(med, user, navigate, axiosSecure)}
                                         className='btn text-lg bg-[#00afb9] text-white w-full'
                                     >
                                         Select
@@ -144,7 +146,7 @@ const LatestMedicine = () => {
                                 </div>
                                 {userRole === 'user' && (
                                     <button
-                                        onClick={() => handleSelect(detailModalMedicine, user, navigate)}
+                                        onClick={() => handleSelect(detailModalMedicine, user, navigate, axiosSecure)}
                                         className='btn text-lg bg-[#00afb9] text-white '
                                     >
                                         Select

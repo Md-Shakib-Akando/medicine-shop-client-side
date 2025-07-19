@@ -53,7 +53,7 @@ const Sidebar = () => {
         <div className='fixed z-50'>
 
             <button
-                className="text-2xl p-2 fixed top-0 left-2 z-50 lg:hidden"
+                className="text-2xl p-2 fixed top-0 left-2 z-50 xl:hidden"
                 onClick={() => setIsDrawerOpen(!isDrawerOpen)}
             >
                 {isDrawerOpen ? <IoClose className='border border-[#00afb9] text-3xl rounded-full' /> : <IoMenu className=' border  border-[#00afb9] text-3xl rounded-full' />}
@@ -61,8 +61,8 @@ const Sidebar = () => {
 
 
             <div
-                className={`fixed top-0 left-0 min-h-screen h-auto z-20 bg-gray-100 w-80 transition-transform transform ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'
-                    } lg:translate-x-0 lg:static '`}
+                className={`fixed top-0 left-0 min-h-screen  h-screen overflow-y-auto z-20 bg-gray-100 w-80 transition-transform transform ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'
+                    } xl:translate-x-0 xl:static '`}
             >
 
                 <Link to={'/'}>
@@ -250,7 +250,7 @@ const Sidebar = () => {
 
 
 
-                <div className=' fixed bottom-0 left-0  w-full'>
+                <div className='   w-full'>
                     <div className="divider mb-2 xl:mb-14"></div>
 
 

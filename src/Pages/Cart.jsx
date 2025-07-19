@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import UseAuth from '../UseAuth';
-import axios from 'axios';
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { RxCross2 } from 'react-icons/rx';
+import useAxiosSecure from '../Hooks/UseAxiosSecure';
 
 const Cart = () => {
     const { user } = UseAuth();
     const [cart, setCart] = useState([]);
+    const axiosSecure = useAxiosSecure();
+
 
     const clearAllCarts = async () => {
         try {
-            await axios.delete(`http://localhost:5000/cart/clear/${user.email}`);
+            await axiosSecure.delete(`/cart/clear/${user.email}`);
             setCart([]);
             window.dispatchEvent(new Event('cart-updated'));
         } catch (error) {
@@ -21,7 +23,7 @@ const Cart = () => {
 
     const deleteItem = async (id) => {
         try {
-            await axios.delete(`http://localhost:5000/cart/${id}`);
+            await axiosSecure.delete(`/cart/${id}`);
             setCart(prev => prev.filter(item => item._id !== id));
             window.dispatchEvent(new Event('cart-updated'));
         } catch (error) {
@@ -37,7 +39,7 @@ const Cart = () => {
 
         const changedItem = updatedCart.find(item => item._id === id);
         try {
-            await axios.patch(`http://localhost:5000/cart/${id}`, {
+            await axiosSecure.patch(`/cart/${id}`, {
                 quantity: changedItem.quantity
             });
         } catch (error) {
@@ -54,7 +56,7 @@ const Cart = () => {
 
         const changedItem = updatedCart.find(item => item._id === id);
         try {
-            await axios.patch(`http://localhost:5000/cart/${id}`, {
+            await axiosSecure.patch(`/cart/${id}`, {
                 quantity: changedItem.quantity
             });
         } catch (error) {
@@ -65,7 +67,7 @@ const Cart = () => {
 
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/cart/${user.email}`)
+            axiosSecure.get(`/cart/${user.email}`)
                 .then((res) => {
                     setCart(res.data);
                 })
@@ -73,7 +75,7 @@ const Cart = () => {
                     console.error("Failed to fetch cart:", err);
                 });
         }
-    }, [user]);
+    }, [user, axiosSecure]);
 
     const totalPrice = cart.reduce((acc, item) => {
         const quantity = item.quantity || 1;

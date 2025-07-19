@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 import { FaCartPlus } from "react-icons/fa";
+import useAxiosSecure from '../Hooks/UseAxiosSecure';
 
 const Navbar = () => {
     const { user, logOut } = UseAuth();
@@ -12,6 +12,7 @@ const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [role, setRole] = useState('');
     const [cartCount, setCartCount] = useState(0);
+    const axiosSecure = useAxiosSecure();
 
 
 
@@ -22,8 +23,15 @@ const Navbar = () => {
 
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/shop'>Shop</NavLink></li>
-        <li><NavLink to='/contact'>Contact Us</NavLink></li>
-
+        <li tabIndex={0}>
+            <details className="dropdown">
+                <summary className="   ">Language</summary>
+                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-40">
+                    <li><NavLink to="/en">English</NavLink></li>
+                    <li><NavLink to="/bn">বাংলা</NavLink></li>
+                </ul>
+            </details>
+        </li>
 
 
 
@@ -65,16 +73,16 @@ const Navbar = () => {
 
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/users/role/${user.email}`)
+            axiosSecure.get(`/users/role/${user.email}`)
                 .then(res => setRole(res.data.userRole))
                 .catch(console.error);
         }
-    }, [user]);
+    }, [user, axiosSecure]);
 
     useEffect(() => {
         const fetchCartCount = () => {
             if (user?.email) {
-                axios.get(`http://localhost:5000/cart/${user.email}`)
+                axiosSecure.get(`/cart/${user.email}`)
                     .then(res => setCartCount(res.data.length))
                     .catch(console.error);
             } else {
@@ -88,7 +96,7 @@ const Navbar = () => {
 
         window.addEventListener('cart-updated', handler);
         return () => window.removeEventListener('cart-updated', handler);
-    }, [user]);
+    }, [user, axiosSecure]);
 
 
     return (

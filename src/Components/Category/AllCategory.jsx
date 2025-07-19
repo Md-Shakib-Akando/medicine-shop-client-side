@@ -1,24 +1,30 @@
-import axios from 'axios';
+
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import Swal from 'sweetalert2';
+import UseAuth from '../../UseAuth';
+import useAxiosSecure from '../../Hooks/UseAxiosSecure';
 
 const AllCategory = () => {
+
     const [categories, setCategories] = useState([]);
     const [medicines, setMedicines] = useState([]);
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
-        axios.get('http://localhost:5000/categories')
+        axiosSecure.get('/categories')
             .then(res => {
                 setCategories(res.data)
 
             })
             .catch(err => console.error(err));
 
-        axios.get('http://localhost:5000/medicines')
+        axiosSecure.get('/medicines', {
+
+        })
             .then(res => setMedicines(res.data))
             .catch(err => console.error(err));
-    }, []);
+    }, [axiosSecure]);
 
 
 

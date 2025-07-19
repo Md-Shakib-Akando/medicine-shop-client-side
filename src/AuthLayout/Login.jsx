@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FcGoogle } from 'react-icons/fc';
 import { Link, useLocation, useNavigate } from 'react-router';
 import UseAuth from '../UseAuth';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
-import axios from 'axios';
+import useAxiosSecure from '../Hooks/UseAxiosSecure';
 
 const Login = () => {
     const {
@@ -16,6 +16,8 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
+    const axiosSecure = useAxiosSecure();
+    const [error, setError] = useState('');
 
     const onSubmit = (data) => {
 
@@ -34,7 +36,7 @@ const Login = () => {
                 navigate(from);
             })
             .catch(error => {
-                console.error("Error saving user to DB:", error);
+                setError(error.message)
             });
 
 
@@ -51,7 +53,7 @@ const Login = () => {
                     userRole: "user",
                 };
 
-                axios.post('http://localhost:5000/users', userBody)
+                axiosSecure.post('/users', userBody)
                     .then(res => {
 
                         if (res.data.insertedId) {
@@ -126,7 +128,14 @@ const Login = () => {
                             />
 
                         </div>
+
                     </div>
+
+                    {error && (
+                        <p className="mt-1 text-sm text-red-600">
+                            {error}
+                        </p>
+                    )}
 
                     <div className="flex items-center justify-between">
                         <div className="flex items-center">

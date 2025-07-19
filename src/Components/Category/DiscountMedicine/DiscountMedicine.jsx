@@ -1,4 +1,4 @@
-import axios from 'axios';
+
 import React, { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router';
 import UseAuth from '../../../UseAuth';
 import { RxCross2 } from 'react-icons/rx';
 import { handleSelect } from '../../../Hooks/Select';
+import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 
 const DiscountMedicine = () => {
     const { user } = UseAuth();
@@ -19,23 +20,24 @@ const DiscountMedicine = () => {
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
     const navigate = useNavigate();
     const [userRole, setUserRole] = useState('');
+    const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         if (user?.email) {
-            axios.get(`http://localhost:5000/users/role/${user.email}`)
+            axiosSecure.get(`/users/role/${user.email}`,)
                 .then(res => setUserRole(res.data.userRole))
                 .catch(console.error);
         }
-    }, [user]);
+    }, [axiosSecure, user]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/medicines')
+        axiosSecure.get('/medicines',)
             .then(res => {
                 const discounted = res.data.filter(med => med.discount && med.discount > 0);
                 setDiscountMedicines(discounted);
             })
             .catch(err => console.error(err));
-    }, []);
+    }, [axiosSecure]);
 
     return (
         <div className='bg-base-200 my-10 p-7'>
@@ -87,7 +89,7 @@ const DiscountMedicine = () => {
                                     <div className="card-actions justify-end mt-4">
                                         {userRole === 'user' && (
                                             <button
-                                                onClick={() => handleSelect(med, user, navigate)}
+                                                onClick={() => handleSelect(med, user, navigate, axiosSecure)}
                                                 className='btn text-lg bg-[#00afb9] text-white '
                                             >
                                                 Select
@@ -156,7 +158,7 @@ const DiscountMedicine = () => {
                                 </div>
                                 {userRole === 'user' && (
                                     <button
-                                        onClick={() => handleSelect(detailModalMedicine, user, navigate)}
+                                        onClick={() => handleSelect(detailModalMedicine, user, navigate, axiosSecure)}
                                         className='btn text-lg bg-[#00afb9] text-white '
                                     >
                                         Select
