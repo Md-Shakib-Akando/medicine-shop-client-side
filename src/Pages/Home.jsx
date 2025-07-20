@@ -5,13 +5,17 @@ import LatestMedicine from '../Components/LatestMedicine';
 import Banner from '../Components/Category/Banner';
 import Faq from '../Components/Extra/Faq';
 import WhyChoose from '../Components/Extra/WhyChoose';
+import { ReTitle } from 're-title';
+
 
 
 const Home = () => {
     return (
         <>
+            <ReTitle title="Medicine Shop | Home"></ReTitle>
 
             <div className='min-h-[calc(100vh-367px)]'>
+
                 <Banner></Banner>
                 <AllCategory></AllCategory>
                 <DiscountMedicine></DiscountMedicine>

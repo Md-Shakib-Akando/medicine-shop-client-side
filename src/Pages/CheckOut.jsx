@@ -6,18 +6,27 @@ import { loadStripe } from '@stripe/stripe-js';
 import CheckOutForm from '../Components/Dashboard/Payment/CheckOutForm';
 import useAxiosSecure from '../Hooks/UseAxiosSecure';
 
+import LoadingSpinner from '../Components/LoadingSpinner';
+import { ReTitle } from 're-title';
+
 const stripePromise = loadStripe(import.meta.env.VITE_payment_key);
 const CheckOut = () => {
     const { user } = UseAuth();
     const [cart, setCart] = useState([]);
     const axiosSecure = useAxiosSecure();
-
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (user?.email) {
             axiosSecure.get(`/cart/${user.email}`)
-                .then((res) => setCart(res.data))
-                .catch((err) => console.error("Cart fetch error:", err));
+                .then((res) => {
+                    setCart(res.data)
+                    setLoading(false)
+                })
+                .catch((err) => {
+                    console.error("Cart fetch error:", err)
+                    setLoading(false)
+                });
         }
     }, [user, axiosSecure]);
 
@@ -27,8 +36,13 @@ const CheckOut = () => {
         return acc + (price * quantity);
     }, 0);
 
+    if (loading) {
+        return <LoadingSpinner></LoadingSpinner>
+    }
+
     return (
         <div className="max-w-10/12 min-h-[calc(100vh-367px)] mx-auto md:px-4 py-10">
+            <ReTitle title="Cart Page | Check out"></ReTitle>
             <div className="flex flex-col-reverse lg:flex-row gap-8">
 
 

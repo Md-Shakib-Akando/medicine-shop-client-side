@@ -6,6 +6,10 @@ import { handleSelect } from '../Hooks/Select';
 import useAxiosSecure from '../Hooks/UseAxiosSecure';
 import { ToastContainer } from 'react-toastify';
 
+import LoadingSpinner from '../Components/LoadingSpinner';
+import { ReTitle } from 're-title';
+
+
 const Shop = () => {
     const { user } = UseAuth();
     const [medicines, setMedicines] = useState([]);
@@ -14,6 +18,7 @@ const Shop = () => {
     const [sortOrder, setSortOrder] = useState('');
     const navigate = useNavigate();
     const axiosSecure = useAxiosSecure();
+    const [loading, setLoading] = useState(true);
 
 
     const [detailModalMedicine, setDetailModalMedicine] = useState(null);
@@ -35,8 +40,12 @@ const Shop = () => {
             .then(res => {
                 setMedicines(res.data);
                 setSortedMedicines(res.data);
+                setLoading(false);
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error(err)
+                setLoading(false);
+            });
     }, [axiosSecure]);
 
     useEffect(() => {
@@ -71,9 +80,14 @@ const Shop = () => {
         }
     }, [user, axiosSecure]);
 
+    if (loading) {
+        return <LoadingSpinner></LoadingSpinner>
+    }
+
 
     return (
         <div className="max-w-11/12 min-h-[calc(100vh-367px)] mx-auto p-6">
+            <ReTitle title="Medicine Shop | Shop Page"></ReTitle>
             <div className="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
                 <p className="mb-4 font-semibold text-lg text-gray-700">
                     Total Medicines: {medicines.length}
@@ -162,17 +176,18 @@ const Shop = () => {
                                             )}
                                         </div>
                                         <button
-                                            className="btn btn-sm bg-blue-600 whitespace-nowrap"
+                                            className="btn btn-sm bg-blue-600 whitespace-nowrap px-4 py-[19px]"
                                             onClick={() => {
                                                 if (!user) {
                                                     navigate('/login');
                                                 } else {
                                                     setDetailModalMedicine(med);
+
                                                 }
                                             }}
                                             title="View Details"
                                         >
-                                            <RxEyeOpen size={20} className='text-white'></RxEyeOpen>
+                                            <RxEyeOpen size={24} className="text-white " />
                                         </button>
                                     </div>
                                 </td>

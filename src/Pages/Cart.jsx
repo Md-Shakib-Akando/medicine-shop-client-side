@@ -4,6 +4,8 @@ import UseAuth from '../UseAuth';
 import { FiMinus, FiPlus } from "react-icons/fi";
 import { RxCross2 } from 'react-icons/rx';
 import useAxiosSecure from '../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
+
 
 const Cart = () => {
     const { user } = UseAuth();
@@ -85,6 +87,7 @@ const Cart = () => {
 
     return (
         <div className="overflow-x-auto min-h-screen max-w-10/12 mx-auto px-4 py-8">
+            <ReTitle title="Medicine Shop | Cart"></ReTitle>
             <div className="flex justify-end mb-6">
                 <button onClick={clearAllCarts} className="bg-[#008c94] text-white py-2 px-6 rounded-md hover:cursor-pointer">
                     Clear All

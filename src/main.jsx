@@ -9,17 +9,21 @@ import {
 import { router } from './router/router.jsx';
 import AuthProvider from './AuthProvider.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-
+import { ReTitleProvider } from 're-title';
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <RouterProvider router={router}>
+        <ReTitleProvider>
+          <RouterProvider router={router}>
 
-        </RouterProvider>
+          </RouterProvider>
+        </ReTitleProvider>
       </AuthProvider>
     </QueryClientProvider>
+
   </StrictMode>,
 )

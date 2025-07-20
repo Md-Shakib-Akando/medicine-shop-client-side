@@ -5,22 +5,36 @@ import AdminHome from './Admin/AdminHome';
 import SellerHome from './Seller/SellerHome';
 import PaymentHistory from './User/PaymentHistory';
 import useAxiosSecure from '../../Hooks/UseAxiosSecure';
+import LoadingSpinner from '../LoadingSpinner';
+
 
 const DashHome = () => {
     const { user } = UseAuth();
     const [userRole, setUserRole] = useState('');
     const axiosSecure = useAxiosSecure();
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (user?.email) {
             axiosSecure.get(`/users/role/${user.email}`)
-                .then(res => setUserRole(res.data.userRole))
-                .catch(console.error);
+                .then(res => {
+                    setUserRole(res.data.userRole)
+                    setLoading(false)
+                })
+                .catch(err => {
+                    console.log(err)
+                    setLoading(false)
+                });
         }
     }, [user, axiosSecure]);
+    if (loading) {
+        return <LoadingSpinner></LoadingSpinner>
+    }
     return (
         <div>
+
             {userRole === 'admin' && (
+
                 <AdminHome></AdminHome>
             )}
             {

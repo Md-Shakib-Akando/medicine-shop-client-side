@@ -8,6 +8,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import UseAuth from '../../../UseAuth';
 import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
 
 const SalesReport = () => {
     const [payments, setPayments] = useState([]);
@@ -117,6 +118,7 @@ const SalesReport = () => {
 
     return (
         <div className="p-6">
+            <ReTitle title="Dashboard | SalesReports"></ReTitle>
             <h2 className="text-3xl font-semibold mb-6">Admin Sales Report</h2>
 
             <div className="mb-6 flex flex-wrap gap-4 items-center">

@@ -80,17 +80,7 @@ const LatestMedicine = () => {
                             <p className='font-medium text-[15px] truncate'>Company: <span className='font-normal'>{med.company}</span></p>
                             <p className='font-medium text-[15px]'>Category: <span className='font-normal'>{med.category}</span></p>
 
-                            <div className="mt-4 opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                                {userRole === 'user' && (
-                                    <button
-                                        onClick={() => handleSelect(med, user, navigate, axiosSecure)}
-                                        className='btn text-lg bg-[#00afb9] text-white w-full'
-                                    >
-                                        Select
-                                    </button>
-                                )}
 
-                            </div>
                         </div>
 
 

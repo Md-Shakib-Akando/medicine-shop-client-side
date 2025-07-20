@@ -5,6 +5,7 @@ import invoiceLogo from '/logo.png';
 import UseAuth from "../../../UseAuth";
 
 import useAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import { ReTitle } from "re-title";
 
 const Invoice = () => {
     const { user } = UseAuth();
@@ -127,6 +128,7 @@ const Invoice = () => {
 
     return (
         <div className="max-w-7xl px-10 mx-auto">
+            <ReTitle title="Medicine Shop | Invoice"></ReTitle>
             <div className="sm:flex my-14 justify-between items-center">
                 <div className="flex justify-center items-center">
                     <img className="w-[150px] mb-8 sm:mb-0 rounded-full" src={invoiceLogo} alt="Logo" />

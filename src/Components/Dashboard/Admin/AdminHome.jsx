@@ -6,6 +6,7 @@ import {
 } from 'recharts';
 
 import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
 
 const AdminHome = () => {
 
@@ -70,6 +71,7 @@ const AdminHome = () => {
 
     return (
         <div className="p-6 max-w-7xl mx-auto">
+            <ReTitle title="Dashboard | Admin"></ReTitle>
             <h2 className="text-3xl font-semibold mb-6">Admin Dashboard</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
 

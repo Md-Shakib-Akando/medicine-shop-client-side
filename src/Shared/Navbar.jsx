@@ -21,8 +21,16 @@ const Navbar = () => {
 
     const NavItem = <>
 
-        <li><NavLink to='/'>Home</NavLink></li>
-        <li><NavLink to='/shop'>Shop</NavLink></li>
+        <li><NavLink to='/' className={({ isActive }) =>
+            isActive
+                ? "text-white  flex items-center  rounded-md  justify-center  bg-[#00afb9]  "
+                : "flex items-center justify-center  hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md "
+        }>Home</NavLink></li>
+        <li><NavLink to='/shop' className={({ isActive }) =>
+            isActive
+                ? "text-white  flex items-center  rounded-md  justify-center  bg-[#00afb9]  "
+                : "flex items-center justify-center  hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md "
+        }>Shop</NavLink></li>
         <li tabIndex={0}>
             <details className="dropdown">
                 <summary className="   ">Language</summary>

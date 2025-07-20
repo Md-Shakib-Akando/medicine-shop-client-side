@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import UseAuth from '../../../UseAuth';
 import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
 
 const ManageUsers = () => {
     const { user } = UseAuth();
@@ -27,6 +28,7 @@ const ManageUsers = () => {
     }, [user, axiosSecure]);
     return (
         <div className="p-4">
+            <ReTitle title="Dashboard | Manage-users"></ReTitle>
             <h2 className="text-2xl font-bold mb-4">Manage Users</h2>
             <div className="overflow-x-auto ">
                 <table className="table w-full border-collapse border border-gray-300">
@@ -45,16 +47,28 @@ const ManageUsers = () => {
                                 <td className="p-4 border border-gray-300 text-center text-[16px]">{user.userEmail}</td>
                                 <td className="p-4 border border-gray-300 text-center text-[16px]">{user.userRole}</td>
                                 {currentUserRole === 'admin' && (
-                                    <td className="p-4 border border-gray-300 text-center">
+                                    <td className="p-4 border border-gray-300   text-center">
                                         {user.userRole !== 'admin' && (
                                             <>
                                                 {user.userRole === 'user' ? (
-                                                    <button
-                                                        className="bg-green-600 text-white text-sm px-3 py-1.5 rounded hover:bg-green-700 transition"
-                                                        onClick={() => handleRoleChange(user._id, 'seller')}
-                                                    >
-                                                        Make Seller
-                                                    </button>
+                                                    <>
+                                                        <div className='inline-flex justify-center w-full'>
+                                                            <button
+                                                                className=" bg-green-600 text-white  px-3 text-sm py-1.5 rounded hover:bg-green-700 transition mr-2"
+                                                                onClick={() => handleRoleChange(user._id, 'seller')}
+                                                            >
+                                                                Make Seller
+                                                            </button>
+
+
+                                                            <button
+                                                                className=" bg-blue-600 text-white text-sm px-3 py-1.5 rounded hover:bg-blue-700 transition"
+                                                                onClick={() => handleRoleChange(user._id, 'admin')}
+                                                            >
+                                                                Make Admin
+                                                            </button>
+                                                        </div>
+                                                    </>
                                                 ) : (
                                                     <button
                                                         className="bg-yellow-500 text-white text-sm px-3 py-1.5 rounded hover:bg-yellow-600 transition"

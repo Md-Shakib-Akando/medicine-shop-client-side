@@ -3,7 +3,7 @@ import axios from 'axios';
 import UseAuth from '../UseAuth';
 
 const axiosSecure = axios.create({
-    baseURL: 'http://localhost:5000',
+    baseURL: 'https://medicine-shop-server-side.vercel.app',
 });
 
 const useAxiosSecure = () => {

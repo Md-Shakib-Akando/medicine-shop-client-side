@@ -7,20 +7,27 @@ import 'swiper/css/pagination';
 import { Link } from 'react-router';
 import UseAuth from '../../UseAuth';
 import useAxiosSecure from '../../Hooks/UseAxiosSecure';
+import LoadingSpinner from '../LoadingSpinner';
 
 const Banner = () => {
 
     const [ads, setAds] = useState([]);
     const axiosSecure = useAxiosSecure();
-
+    const [loading, setLoading] = useState(false);
     const approvedAds = ads.filter(ad => ad.status === 'approved');
 
     useEffect(() => {
+        setLoading(true)
         axiosSecure.get('/advertisements',
         )
-            .then(res => setAds(res.data))
+            .then(res => {
+                setAds(res.data)
+                setLoading(false)
+            }
+            )
             .catch(err => console.error(err));
     }, [axiosSecure]);
+    if (loading) return <LoadingSpinner></LoadingSpinner>
 
     return (
         <div className=" mx-auto rounded-lg overflow-hidden shadow-lg h-[70vh]">

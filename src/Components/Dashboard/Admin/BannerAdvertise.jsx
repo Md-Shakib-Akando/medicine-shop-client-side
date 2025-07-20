@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import UseAuth from '../../../UseAuth';
 import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
 
 const BannerAdvertise = () => {
     const { user } = UseAuth();
@@ -18,7 +19,7 @@ const BannerAdvertise = () => {
 
     const handleToggle = async (id, currentStatus) => {
         try {
-            const newStatus = currentStatus === 'approved' ? 'pending' : 'approved';
+            const newStatus = currentStatus === 'pending' ? 'approved' : 'pending';
 
             await axiosSecure.patch(`/advertisements/${id}`, {
                 status: newStatus
@@ -42,6 +43,7 @@ const BannerAdvertise = () => {
 
     return (
         <div className="p-4">
+            <ReTitle title="Dashboard | Advertise"></ReTitle>
             <h2 className="text-2xl font-semibold mb-4">Manage Advertisements</h2>
 
             <div className="overflow-x-auto">

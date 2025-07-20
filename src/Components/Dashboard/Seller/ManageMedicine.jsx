@@ -6,6 +6,7 @@ import UseAuth from '../../../UseAuth';
 import Swal from 'sweetalert2';
 import { RxCross2 } from 'react-icons/rx';
 import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
 
 const ManageMedicine = () => {
     const { user } = UseAuth();
@@ -227,6 +228,7 @@ const ManageMedicine = () => {
 
     return (
         <div className=" mx-auto px-6">
+            <ReTitle title="Dashboard | Manage-Medicine"></ReTitle>
             <h2 className="text-3xl text-[#00afb9] text-center font-bold mb-6">Manage Medicines</h2>
             <div className="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
                 <p className="mb-4 font-semibold text-lg text-gray-700">

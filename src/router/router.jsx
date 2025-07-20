@@ -24,11 +24,13 @@ import Cart from "../Pages/Cart";
 import CheckOut from "../Pages/CheckOut";
 import Invoice from "../Components/Dashboard/Payment/Invoice";
 import DashHome from "../Components/Dashboard/DashHome";
+import Error from "../Components/Error/Error";
 
 
 export const router = createBrowserRouter([
     {
         path: "/",
+        errorElement: <Error></Error>,
         Component: RootLayOut,
         children: [
             {

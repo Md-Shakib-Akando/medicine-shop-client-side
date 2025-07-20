@@ -7,6 +7,7 @@ import axios from 'axios';
 import { auth } from '../firebase.config';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
 
 const Register = () => {
 
@@ -144,6 +145,7 @@ const Register = () => {
     }
     return (
         <div>
+            <ReTitle title="Medicine Shop | Register"></ReTitle>
             <div className="text-center">
                 <h2 className="text-3xl font-bold text-[#00afb9]">
                     Create Account

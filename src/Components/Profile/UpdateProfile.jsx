@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UseAuth from '../../UseAuth';
 import useRole from '../../Hooks/useRole';
 import Swal from 'sweetalert2';
@@ -6,17 +6,22 @@ import axios from 'axios';
 
 import { useForm } from 'react-hook-form';
 import useAxiosSecure from '../../Hooks/UseAxiosSecure';
+import LoadingSpinner from '../LoadingSpinner';
+import { ReTitle } from 're-title';
+
 
 const UpdateProfile = () => {
     const { user, setUser, updateUserProfile } = UseAuth();
     const { role } = useRole();
     const axiosSecure = useAxiosSecure();
+    const [loading, setLoading] = useState(false);
 
     const imgUrl = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_Image_Upload_Key}`
 
     const { register, handleSubmit } = useForm();
 
     const onSubmit = async (data) => {
+
         try {
             let photoURL = user?.photoURL;
 
@@ -52,14 +57,20 @@ const UpdateProfile = () => {
         } catch (error) {
             console.error(error);
 
+        } finally {
+            setLoading(false);
         }
     };
+
+    if (loading) {
+        return <LoadingSpinner></LoadingSpinner>
+    }
 
     return (
         <div className=" max-w-3xl  mx-auto  p-6 mt-20 mb-10  bg-blue-100 rounded-lg shadow-md ">
 
 
-
+            <ReTitle title="Update Profile"></ReTitle>
             <div className='mb-10 flex flex-col justify-center items-center'>
 
                 <div className="avatar px-8 pb-5 flex justify-center  sm:block">

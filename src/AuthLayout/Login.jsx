@@ -5,6 +5,7 @@ import UseAuth from '../UseAuth';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
 
 const Login = () => {
     const {
@@ -87,6 +88,7 @@ const Login = () => {
     }
     return (
         <div >
+            <ReTitle title="Medicine Shop | Login"></ReTitle>
             <div className="text-center">
                 <h2 className="text-3xl font-bold text-[#00afb9]">
                     Welcome back

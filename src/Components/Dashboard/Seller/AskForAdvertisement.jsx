@@ -4,6 +4,7 @@ import UseAuth from '../../../UseAuth';
 import Swal from 'sweetalert2';
 import { toast, ToastContainer } from 'react-toastify';
 import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
 
 
 const AskForAdvertisement = () => {
@@ -119,6 +120,7 @@ const AskForAdvertisement = () => {
             </button>
 
             <div className="overflow-x-auto">
+                <ReTitle title="Dashboard | Advertisement"></ReTitle>
                 <table className="table w-full ">
                     <thead>
                         <tr className="bg-[#00afb9] text-white " >
@@ -152,10 +154,11 @@ const AskForAdvertisement = () => {
                                     <td>{ad.description}</td>
                                     <td>
                                         <span
-                                            className={`px-2 py-1 rounded text-sm font-semibold ${ad.status === true ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                                            className={`px-2 py-1 rounded text-sm font-semibold ${ad.status?.toLowerCase() === 'approved' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
                                                 }`}
                                         >
-                                            {ad.status === true ? 'Approved' : 'Pending'}
+                                            {ad.status?.toLowerCase() === 'approved' ? 'Approved' : 'Pending'}
+
                                         </span>
                                     </td>
 

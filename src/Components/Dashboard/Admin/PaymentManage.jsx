@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import UseAuth from '../../../UseAuth';
 import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
 
 const PaymentManage = () => {
     const [payments, setPayments] = useState([]);
@@ -37,6 +38,7 @@ const PaymentManage = () => {
 
     return (
         <div className="max-w-11/12 mx-auto p-6">
+            <ReTitle title="Dashboard | Manage-Payment"></ReTitle>
             <h2 className="text-3xl font-semibold mb-6">Manage Payments</h2>
 
             {loading ? (

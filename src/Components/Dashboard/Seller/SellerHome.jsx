@@ -6,6 +6,7 @@ import {
 } from 'recharts';
 import UseAuth from '../../../UseAuth';
 import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
 
 const SellerHome = () => {
     const { user } = UseAuth();
@@ -61,6 +62,7 @@ const SellerHome = () => {
 
     return (
         <div className="p-6 max-w-7xl mx-auto">
+            <ReTitle title="Dashboard | Seller"></ReTitle>
             <h2 className="text-3xl font-semibold mb-6">Seller Dashboard</h2>
 
 

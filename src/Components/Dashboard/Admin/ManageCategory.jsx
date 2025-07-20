@@ -4,6 +4,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import UseAuth from '../../../UseAuth';
 import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { ReTitle } from 're-title';
+
 
 const ManageCategory = () => {
     const [showModal, setShowModal] = useState(false);
@@ -98,14 +100,18 @@ const ManageCategory = () => {
     };
 
 
+
+
     useEffect(() => {
         axiosSecure.get('/categories')
             .then(res => setCategories(res.data))
             .catch(err => console.error(err));
     }, [user, axiosSecure]);
 
+
     return (
         <div>
+            <ReTitle title="Dashboard | Categories"></ReTitle>
             <h2 className="text-3xl text-[#00afb9] text-center font-bold mb-6">Manage Category</h2>
 
             <div className="mb-4 flex justify-center items-center my-7 md:my-10">
@@ -150,12 +156,11 @@ const ManageCategory = () => {
                                     </td>
                                     <td className='text-center text-lg'>{cat.name}</td>
                                     <td className='text-center'>
-                                        <div className="inline-flex   justify-center">
-
+                                        <div className="inline-flex  justify-center">
 
                                             <button
                                                 onClick={() => handleDelete(cat._id)}
-                                                className="px-4 py-2 bg-red-500 text-white rounded-md text-lg hover:bg-red-700 hover:cursor-pointer transition">
+                                                className="px-4 py-2 bg-red-500 text-white rounded-md  hover:bg-red-700 hover:cursor-pointer transition">
                                                 Delete
                                             </button>
                                         </div>
@@ -230,6 +235,8 @@ const ManageCategory = () => {
                     </div>
                 </div>
             )}
+
+
         </div>
     );
 };
