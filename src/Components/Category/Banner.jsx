@@ -56,8 +56,8 @@ const Banner = () => {
 
                             <div className="relative z-20 flex h-full items-center justify-center px-4 sm:px-8 md:px-16 lg:px-24">
                                 <div className="text-white text-center space-y-5 max-w-xl">
-                                    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold drop-shadow-xl leading-tight">{ad.name}</h1>
-                                    <p className="text-sm sm:text-base md:text-lg lg:text-xl drop-shadow leading-relaxed">{ad.description}</p>
+                                    <h1 className="text-2xl sm:text-3xl md:text-4xl  font-bold drop-shadow-xl leading-tight">{ad.name}</h1>
+                                    <p className="text-sm sm:text-base md:text-lg  drop-shadow leading-relaxed">{ad.description}</p>
                                     <Link to="/shop">
 
                                         <button className="bg-gradient-to-r from-[#00afb9] to-[#007a85] text-white rounded-md py-2 px-6 hover:from-[#008b94] hover:to-[#005f66] transition hover:cursor-pointer">

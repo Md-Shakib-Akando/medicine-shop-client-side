@@ -134,14 +134,23 @@ const LatestMedicine = () => {
 
 
                                 </div>
-                                {userRole === 'user' && (
-                                    <button
-                                        onClick={() => handleSelect(detailModalMedicine, user, navigate, axiosSecure)}
-                                        className='btn text-lg bg-[#00afb9] text-white '
-                                    >
-                                        Select
-                                    </button>
-                                )}
+                                <button
+                                    onClick={() => {
+                                        if (!user) {
+                                            navigate('/login');
+                                        } else if (userRole === 'user') {
+                                            handleSelect(detailModalMedicine, user, navigate, axiosSecure);
+                                        }
+                                    }}
+                                    className={`btn text-lg text-white ${!user || userRole === 'user'
+                                            ? 'bg-[#00afb9] hover:bg-[#009ca5]'
+                                            : 'bg-gray-400 cursor-not-allowed'
+                                        }`}
+                                    disabled={userRole === 'admin' || userRole === 'seller'}
+                                >
+                                    Select
+                                </button>
+
                             </div>
                         </div>
                     </div>

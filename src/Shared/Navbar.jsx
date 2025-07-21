@@ -46,6 +46,14 @@ const Navbar = () => {
 
     </>
 
+    const handleCartClick = () => {
+        if (!user) {
+            navigate('/login');
+        } else if (role === 'user') {
+            navigate('/cart');
+        }
+
+    };
 
 
 
@@ -124,18 +132,20 @@ const Navbar = () => {
                     </div>
 
                     <div className="navbar-end space-x-2">
-                        {
-                            role === 'user' && (
-                                <NavLink to='/cart' className="relative inline-block">
-                                    <FaCartPlus size={28} />
-                                    <span
-                                        className="absolute -top-2 -right-2 bg-[#00afb9] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none"
-                                    >
-                                        {cartCount}
-                                    </span>
-                                </NavLink>
-                            )
-                        }
+                        <button
+                            onClick={handleCartClick}
+                            className="relative inline-block"
+                            disabled={role === 'admin' || role === 'seller'}
+                        >
+                            <FaCartPlus size={28} className={`${(role === 'admin' || role === 'seller') ? ' cursor-not-allowed' : ''}`} />
+                            {role === 'user' && (
+                                <span
+                                    className="absolute -top-2 -right-2 bg-[#00afb9] text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center select-none"
+                                >
+                                    {cartCount}
+                                </span>
+                            )}
+                        </button>
 
                         {
                             user ?

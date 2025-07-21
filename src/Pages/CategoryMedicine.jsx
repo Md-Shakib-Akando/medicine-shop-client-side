@@ -78,14 +78,23 @@ const CategoryMedicine = () => {
                                 <td className='text-center'>{med.massUnit || 'N/A'}</td>
                                 <td className="text-center">
                                     <div className="inline-flex space-x-2 justify-center items-center">
-                                        {userRole === 'user' && (
-                                            <button
-                                                onClick={() => handleSelect(med, user, navigate, axiosSecure)}
-                                                className='btn  bg-[#00afb9] text-white '
-                                            >
-                                                Select
-                                            </button>
-                                        )}
+                                        <button
+                                            onClick={() => {
+                                                if (!user) {
+                                                    navigate('/login');
+                                                } else if (userRole === 'user') {
+                                                    handleSelect(med, user, navigate, axiosSecure);
+                                                }
+                                            }}
+                                            className={`btn text-lg text-white ${!user || userRole === 'user'
+                                                ? 'bg-[#00afb9] hover:bg-[#009ca5]'
+                                                : 'bg-gray-400 cursor-not-allowed'
+                                                }`}
+                                            disabled={userRole === 'admin' || userRole === 'seller'}
+                                        >
+                                            Select
+                                        </button>
+
                                         <button
                                             className="btn btn-sm bg-blue-600 whitespace-nowrap px-4 py-[19px]"
                                             onClick={() => {
@@ -157,14 +166,23 @@ const CategoryMedicine = () => {
 
 
                                 </div>
-                                {userRole === 'user' && (
-                                    <button
-                                        onClick={() => handleSelect(detailModalMedicine, user, navigate, axiosSecure)}
-                                        className='btn text-lg bg-[#00afb9] text-white '
-                                    >
-                                        Select
-                                    </button>
-                                )}
+                                <button
+                                    onClick={() => {
+                                        if (!user) {
+                                            navigate('/login');
+                                        } else if (userRole === 'user') {
+                                            handleSelect(detailModalMedicine, user, navigate, axiosSecure);
+                                        }
+                                    }}
+                                    className={`btn text-lg text-white ${!user || userRole === 'user'
+                                        ? 'bg-[#00afb9] hover:bg-[#009ca5]'
+                                        : 'bg-gray-400 cursor-not-allowed'
+                                        }`}
+                                    disabled={userRole === 'admin' || userRole === 'seller'}
+                                >
+                                    Select
+                                </button>
+
                             </div>
                         </div>
                     </div>

@@ -166,14 +166,23 @@ const Shop = () => {
                                 <td className="text-center">
                                     <div className="inline-flex space-x-2  justify-center">
                                         <div>
-                                            {userRole === 'user' && (
-                                                <button
-                                                    onClick={() => handleSelect(med, user, navigate, axiosSecure)}
-                                                    className='btn text-sm bg-[#00afb9] text-white '
-                                                >
-                                                    Select
-                                                </button>
-                                            )}
+                                            <button
+                                                onClick={() => {
+                                                    if (!user) {
+                                                        navigate('/login');
+                                                    } else if (userRole === 'user') {
+                                                        handleSelect(med, user, navigate, axiosSecure);
+                                                    }
+                                                }}
+                                                className={`btn text-lg text-white ${!user || userRole === 'user'
+                                                    ? 'bg-[#00afb9] hover:bg-[#009ca5]'
+                                                    : 'bg-gray-400 cursor-not-allowed'
+                                                    }`}
+                                                disabled={userRole === 'admin' || userRole === 'seller'}
+                                            >
+                                                Select
+                                            </button>
+
                                         </div>
                                         <button
                                             className="btn btn-sm bg-blue-600 whitespace-nowrap px-4 py-[19px]"
@@ -273,14 +282,23 @@ const Shop = () => {
 
                             </div>
                             <div>
-                                {userRole === 'user' && (
-                                    <button
-                                        onClick={() => handleSelect(detailModalMedicine, user, navigate, axiosSecure)}
-                                        className='btn text-lg bg-[#00afb9] text-white '
-                                    >
-                                        Select
-                                    </button>
-                                )}
+                                <button
+                                    onClick={() => {
+                                        if (!user) {
+                                            navigate('/login');
+                                        } else if (userRole === 'user') {
+                                            handleSelect(detailModalMedicine, user, navigate, axiosSecure);
+                                        }
+                                    }}
+                                    className={`btn text-lg text-white ${!user || userRole === 'user'
+                                        ? 'bg-[#00afb9] hover:bg-[#009ca5]'
+                                        : 'bg-gray-400 cursor-not-allowed'
+                                        }`}
+                                    disabled={userRole === 'admin' || userRole === 'seller'}
+                                >
+                                    Select
+                                </button>
+
                             </div>
                         </div>
                     </div>
