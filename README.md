@@ -1,6 +1,6 @@
 # 🏥 Medicine Shop
 
-![MedicineShop Screenshot](C:\Users\User\Pictures\Screenshots\Screenshot 2025-07-27 213406.png)
+![MedicineShop Screenshot](https://i.ibb.co.com/TBhfzN7y/Screenshot-2025-07-27-213406.png)
 
 
 ## Project Overview
