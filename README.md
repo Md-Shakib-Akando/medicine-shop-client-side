@@ -1,5 +1,8 @@
 # 🏥 Medicine Shop
 
+![MedicineShop Screenshot](C:\Users\User\Pictures\Screenshots\Screenshot 2025-07-27 213406.png)
+
+
 ## Project Overview
 **MedicineShop** is a full-stack web application designed for purchasing medicines online. The platform offers a seamless and secure shopping experience with features like role-based access, comprehensive product catalogs, advanced search filters, and secure payment options via Stripe. Users can browse, purchase medicines, and manage their orders, while admins and sellers have their dedicated dashboards for product and order management.
 
