@@ -69,6 +69,20 @@ const AdminHome = () => {
         { name: 'Total Payments', value: salesData.totalPaymentsCount },
     ];
 
+    const CustomTooltip = ({ active, payload, label }) => {
+        if (active && payload && payload.length) {
+            return (
+                <div className="p-3 rounded-lg shadow-md border 
+                      bg-gray-900 text-white
+                      dark:bg-base-200 dark:text-base-content dark:border-gray-700">
+                    <p className="font-semibold">{label}</p>
+                    <p>{`Value: ${payload[0].value}`}</p>
+                </div>
+            );
+        }
+        return null;
+    };
+
     return (
         <div className="p-6 max-w-7xl mx-auto">
             <ReTitle title="Dashboard | Admin"></ReTitle>
@@ -76,32 +90,32 @@ const AdminHome = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6 mb-10">
 
 
-                <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-[#00afb9]">
+                <div className="bg-white dark:bg-base-200 rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-[#00afb9]">
                     <div className="bg-[#00afb9] text-white p-3 rounded-full">
                         <FaDollarSign size={24} />
                     </div>
                     <div>
-                        <h4 className="text-gray-600 text-sm">Total sales Revenue</h4>
-                        <p className="text-2xl font-bold text-gray-800">${salesData.totalRevenue.toFixed(2)}</p>
+                        <h4 className="text-gray-600 dark:text-base-content text-sm">Total sales Revenue</h4>
+                        <p className="text-2xl font-bold dark:text-base-content text-gray-800">${salesData.totalRevenue.toFixed(2)}</p>
                     </div>
                 </div>
-                <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-blue-500">
+                <div className="bg-white dark:bg-base-200 rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-blue-500">
                     <div className="bg-blue-500 text-white p-3 rounded-full">
                         <FaDollarSign size={24} />
                     </div>
                     <div>
-                        <h4 className="text-gray-600 text-sm">Total Paid</h4>
-                        <p className="text-2xl font-bold text-gray-800">${salesData.totalPaid.toFixed(2)}</p>
+                        <h4 className="text-gray-600 dark:text-base-content text-sm">Total Paid</h4>
+                        <p className="text-2xl font-bold dark:text-base-content text-gray-800">${salesData.totalPaid.toFixed(2)}</p>
                     </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-yellow-500">
+                <div className="bg-white dark:bg-base-200 rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-yellow-500">
                     <div className="bg-yellow-500 text-white p-3 rounded-full">
                         <FaClock size={24} />
                     </div>
                     <div>
-                        <h4 className="text-gray-600 text-sm">Total Pending Amount</h4>
-                        <p className="text-2xl font-bold text-gray-800">${salesData.totalPendingAmount.toFixed(2)}</p>
+                        <h4 className="text-gray-600 dark:text-base-content text-sm">Total Pending Amount</h4>
+                        <p className="text-2xl font-bold dark:text-base-content text-gray-800">${salesData.totalPendingAmount.toFixed(2)}</p>
                     </div>
                 </div>
 
@@ -109,19 +123,19 @@ const AdminHome = () => {
 
 
 
-                <div className="bg-white rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-green-500">
+                <div className="bg-white dark:bg-base-300 rounded-xl shadow-md p-6 flex items-center gap-4 border-l-4 border-green-500">
                     <div className="bg-green-500 text-white p-3 rounded-full">
                         <FaReceipt size={24} />
                     </div>
                     <div>
-                        <h4 className="text-gray-600 text-sm">Total Payments</h4>
-                        <p className="text-2xl font-bold text-gray-800">{salesData.totalPaymentsCount}</p>
+                        <h4 className="text-gray-600 dark:text-base-content text-sm">Total Payments</h4>
+                        <p className="text-2xl font-bold dark:text-base-content text-gray-800">{salesData.totalPaymentsCount}</p>
                     </div>
                 </div>
             </div>
 
 
-            <div className="bg-white rounded-xl shadow-md w-full">
+            <div className="bg-white dark:bg-base-200 rounded-xl shadow-md w-full">
                 <h3 className="text-xl font-semibold mb-4 text-center">Sales Overview</h3>
 
 
@@ -134,7 +148,7 @@ const AdminHome = () => {
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
-                            <Tooltip />
+                            <Tooltip content={<CustomTooltip />} />
                             <Legend />
                             <Bar dataKey="value" fill="#00afb9" barSize={50} />
                         </BarChart>

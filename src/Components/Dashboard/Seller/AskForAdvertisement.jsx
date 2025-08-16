@@ -115,7 +115,7 @@ const AskForAdvertisement = () => {
         <div>
             <button
                 onClick={() => setModal(true)}
-                className='bg-[#00afb9] text-white rounded-md py-2 px-4 my-3 hover:cursor-pointer'>
+                className='bg-[#00afb9] dark:bg-base-300 dark:hover:bg-[#00afb9] text-white rounded-md py-2 px-4 my-3 hover:cursor-pointer'>
                 Add Advertise
             </button>
 
@@ -123,7 +123,7 @@ const AskForAdvertisement = () => {
                 <ReTitle title="Dashboard | Advertisement"></ReTitle>
                 <table className="table w-full ">
                     <thead>
-                        <tr className="bg-[#00afb9] text-white " >
+                        <tr className="bg-[#00afb9] dark:bg-base-300 text-white " >
                             <th className='text-lg p-5'>Image</th>
                             <th className='text-lg p-5'> Name</th>
                             <th className='text-lg p-5'>Description</th>
@@ -138,7 +138,7 @@ const AskForAdvertisement = () => {
                             ads.map(ad => (
                                 <tr
                                     key={ad._id}
-                                    className="hover:bg-blue-100 transition-colors duration-200"
+                                    className="hover:bg-blue-100 dark:hover:bg-base-200 transition-colors duration-200"
                                 >
                                     <td>
                                         <div className="avatar">

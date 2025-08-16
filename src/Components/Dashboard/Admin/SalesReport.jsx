@@ -149,7 +149,7 @@ const SalesReport = () => {
                         setStartDate(null);
                         setEndDate(null);
                     }}
-                    className="bg-yellow-500 text-white  px-3 py-1.5 rounded hover:bg-yellow-600 transition"
+                    className="bg-yellow-500 dark:bg-base-300 dark:hover:bg-base-200 text-white  px-3 py-1.5 rounded hover:bg-yellow-600 transition"
                 >
                     Reset Filter
                 </button>
@@ -183,7 +183,7 @@ const SalesReport = () => {
             <div className="overflow-x-auto">
                 <table className="table w-full border-collapse border border-gray-300">
                     <thead>
-                        <tr className="bg-[#00afb9] text-white">
+                        <tr className="bg-[#00afb9] dark:bg-base-300 text-white">
                             <th className="p-4 border border-gray-300">#</th>
                             <th className="p-4 border border-gray-300">Transaction ID</th>
                             <th className="p-4 border border-gray-300">Medicine Names</th>
@@ -196,7 +196,7 @@ const SalesReport = () => {
                     </thead>
                     <tbody>
                         {filteredPayments.map((payment, index) => (
-                            <tr key={payment._id} className="hover:bg-gray-100 transition">
+                            <tr key={payment._id} className="hover:bg-gray-100 dark:hover:bg-base-200 transition">
                                 <td className="p-4 border border-gray-300">{index + 1}</td>
                                 <td className="p-4 border border-gray-300">{payment.transactionId}</td>
                                 <td className="p-4 border border-gray-300 max-w-xs truncate" title={payment.name?.join(', ')}>

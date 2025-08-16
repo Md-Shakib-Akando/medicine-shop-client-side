@@ -44,12 +44,12 @@ const PaymentManage = () => {
             {loading ? (
                 <p>Loading payments...</p>
             ) : payments.length === 0 ? (
-                <p className="text-gray-500">No payment records found.</p>
+                <p className="text-gray-500 dark:text-base-content">No payment records found.</p>
             ) : (
                 <div className="overflow-x-auto">
                     <table className="table w-full border-collapse border border-gray-300">
                         <thead>
-                            <tr className="bg-[#00afb9] text-white">
+                            <tr className="bg-[#00afb9] dark:bg-base-300    text-white">
                                 <th className="p-4 border border-gray-300">Buyer Email</th>
                                 <th className="p-4 border border-gray-300">Transaction ID</th>
                                 <th className="p-4 border border-gray-300">Total Items</th>
@@ -60,7 +60,7 @@ const PaymentManage = () => {
                         </thead>
                         <tbody>
                             {payments.map(payment => (
-                                <tr key={payment._id} className="hover:bg-gray-100 transition">
+                                <tr key={payment._id} className="hover:bg-gray-100 dark:hover:bg-base-200 transition">
                                     <td className="p-4 border border-gray-300">{payment.email}</td>
                                     <td className="p-4 border border-gray-300">{payment.transactionId}</td>
                                     <td className="p-4 border border-gray-300 text-center">{payment.name?.length || 0}</td>

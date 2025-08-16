@@ -229,9 +229,9 @@ const ManageMedicine = () => {
     return (
         <div className=" mx-auto px-6">
             <ReTitle title="Dashboard | Manage-Medicine"></ReTitle>
-            <h2 className="text-3xl text-[#00afb9] text-center font-bold mb-6">Manage Medicines</h2>
+            <h2 className="text-3xl text-[#00afb9] dark:text-base-content text-center font-bold mb-6">Manage Medicines</h2>
             <div className="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-3 sm:space-y-0">
-                <p className="mb-4 font-semibold text-lg text-gray-700">
+                <p className="mb-4 font-semibold text-lg text-gray-700 dark:text-base-content">
                     Total Medicines: {medicines.length}
                 </p>
                 <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-2">
@@ -256,7 +256,7 @@ const ManageMedicine = () => {
                             setSortOrder(e.target.value);
                             setCurrentPage(1);
                         }}
-                        className="border rounded px-3 py-1 w-full sm:w-auto"
+                        className="border dark:bg-base-200 rounded px-3 py-1 w-full sm:w-auto"
                     >
                         <option value="">All</option>
                         <option value="asc">Ascending</option>
@@ -266,7 +266,7 @@ const ManageMedicine = () => {
                 <div>
                     <button
                         onClick={() => setShowModal(true)}
-                        className='bg-[#00afb9]  text-white rounded-md py-2 px-4 hover:cursor-pointer my-3'
+                        className='bg-[#00afb9] dark:bg-base-300 dark:hover:bg-[#00afb9]  text-white rounded-md py-2 px-4 hover:cursor-pointer my-3'
                     >
                         Add Medicine
                     </button>
@@ -277,7 +277,7 @@ const ManageMedicine = () => {
             <div className="overflow-x-auto">
                 <table className="table w-full ">
                     <thead>
-                        <tr className="bg-[#00afb9] text-white " >
+                        <tr className="bg-[#00afb9] dark:bg-base-300 text-white " >
                             <th className='text-lg p-5'>Image</th>
                             <th className='text-lg p-5'>Item Name</th>
                             <th className='text-lg p-5'>Generic Name</th>
@@ -303,7 +303,7 @@ const ManageMedicine = () => {
                             paginatedMedicines.map((med, index) => (
                                 <tr
                                     key={med._id || index}
-                                    className="hover:bg-blue-100 transition-colors duration-200"
+                                    className="hover:bg-blue-100 dark:hover:bg-base-200 transition-colors duration-200"
                                 >
                                     <td>
                                         <div className="avatar">
@@ -354,7 +354,7 @@ const ManageMedicine = () => {
                         <button
                             onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                             disabled={currentPage === 1}
-                            className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-300' : 'bg-[#00afb9] text-white'}`}
+                            className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-300 dark:bg-base-200' : 'bg-[#00afb9] text-white'}`}
                         >
                             Prev
                         </button>
@@ -363,7 +363,7 @@ const ManageMedicine = () => {
                             <button
                                 key={index}
                                 onClick={() => setCurrentPage(index + 1)}
-                                className={`px-3 py-1 rounded ${currentPage === index + 1 ? 'bg-[#00afb9] text-white' : 'bg-gray-200'}`}
+                                className={`px-3 py-1 rounded ${currentPage === index + 1 ? 'bg-[#00afb9] dark:bg-base-200 text-white' : 'bg-gray-200'}`}
                             >
                                 {index + 1}
                             </button>
@@ -372,7 +372,7 @@ const ManageMedicine = () => {
                         <button
                             onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                             disabled={currentPage === totalPages}
-                            className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-300' : 'bg-[#00afb9] text-white'}`}
+                            className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-300 dark:bg-base-200' : 'bg-[#00afb9] text-white'}`}
                         >
                             Next
                         </button>
@@ -387,7 +387,7 @@ const ManageMedicine = () => {
             {
                 showModal && (
                     <div className="fixed inset-0 bg-black/80 bg-opacity-40 flex items-center justify-center z-50">
-                        <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 relative">
+                        <div className="bg-white dark:bg-base-200 rounded-lg shadow-lg w-full max-w-lg p-6 relative">
                             <button
                                 onClick={() => setShowModal(false)}
                                 className="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-2xl hover:cursor-pointer  font-bold"
@@ -523,7 +523,7 @@ const ManageMedicine = () => {
             {
                 showUpdateModal && updateMedicine && (
                     <div className="fixed inset-0 bg-black/80 bg-opacity-40 flex items-center justify-center z-50">
-                        <div className="bg-white rounded-lg shadow-lg w-full max-w-lg p-6 relative">
+                        <div className="bg-white dark:bg-base-200 rounded-lg shadow-lg w-full max-w-lg p-6 relative">
                             <button
                                 onClick={() => setShowUpdateModal(false)}
                                 className="absolute top-3 right-3 text-gray-600 hover:text-gray-900 text-2xl hover:cursor-pointer  font-bold"
@@ -664,7 +664,7 @@ const ManageMedicine = () => {
             }
             {detailModalMedicine && (
                 <div className="fixed inset-0 bg-black/80 bg-opacity-70 flex justify-center items-center z-50 p-6">
-                    <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-10 relative">
+                    <div className="bg-white dark:bg-base-200 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-10 relative">
                         <button
                             onClick={() => setDetailModalMedicine(null)}
                             className="absolute top-5 right-5 text-4xl font-extrabold text-gray-600 hover:text-gray-900 transition"
@@ -674,7 +674,7 @@ const ManageMedicine = () => {
                         </button>
 
                         <div className="flex flex-col justify-center items-center md:space-x-12">
-                            <div className="mb-8 md:mb-0 flex justify-center items-center">
+                            <div className="mb-8 md:mb-0   flex justify-center items-center">
                                 <img
                                     src={detailModalMedicine.image || 'https://via.placeholder.com/400'}
                                     alt={detailModalMedicine.itemName}
@@ -682,25 +682,25 @@ const ManageMedicine = () => {
                                 />
                             </div>
 
-                            <div className="mt-5 flex flex-col">
-                                <h3 className="text-4xl font-semibold mb-6 text-gray-900">
+                            <div className="mt-5 flex flex-col ">
+                                <h3 className="text-4xl font-semibold mb-6 dark:text-base-content text-gray-900">
                                     {detailModalMedicine.itemName}
                                 </h3>
 
-                                <h4 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800">
+                                <h4 className="text-xl dark:text-base-content font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800">
                                     Medicine Information
                                 </h4>
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 text-gray-700 font-medium mb-8">
-                                    <p><span className="text-gray-900 font-semibold">Generic Name:</span> {detailModalMedicine.genericName || '-'}</p>
-                                    <p><span className="text-gray-900 font-semibold">Category:</span> {detailModalMedicine.category}</p>
-                                    <p><span className="text-gray-900 font-semibold">Company:</span> {detailModalMedicine.company}</p>
-                                    <p><span className="text-gray-900 font-semibold">Mass Unit:</span> {detailModalMedicine.massUnit}</p>
-                                    <p><span className="text-gray-900 font-semibold">Price:</span> ${detailModalMedicine.price.toFixed(2)}</p>
-                                    <p><span className="text-gray-900 font-semibold">Discount:</span> {detailModalMedicine.discount}%</p>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 dark:text-base-content text-gray-700 font-medium mb-8">
+                                    <p><span className="text-gray-900 dark:text-base-content font-semibold">Generic Name:</span> {detailModalMedicine.genericName || '-'}</p>
+                                    <p><span className="text-gray-900 dark:text-base-content font-semibold">Category:</span> {detailModalMedicine.category}</p>
+                                    <p><span className="text-gray-900 dark:text-base-content font-semibold">Company:</span> {detailModalMedicine.company}</p>
+                                    <p><span className="text-gray-900 dark:text-base-content font-semibold">Mass Unit:</span> {detailModalMedicine.massUnit}</p>
+                                    <p><span className="text-gray-900 dark:text-base-content font-semibold">Price:</span> ${detailModalMedicine.price.toFixed(2)}</p>
+                                    <p><span className="text-gray-900 dark:text-base-content font-semibold">Discount:</span> {detailModalMedicine.discount}%</p>
                                 </div>
 
-                                <h4 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800">Description</h4>
-                                <p className="text-gray-600 whitespace-pre-line leading-relaxed">
+                                <h4 className="text-xl dark:text-base-content font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800">Description</h4>
+                                <p className="text-gray-600 dark:text-base-content whitespace-pre-line leading-relaxed">
                                     {detailModalMedicine.description || 'No description available.'}
                                 </p>
                             </div>

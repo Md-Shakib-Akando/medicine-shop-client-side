@@ -49,7 +49,7 @@ const BannerAdvertise = () => {
             <div className="overflow-x-auto">
                 <table className="table w-full ">
                     <thead>
-                        <tr className="bg-[#00afb9] text-white">
+                        <tr className="bg-[#00afb9] dark:bg-base-300 text-white">
                             <th className="p-4 text-[16px]">Image</th>
                             <th className="p-4 text-[16px]">Name</th>
                             <th className="p-4 text-[16px]">Description</th>
@@ -59,7 +59,7 @@ const BannerAdvertise = () => {
                     </thead>
                     <tbody>
                         {ads.map(ad => (
-                            <tr key={ad._id} className="hover:bg-gray-100">
+                            <tr key={ad._id} className="hover:bg-gray-100 dark:hover:bg-base-200">
                                 <td className="p-3">
                                     <img src={ad.image} alt={ad.name} className="w-12 h-12 rounded-full" />
                                 </td>

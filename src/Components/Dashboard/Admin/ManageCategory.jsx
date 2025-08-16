@@ -112,12 +112,12 @@ const ManageCategory = () => {
     return (
         <div>
             <ReTitle title="Dashboard | Categories"></ReTitle>
-            <h2 className="text-3xl text-[#00afb9] text-center font-bold mb-6">Manage Category</h2>
+            <h2 className="text-3xl text-[#00afb9] dark:text-base-content text-center font-bold mb-6">Manage Category</h2>
 
             <div className="mb-4 flex justify-center items-center my-7 md:my-10">
                 <button
                     onClick={() => setShowModal(true)}
-                    className='bg-[#00afb9] text-white rounded-md py-2 px-4'
+                    className='bg-[#00afb9] dark:bg-base-300 dark:hover:bg-base-200 text-white rounded-md py-2 px-4'
                 >
                     Add Category
                 </button>
@@ -128,7 +128,7 @@ const ManageCategory = () => {
             <div className='overflow-x-auto'>
                 <table className="table max-w-6xl mx-auto ">
                     <thead>
-                        <tr className="bg-[#00afb9] text-white">
+                        <tr className="bg-[#00afb9] dark:bg-base-300 text-white">
                             <th className="text-lg p-5 ">Image</th>
                             <th className="text-lg p-5 text-center">Category Name</th>
                             <th className="text-lg p-5 text-center">Action</th>
@@ -137,13 +137,13 @@ const ManageCategory = () => {
                     <tbody>
                         {categories.length === 0 ? (
                             <tr>
-                                <td colSpan="2" className="text-center text-xl py-8 text-gray-500">
+                                <td colSpan="2" className="text-center dark:text-base-content text-xl py-8 text-gray-500">
                                     No Categories Found
                                 </td>
                             </tr>
                         ) : (
                             categories.map(cat => (
-                                <tr key={cat._id} className="hover:bg-blue-100 transition-colors duration-200">
+                                <tr key={cat._id} className="hover:bg-blue-100 dark:hover:bg-base-200 transition-colors duration-200">
                                     <td>
                                         <div className="avatar">
                                             <div className="rounded-full  w-12 h-12 ">

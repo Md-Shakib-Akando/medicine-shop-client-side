@@ -61,12 +61,12 @@ const ManagePayment = () => {
             <h2 className="text-3xl font-semibold mb-6">Seller Payment History</h2>
 
             {sellerPayments.length === 0 ? (
-                <p className="text-gray-500">No payment history found.</p>
+                <p className="text-gray-500 dark:text-base-content">No payment history found.</p>
             ) : (
                 <div className="overflow-x-auto">
                     <table className="table w-full border-collapse border border-gray-300">
                         <thead>
-                            <tr className="bg-[#00afb9] text-white">
+                            <tr className="bg-[#00afb9] dark:bg-base-300 text-white">
                                 <th className="p-4 border border-gray-300">Buyer Email</th>
                                 <th className="p-4 border border-gray-300">Transaction ID</th>
                                 <th className="p-4 border border-gray-300">Items</th>
@@ -77,7 +77,7 @@ const ManagePayment = () => {
                         </thead>
                         <tbody>
                             {paginatedPayments.map(payment => (
-                                <tr key={payment._id} className="hover:bg-gray-100 transition">
+                                <tr key={payment._id} className="hover:bg-gray-100 dark:hover:bg-base-200 transition">
                                     <td className="p-4 border border-gray-300">{payment.email}</td>
                                     <td className="p-4 border border-gray-300">{payment.transactionId}</td>
                                     <td className="p-4 border border-gray-300 max-w-xs truncate" title={payment.name?.join(', ')}>
@@ -102,7 +102,7 @@ const ManagePayment = () => {
                             <button
                                 onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
                                 disabled={currentPage === 1}
-                                className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-300' : 'bg-[#00afb9] text-white'}`}
+                                className={`px-3 py-1 rounded ${currentPage === 1 ? 'bg-gray-300 dark:bg-base-200' : 'bg-[#00afb9] text-white'}`}
                             >
                                 Prev
                             </button>
@@ -111,7 +111,7 @@ const ManagePayment = () => {
                                 <button
                                     key={index}
                                     onClick={() => setCurrentPage(index + 1)}
-                                    className={`px-3 py-1 rounded ${currentPage === index + 1 ? 'bg-[#00afb9] text-white' : 'bg-gray-200'}`}
+                                    className={`px-3 py-1 rounded ${currentPage === index + 1 ? 'bg-[#00afb9] dark:bg-base-200 text-white' : 'bg-gray-200'}`}
                                 >
                                     {index + 1}
                                 </button>
@@ -120,7 +120,7 @@ const ManagePayment = () => {
                             <button
                                 onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
                                 disabled={currentPage === totalPages}
-                                className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-300' : 'bg-[#00afb9] text-white'}`}
+                                className={`px-3 py-1 rounded ${currentPage === totalPages ? 'bg-gray-300 dark:bg-base-200' : 'bg-[#00afb9] text-white'}`}
                             >
                                 Next
                             </button>
