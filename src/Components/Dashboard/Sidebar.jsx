@@ -61,12 +61,12 @@ const Sidebar = () => {
 
 
             <div
-                className={`fixed top-0 left-0 min-h-screen  h-screen overflow-y-auto z-20 bg-gray-100 w-80 transition-transform transform ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'
+                className={`fixed top-0 left-0 min-h-screen  h-screen overflow-y-auto z-20 bg-base-200 w-80 transition-transform transform ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'
                     } xl:translate-x-0 xl:static '`}
             >
 
                 <Link to={'/'}>
-                    <div className="flex bg-blue-100 mx-auto pt-7 pb-3 justify-center items-center mb-8 gap-1">
+                    <div className="flex bg-blue-100 dark:bg-base-300 mx-auto pt-7 pb-3 justify-center items-center mb-8 gap-1">
                         <img className="sm:w-[60px] w-[40px] rounded-full" src='/logo.png' alt="Logo" />
                         <h1 className="font-bold">Medicine Shop</h1>
                     </div>

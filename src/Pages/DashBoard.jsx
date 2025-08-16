@@ -7,7 +7,7 @@ const DashBoard = () => {
     return (
         <div className="flex flex-col xl:flex-row overflow-x-hidden">
             <ReTitle title="Dashboard "></ReTitle>
-            <div className="w-full md:w-64 lg:w-80">
+            <div className=" w-full md:w-64 lg:w-96">
                 <Sidebar />
             </div>
 

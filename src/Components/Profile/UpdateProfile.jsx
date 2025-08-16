@@ -67,14 +67,14 @@ const UpdateProfile = () => {
     }
 
     return (
-        <div className=" max-w-3xl  mx-auto  p-6 mt-20 mb-10  bg-blue-100 rounded-lg shadow-md ">
+        <div className=" max-w-3xl  mx-auto  p-6 mt-20 mb-10  bg-blue-100 dark:bg-base-200 rounded-lg shadow-md ">
 
 
             <ReTitle title="Update Profile"></ReTitle>
             <div className='mb-10 flex flex-col justify-center items-center'>
 
                 <div className="avatar px-8 pb-5 flex justify-center  sm:block">
-                    <div className="ring-[#00afb9] ring-offset-base-100 w-16 sm:w-24 lg:w-24 rounded-full ring ring-offset-2">
+                    <div className="ring-[#00afb9]  ring-offset-base-100 w-16 sm:w-24 lg:w-24 rounded-full ring ring-offset-2">
                         <img src={user?.photoURL} alt="Profile" />
                     </div>
                 </div>
@@ -89,12 +89,12 @@ const UpdateProfile = () => {
 
 
 
-            <h2 className="text-2xl font-semibold text-center mb-6 text-[#00afb9]">
+            <h2 className="text-2xl font-semibold text-center mb-6 text-[#00afb9] dark:text-base-content">
                 Update Profile
             </h2>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-base-content mb-1">
                         Full Name
                     </label>
                     <input
@@ -102,20 +102,20 @@ const UpdateProfile = () => {
 
                         {...register("name")}
                         placeholder="Enter your full name"
-                        className="w-full px-3 py-2 border border-[#00afb9]  rounded-md focus:outline-none focus:ring-2 focus:ring-[#00afb9]"
+                        className="w-full px-3 py-2 border border-[#00afb9] dark:border-white dark:focus:ring-white  rounded-md focus:outline-none focus:ring-2 focus:ring-[#00afb9]"
                         required
                     />
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-base-content mb-1">
                         Profile Picture
                     </label>
                     <input
                         type="file"
                         accept="image/*"
                         {...register("image")}
-                        className="w-full text-sm px-3 py-2 border border-[#00afb9]  rounded-md focus:outline-none focus:ring-2 focus:ring-[#00afb9] text-gray-600"
+                        className="w-full text-sm px-3 py-2 border border-[#00afb9] dark:border-white dark:focus:ring-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#00afb9] text-gray-600"
                     />
 
                 </div>

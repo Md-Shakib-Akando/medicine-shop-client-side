@@ -29,7 +29,7 @@ const PaymentHistory = () => {
                 <div className="overflow-x-auto">
                     <table className="table w-full">
                         <thead>
-                            <tr className="bg-[#00afb9] text-white">
+                            <tr className="bg-[#00afb9] dark:bg-base-300 text-white">
                                 <th className="text-lg p-5">#</th>
                                 <th className="text-lg p-5">Transaction ID</th>
                                 <th className="text-lg p-5">Total Item</th>
@@ -40,7 +40,7 @@ const PaymentHistory = () => {
                         </thead>
                         <tbody>
                             {payments.map((payment, index) => (
-                                <tr key={payment._id} className="hover:bg-blue-100 transition">
+                                <tr key={payment._id} className="hover:bg-gray-900 transition">
                                     <td className="p-5">{index + 1}</td>
 
                                     <td className="p-5">{payment.transactionId}</td>
