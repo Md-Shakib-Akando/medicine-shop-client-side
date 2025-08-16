@@ -117,7 +117,7 @@ const Navbar = () => {
 
     return (
         <div className=''>
-            <div className='fixed top-0 z-50 bg-blue-100/50 backdrop-blur-md w-full shadow-sm'>
+            <div className='fixed top-0 z-50 bg-blue-100/50 dark:bg-base-300 backdrop-blur-md w-full shadow-sm'>
                 <div className="navbar  md:max-w-11/12   mx-auto  py-3 ">
                     <div className="navbar-start">
                         <Link className='flex items-center ' to='/'><img className='h-[50px] md:h-[70px] ' src="/logo.png" alt="" /> <span className='text-lg md:text-2xl font-bold'>Medicine Shop</span></Link>
@@ -164,7 +164,7 @@ const Navbar = () => {
                                                     />
                                                 </div>
                                             </div>
-                                            <ul tabIndex={0} className="mt-3 z-50 p-2 shadow menu menu-sm    dropdown-content bg-blue-100 rounded-box w-52 -left-20 ">
+                                            <ul tabIndex={0} className="mt-3 z-50 p-2 shadow menu menu-sm    dropdown-content bg-blue-100 dark:bg-base-200 rounded-box w-52 -left-20 ">
                                                 <li className=' text-lg  mt-2'><Link to="/updateProfile" className='text-lg'>Update Profile</Link></li>
                                                 <li className='   mt-2'><Link to="/dashBoard" className='text-lg'>Dashboard</Link></li>
 
@@ -229,7 +229,7 @@ const Navbar = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm    dropdown-content bg-blue-200 rounded-box w-52 -left-20 ">
+                                                <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm    dropdown-content bg-blue-200 dark:bg-base-200 rounded-box w-52 -left-20 ">
                                                     <li className=' text-lg  mt-2'><Link to="/updateProfile" className='text-lg'>Update Profile</Link></li>
                                                     <li className='   mt-2'><Link to="/dashBoard" className='text-lg'>Dashboard</Link></li>
 

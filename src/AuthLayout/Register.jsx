@@ -147,7 +147,7 @@ const Register = () => {
         <div>
             <ReTitle title="Medicine Shop | Register"></ReTitle>
             <div className="text-center">
-                <h2 className="text-3xl font-bold text-[#00afb9]">
+                <h2 className="text-3xl dark:text-base-content font-bold text-[#00afb9]">
                     Create Account
                 </h2>
 
@@ -158,7 +158,7 @@ const Register = () => {
 
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block dark:text-base-content text-sm font-medium text-gray-700">
                             Full Name
                         </label>
                         <input
@@ -171,7 +171,7 @@ const Register = () => {
                         {errors.name && <span className='text-red-800 pt-3'>Name must be 3+ characters</span>}
                     </div>
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block dark:text-base-content text-sm font-medium text-gray-700">
                             Profile
                         </label>
                         <input
@@ -184,7 +184,7 @@ const Register = () => {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block dark:text-base-content text-sm font-medium text-gray-700">
                             Email
                         </label>
                         <input
@@ -198,7 +198,7 @@ const Register = () => {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block dark:text-base-content text-sm font-medium text-gray-700">
                             Password
                         </label>
                         <div className="mt-1 relative">
@@ -215,7 +215,7 @@ const Register = () => {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block dark:text-base-content text-sm font-medium text-gray-700">
                             Role
                         </label>
                         <select
@@ -239,7 +239,7 @@ const Register = () => {
                             className="h-4 w-4 text-[#00afb9] focus:[#00afb9] border-gray-300 !rounded-button"
                             required
                         />
-                        <label className="ml-2 block text-sm text-gray-700">
+                        <label className="ml-2 dark:text-base-content block text-sm text-gray-700">
                             I accept the{" "}
                             <a href="#" className="text-[#00afb9] ">
                                 Terms and Conditions
@@ -250,7 +250,7 @@ const Register = () => {
 
                 <button
                     type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent !rounded-button shadow-sm text-sm font-medium text-white bg-[#00afb9] hover:bg-[#00afb9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00afb9] cursor-pointer whitespace-nowrap"
+                    className="w-full dark:text-base-content flex justify-center py-2 px-4 border border-transparent !rounded-button shadow-sm text-sm font-medium text-white bg-[#00afb9] hover:bg-[#00afb9] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#00afb9] cursor-pointer whitespace-nowrap"
                 >
                     Create Account
                 </button>
@@ -276,7 +276,7 @@ const Register = () => {
                 </button>
 
                 <div className="text-center">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm dark:text-base-content text-gray-600">
                         Already have an account?
                         <Link to='/login'><button
 

@@ -90,10 +90,10 @@ const Login = () => {
         <div >
             <ReTitle title="Medicine Shop | Login"></ReTitle>
             <div className="text-center">
-                <h2 className="text-3xl font-bold text-[#00afb9]">
+                <h2 className="text-3xl font-bold dark:text-base-content text-[#00afb9]">
                     Welcome back
                 </h2>
-                <p className="mt-2 text-gray-600">
+                <p className="mt-2 dark:text-base-content text-gray-600">
                     Please sign in to your account
                 </p>
             </div>
@@ -101,7 +101,7 @@ const Login = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
                 <div className="space-y-4">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block text-sm font-medium dark:text-base-content text-gray-700">
                             Email
                         </label>
                         <div className="mt-1 relative">
@@ -117,7 +117,7 @@ const Login = () => {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700">
+                        <label className="block dark:text-base-content text-sm font-medium text-gray-700">
                             Password
                         </label>
                         <div className="mt-1 relative">
@@ -147,14 +147,14 @@ const Login = () => {
 
                                 className="h-4 w-4 text-[#00afb9] focus:ring-[#00afb9]border-gray-300 !rounded-button"
                             />
-                            <label className="ml-2 block text-sm text-gray-700">
+                            <label className="ml-2 dark:text-base-content block text-sm text-gray-700">
                                 Remember me
                             </label>
                         </div>
                         <div className="text-sm">
                             <a
                                 href="#"
-                                className="font-medium text-[#00afb9] hover:text-[#00afb9]"
+                                className="font-medium  text-[#00afb9] hover:text-[#00afb9]"
                             >
                                 Forgot password?
                             </a>
@@ -190,7 +190,7 @@ const Login = () => {
                 </button>
 
                 <div className="text-center">
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm dark:text-base-content text-gray-600">
                         Don't have an account?
                         <Link to='/register'>
 
