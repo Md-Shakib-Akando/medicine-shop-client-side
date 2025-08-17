@@ -28,6 +28,8 @@ import Error from "../Components/Error/Error";
 import ContactUs from "../Pages/ContactUs";
 
 
+
+
 export const router = createBrowserRouter([
     {
         path: "/",
@@ -65,7 +67,8 @@ export const router = createBrowserRouter([
             {
                 path: 'invoice/:transactionId',
                 Component: Invoice,
-            }
+            },
+
 
 
         ]

@@ -77,8 +77,28 @@ const LatestMedicine = () => {
                                     </p>
                                 </div>
                             </div>
-                            <p className='font-medium text-[15px] truncate'>Company: <span className='font-normal'>{med.company}</span></p>
-                            <p className='font-medium text-[15px]'>Category: <span className='font-normal'>{med.category}</span></p>
+                            <p className='text-[15px] mt-4'>
+                                {med.description.length > 30
+                                    ? (
+                                        <>
+                                            {med.description.slice(0, 40)}...
+                                            <button
+                                                onClick={() => {
+                                                    if (!user) {
+                                                        navigate('/login');
+                                                    } else {
+                                                        setDetailModalMedicine(med);
+                                                    }
+                                                }}
+                                                className="text-[#00afb9] ml-1 hover:underline hover:cursor-pointer">
+                                                See More
+                                            </button>
+                                        </>
+                                    )
+                                    : med.description
+                                }
+                            </p>
+
 
 
                         </div>
@@ -143,8 +163,8 @@ const LatestMedicine = () => {
                                         }
                                     }}
                                     className={`btn text-lg text-white ${!user || userRole === 'user'
-                                            ? 'bg-[#00afb9] hover:bg-[#009ca5]'
-                                            : 'bg-gray-400 cursor-not-allowed'
+                                        ? 'bg-[#00afb9] hover:bg-[#009ca5]'
+                                        : 'bg-gray-400 cursor-not-allowed'
                                         }`}
                                     disabled={userRole === 'admin' || userRole === 'seller'}
                                 >

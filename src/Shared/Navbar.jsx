@@ -36,15 +36,16 @@ const Navbar = () => {
                 ? "text-white  flex items-center  rounded-md  justify-center  bg-[#00afb9]  "
                 : "flex items-center justify-center  hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md "
         }>Contact</NavLink></li>
-        <li tabIndex={0}>
-            <details className="dropdown">
-                <summary className="   ">Language</summary>
-                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-40">
-                    <li><NavLink to="/en">English</NavLink></li>
-                    <li><NavLink to="/bn">বাংলা</NavLink></li>
-                </ul>
-            </details>
-        </li>
+        {
+            user && (
+                <li><NavLink to='/dashboard' className={({ isActive }) =>
+                    isActive
+                        ? "text-white  flex items-center  rounded-md  justify-center  bg-[#00afb9]  "
+                        : "flex items-center justify-center  hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md "
+                }>DashBoard</NavLink></li>
+            )
+        }
+
 
 
 
@@ -171,7 +172,7 @@ const Navbar = () => {
                                             </div>
                                             <ul tabIndex={0} className="mt-3 z-50 p-2 shadow menu menu-sm    dropdown-content bg-blue-100 dark:bg-base-200 rounded-box w-52 -left-20 ">
                                                 <li className=' text-lg  mt-2'><Link to="/updateProfile" className='text-lg'>Update Profile</Link></li>
-                                                <li className='   mt-2'><Link to="/dashBoard" className='text-lg'>Dashboard</Link></li>
+
 
                                                 <li className='text-lg  mt-2'><button
                                                     onClick={handleLogOut} className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Logout</button></li>
@@ -236,7 +237,7 @@ const Navbar = () => {
                                                 </div>
                                                 <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm    dropdown-content bg-blue-200 dark:bg-base-200 rounded-box w-52 -left-20 ">
                                                     <li className=' text-lg  mt-2'><Link to="/updateProfile" className='text-lg'>Update Profile</Link></li>
-                                                    <li className='   mt-2'><Link to="/dashBoard" className='text-lg'>Dashboard</Link></li>
+
 
                                                     <li className='text-lg  mt-2'><button
                                                         onClick={handleLogOut} className='btn mr-2 text-white shadow-none bg-[#00afb9] border-[#00afb9] hover:text-[#00afb9] hover:bg-blue-100/70'>Logout</button></li>
