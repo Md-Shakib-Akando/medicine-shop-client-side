@@ -90,7 +90,36 @@ const Login = () => {
 
     }
 
+    const handleForgotPassword = () => {
+        const email = getValues("email");
 
+        if (!email) {
+            Swal.fire({
+                icon: "warning",
+                title: "Please enter your email first!",
+                timer: 2000
+            });
+            return;
+        }
+
+        resetPassword(email)
+            .then(() => {
+                Swal.fire({
+                    icon: "success",
+                    title: "Password reset email sent!",
+                    text: `Check your inbox (${email})`,
+                    showConfirmButton: false,
+                    timer: 2500
+                });
+            })
+            .catch(err => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: err.message,
+                });
+            });
+    };
     return (
         <div >
             <ReTitle title="Medicine Shop | Login"></ReTitle>
