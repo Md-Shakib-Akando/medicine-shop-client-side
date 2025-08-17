@@ -25,6 +25,7 @@ import CheckOut from "../Pages/CheckOut";
 import Invoice from "../Components/Dashboard/Payment/Invoice";
 import DashHome from "../Components/Dashboard/DashHome";
 import Error from "../Components/Error/Error";
+import ContactUs from "../Pages/ContactUs";
 
 
 export const router = createBrowserRouter([
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
             {
                 path: 'shop',
                 Component: Shop,
+            },
+            {
+                path: 'contactUs',
+                Component: ContactUs,
             },
             {
                 path: 'updateProfile',

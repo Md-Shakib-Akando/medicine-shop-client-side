@@ -31,6 +31,11 @@ const Navbar = () => {
                 ? "text-white  flex items-center  rounded-md  justify-center  bg-[#00afb9]  "
                 : "flex items-center justify-center  hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md "
         }>Shop</NavLink></li>
+        <li><NavLink to='/contactUs' className={({ isActive }) =>
+            isActive
+                ? "text-white  flex items-center  rounded-md  justify-center  bg-[#00afb9]  "
+                : "flex items-center justify-center  hover:bg-[#00afb9]  hover:text-white duration-300 rounded-md "
+        }>Contact</NavLink></li>
         <li tabIndex={0}>
             <details className="dropdown">
                 <summary className="   ">Language</summary>
