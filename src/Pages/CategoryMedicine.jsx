@@ -41,7 +41,7 @@ const CategoryMedicine = () => {
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>
-                        <tr className="bg-[#00afb9] text-white">
+                        <tr className="bg-[#00afb9] dark:bg-base-300 text-white">
                             <th className='text-lg p-5'>Image</th>
                             <th className='text-lg p-5'>Item Name</th>
                             <th className='text-lg p-5'>Generic Name</th>
@@ -57,7 +57,7 @@ const CategoryMedicine = () => {
                         {medicines.map(med => (
                             <tr
                                 key={med._id}
-                                className="hover:bg-blue-100 transition-colors duration-200"
+                                className="hover:bg-blue-100 dark:hover:bg-base-200 transition-colors duration-200"
                             >
                                 <td>
                                     <div className="avatar">
@@ -123,10 +123,10 @@ const CategoryMedicine = () => {
 
                 {detailModalMedicine && (
                     <div className="fixed inset-0 bg-black/80 bg-opacity-70 flex justify-center items-center z-50 p-6">
-                        <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-10 relative">
+                        <div className="bg-white dark:bg-base-300 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-10 relative">
                             <button
                                 onClick={() => setDetailModalMedicine(null)}
-                                className="absolute top-5 right-5 text-4xl font-extrabold text-gray-600 hover:text-gray-900 transition"
+                                className="absolute top-5 right-5 text-4xl font-extrabold text-gray-600 hover:text-gray-900 transition dark:text-base-content"
                                 aria-label="Close modal"
                             >
                                 <RxCross2 size={20} />
@@ -144,23 +144,23 @@ const CategoryMedicine = () => {
 
 
                                 <div className="mt-5 flex flex-col">
-                                    <h3 className="text-4xl font-semibold mb-6 text-gray-900">{detailModalMedicine.itemName}</h3>
+                                    <h3 className="text-4xl font-semibold mb-6 text-gray-900 dark:text-base-content">{detailModalMedicine.itemName}</h3>
 
-                                    <h4 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800">Medicine Information</h4>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 text-gray-700 font-medium mb-8">
-                                        <p><span className="text-gray-900 font-semibold">Generic Name:</span> {detailModalMedicine.genericName || '-'}</p>
-                                        <p><span className="text-gray-900 font-semibold">Category:</span> {detailModalMedicine.category}</p>
-                                        <p><span className="text-gray-900 font-semibold">Company:</span> {detailModalMedicine.company}</p>
-                                        <p><span className="text-gray-900 font-semibold">Mass Unit:</span> {detailModalMedicine.massUnit}</p>
-                                        <p className="text-gray-900 text-[17px] font-bold">
+                                    <h4 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800 dark:text-base-content">Medicine Information</h4>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 text-gray-700 font-medium mb-8 dark:text-base-content">
+                                        <p><span className="text-gray-900 font-semibold dark:text-base-content">Generic Name:</span> {detailModalMedicine.genericName || '-'}</p>
+                                        <p><span className="text-gray-900 font-semibold dark:text-base-content">Category:</span> {detailModalMedicine.category}</p>
+                                        <p><span className="text-gray-900 font-semibold dark:text-base-content">Company:</span> {detailModalMedicine.company}</p>
+                                        <p><span className="text-gray-900 font-semibold dark:text-base-content">Mass Unit:</span> {detailModalMedicine.massUnit}</p>
+                                        <p className="text-gray-900 text-[17px] font-bold dark:text-base-content">
                                             Price : ${(detailModalMedicine.price - (detailModalMedicine.price * detailModalMedicine.discount / 100)).toFixed(2)}
-                                            <span className="text-[15px] line-through text-gray-500 ml-1">${detailModalMedicine.price}</span>
+                                            <span className="text-[15px] line-through text-gray-500 ml-1 dark:text-base-content">${detailModalMedicine.price}</span>
                                         </p>
-                                        <p><span className="text-gray-900 font-semibold">Discount:</span> {detailModalMedicine.discount}%</p>
+                                        <p><span className="text-gray-900 font-semibold dark:text-base-content">Discount:</span> {detailModalMedicine.discount}%</p>
                                     </div>
 
-                                    <h4 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800">Description</h4>
-                                    <p className="text-gray-600 whitespace-pre-line leading-relaxed">
+                                    <h4 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800 dark:text-base-content">Description</h4>
+                                    <p className="text-gray-600 whitespace-pre-line leading-relaxed dark:text-base-content">
                                         {detailModalMedicine.description || 'No description available.'}
                                     </p>
 
