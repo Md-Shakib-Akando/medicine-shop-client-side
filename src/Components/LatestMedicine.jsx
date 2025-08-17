@@ -35,7 +35,7 @@ const LatestMedicine = () => {
 
 
     return (
-        <div className='max-w-11/12 mx-auto my-15'>
+        <div className='max-w-11/12 mx-auto mt-15'>
             <h1 className='text-center font-bold text-3xl md:text-5xl my-10'>Latest Medicine</h1>
             <div className='grid grid-cols-1 md:grid-cols-2  xl:grid-cols-4 gap-6'>
                 {latestMedicine.map(med => (

@@ -8,6 +8,7 @@ import WhyChoose from '../Components/Extra/WhyChoose';
 import { ReTitle } from 're-title';
 import LoadingSpinner from '../Components/LoadingSpinner';
 import Review from '../Components/Extra/Review';
+import HowItWorks from '../Components/Extra/HowItWorks';
 
 
 
@@ -32,6 +33,7 @@ const Home = () => {
                         <AllCategory></AllCategory>
                         <DiscountMedicine></DiscountMedicine>
                         <LatestMedicine></LatestMedicine>
+                        <HowItWorks></HowItWorks>
                         <WhyChoose></WhyChoose>
                         <Faq></Faq>
                         <Review></Review>

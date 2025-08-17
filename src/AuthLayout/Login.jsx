@@ -7,13 +7,14 @@ import Swal from 'sweetalert2';
 import useAxiosSecure from '../Hooks/UseAxiosSecure';
 import { ReTitle } from 're-title';
 
+
 const Login = () => {
     const {
         register,
         handleSubmit,
-
+        getValues,
     } = useForm();
-    const { signInUser, signInGoogle } = UseAuth();
+    const { signInUser, signInGoogle, resetPassword } = UseAuth();
     const location = useLocation();
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
@@ -85,7 +86,11 @@ const Login = () => {
             }).catch(error => {
                 console.log(error.message)
             })
+
+
     }
+
+
     return (
         <div >
             <ReTitle title="Medicine Shop | Login"></ReTitle>
@@ -152,12 +157,13 @@ const Login = () => {
                             </label>
                         </div>
                         <div className="text-sm">
-                            <a
-                                href="#"
+                            <button
+                                type="button"
+                                onClick={handleForgotPassword}
                                 className="font-medium  text-[#00afb9] hover:text-[#00afb9]"
                             >
                                 Forgot password?
-                            </a>
+                            </button>
                         </div>
                     </div>
                 </div>

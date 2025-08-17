@@ -20,7 +20,7 @@ const Review = () => {
                 <div id="slide1" className="carousel-item relative w-full">
                     <div className="bg-white dark:bg-base-300 max-w-4xl mx-auto p-6 md:p-8 rounded-xl border border-gray-200 shadow-sm h-fit text-center">
                         <div className="flex justify-center items-center mb-6">
-                            <BsPersonCircle className='dark:text-base-300' size={28} />
+                            <BsPersonCircle className=' dark:text-white' size={28} />
                             <h4 className="ml-2 text-lg font-bold text-gray-800 dark:text-base-content">
                                 John Doe
                             </h4>
@@ -46,7 +46,7 @@ const Review = () => {
                 <div id="slide2" className="carousel-item relative w-full">
                     <div className="bg-white dark:bg-base-300 max-w-4xl mx-auto p-6 md:p-8 rounded-xl border border-gray-200 shadow-sm h-fit text-center">
                         <div className="flex justify-center items-center mb-6">
-                            <BsPersonCircle className='dark:text-base-300' size={28} />
+                            <BsPersonCircle className=' dark:text-white' size={28} />
                             <h4 className="ml-2 text-lg font-bold text-gray-800 dark:text-base-content">
                                 Mary Smith
                             </h4>
@@ -72,7 +72,7 @@ const Review = () => {
                 <div id="slide3" className="carousel-item relative w-full">
                     <div className="bg-white dark:bg-base-300 max-w-4xl mx-auto p-6 md:p-8 rounded-xl border border-gray-200 shadow-sm h-fit text-center">
                         <div className="flex justify-center items-center mb-6">
-                            <BsPersonCircle className='dark:text-base-300' size={28} />
+                            <BsPersonCircle className='dark:text-white' size={28} />
                             <h4 className="ml-2 text-lg font-bold text-gray-800 dark:text-base-content">
                                 Alex Johnson
                             </h4>
