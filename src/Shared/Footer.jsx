@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { FaFacebookF, FaLinkedinIn, FaGithub } from 'react-icons/fa';
+import UseAuth from '../UseAuth';
 
 const Footer = () => {
+    const { user } = UseAuth();
     return (
         <footer className="bg-[#00afb9] dark:bg-base-300 text-white px-6 py-10">
             <div className="max-w-11/12 mx-auto flex flex-col lg:flex-row gap-5 md:gap-10 lg:gap-0">
@@ -25,8 +27,9 @@ const Footer = () => {
                         <ul className="space-y-2 text-[16px] md:text-center">
                             <li><Link to="/" className="hover:underline">Home</Link></li>
                             <li><Link to="/shop" className="hover:underline">Shop</Link></li>
-                            <li><Link to="/" className="hover:underline">FAQ</Link></li>
-                            <li><Link to="/contactUs" className="hover:underline">Contact Us</Link></li>
+
+                            <li><Link to="/contactUs" className="hover:underline">Contact</Link></li>
+                            {user && (<li><Link to="/dashboard" className="hover:underline">DashBoard</Link></li>)}
                         </ul>
                     </div>
 

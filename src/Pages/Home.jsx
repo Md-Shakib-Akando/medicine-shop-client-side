@@ -7,6 +7,7 @@ import Faq from '../Components/Extra/Faq';
 import WhyChoose from '../Components/Extra/WhyChoose';
 import { ReTitle } from 're-title';
 import LoadingSpinner from '../Components/LoadingSpinner';
+import Review from '../Components/Extra/Review';
 
 
 
@@ -33,6 +34,7 @@ const Home = () => {
                         <LatestMedicine></LatestMedicine>
                         <WhyChoose></WhyChoose>
                         <Faq></Faq>
+                        <Review></Review>
                     </div>
                 )
             }

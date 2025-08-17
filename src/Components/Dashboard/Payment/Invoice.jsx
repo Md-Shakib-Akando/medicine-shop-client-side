@@ -155,9 +155,9 @@ const Invoice = () => {
             </div>
 
             <div className="overflow-x-auto mx-auto my-10">
-                <table className="table">
+                <table className="table ">
                     <thead>
-                        <tr className="text-lg text-neutral">
+                        <tr className="text-lg text-neutral dark:text-base-content">
                             <th>Medicine Name</th>
                             <th>Order Date</th>
                             <th className="text-end">Quantity</th>
@@ -173,7 +173,7 @@ const Invoice = () => {
                                 const lineTotal = qty * unitPrice;
 
                                 return (
-                                    <tr key={index} className="text-neutral">
+                                    <tr key={index} className="text-neutral dark:text-base-content">
                                         <td>{name}</td>
                                         <td>{formattedDate}</td>
                                         <td className="text-end">{qty}</td>
@@ -183,7 +183,7 @@ const Invoice = () => {
                                 );
                             })
                         ) : (
-                            <tr className="text-neutral">
+                            <tr className="text-neutral dark:text-base-content">
                                 <td>{invoiceData.name}</td>
                                 <td>{formattedDate}</td>
                                 <td className="text-end">{invoiceData.quantity || 1}</td>
@@ -194,7 +194,7 @@ const Invoice = () => {
                             </tr>
                         )}
 
-                        <tr className="text-neutral font-bold border-t">
+                        <tr className="text-neutral dark:text-base-content font-bold border-t">
                             <td colSpan={4} className="text-right pr-2">Total:</td>
                             <td className="text-end">{invoiceData.totalprice || 0}$</td>
                         </tr>

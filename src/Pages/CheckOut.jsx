@@ -47,14 +47,14 @@ const CheckOut = () => {
 
 
                 <div className="w-full lg:w-[70%] space-y-6">
-                    <h2 className="text-2xl font-bold text-gray-800">Order Summary</h2>
-                    <div className="bg-white p-6 rounded-lg shadow space-y-4">
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-base-content">Order Summary</h2>
+                    <div className="bg-white dark:bg-base-300 p-6 rounded-lg shadow space-y-4">
                         {cart.map(item => (
                             <div key={item._id} className="flex justify-between items-center border-b pb-2">
                                 <div>
                                     <p className="font-medium">{item.itemName}</p>
-                                    <p className="text-sm text-gray-500">{item.company}</p>
-                                    <p className="text-sm text-gray-600">Quantity: {item.quantity || 1}</p>
+                                    <p className="text-sm text-gray-500 dark:text-base-content">{item.company}</p>
+                                    <p className="text-sm text-gray-600 dark:text-base-content">Quantity: {item.quantity || 1}</p>
                                 </div>
                                 <p className="font-semibold">${(item.price * (item.quantity || 1)).toFixed(2)}</p>
                             </div>
@@ -68,10 +68,10 @@ const CheckOut = () => {
 
 
                 <div className="w-full lg:w-[40%]">
-                    <div className="bg-white p-3 md:p-6 rounded-lg shadow-md h-fit">
-                        <h2 className="text-xl font-semibold mb-4">Payment Info</h2>
+                    <div className="bg-white dark:bg-base-300 p-3 md:p-6 rounded-lg shadow-md h-fit">
+                        <h2 className="text-xl font-semibold mb-4 dark:text-base-content">Payment Info</h2>
 
-                        <div className=" rounded text-center text-gray-500 ">
+                        <div className=" rounded text-center text-gray-500 dark:text-base-content   ">
                             <Elements stripe={stripePromise} >
                                 <CheckOutForm cart={cart} totalPrice={totalPrice} ></CheckOutForm>
                             </Elements>

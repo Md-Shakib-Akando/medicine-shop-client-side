@@ -99,7 +99,7 @@ const Cart = () => {
                 <div className="overflow-x-auto w-full lg:w-[70%]">
                     <table className="table w-full">
                         <thead>
-                            <tr className="text-lg uppercase bg-[#00afb9] text-white">
+                            <tr className="text-lg uppercase bg-[#00afb9] dark:bg-base-300 text-white">
                                 <th> </th>
                                 <th>Name</th>
                                 <th>Company</th>
@@ -111,7 +111,7 @@ const Cart = () => {
                         <tbody>
                             {
                                 cart.map((item) => (
-                                    <tr key={item._id} className="hover:bg-blue-50">
+                                    <tr key={item._id} className="hover:bg-blue-50 dark:hover:bg-base-200">
                                         <td>
                                             <div className="p-2 bg-gray-200 rounded-full hover:bg-red-200 cursor-pointer inline-flex items-center justify-center">
                                                 <button onClick={() => deleteItem(item._id)} className='hover:cursor-pointer'>
@@ -124,9 +124,9 @@ const Cart = () => {
                                         <td>${item.price.toFixed(2)}</td>
                                         <td>
                                             <div className="flex items-center gap-2">
-                                                <button onClick={() => handleDecrease(item._id)} className="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded font-bold hover:cursor-pointer"><FiMinus /></button>
+                                                <button onClick={() => handleDecrease(item._id)} className="px-3 py-2 bg-gray-200 dark:text-base-content dark:bg-base-200 dark:hover:bg-base-200 hover:bg-gray-300 rounded font-bold hover:cursor-pointer"><FiMinus /></button>
                                                 <span className="min-w-[20px] text-center">{item.quantity || 1}</span>
-                                                <button onClick={() => handleIncrease(item._id)} className="px-3 py-2 bg-gray-200 hover:bg-gray-300 rounded font-bold hover:cursor-pointer"><FiPlus /> </button>
+                                                <button onClick={() => handleIncrease(item._id)} className="px-3 py-2 bg-gray-200 dark:text-base-content dark:bg-base-200 dark:hover:bg-base-200 hover:bg-gray-300 rounded font-bold hover:cursor-pointer"><FiPlus /> </button>
                                             </div>
                                         </td>
                                         <td className="text-end">
@@ -140,13 +140,13 @@ const Cart = () => {
                 </div>
 
 
-                <div className="w-full lg:w-[30%] h-[220px] border rounded-lg p-6 shadow-md bg-white order-1 lg:order-none">
-                    <h2 className="text-2xl font-bold mb-6 text-gray-800">
+                <div className="w-full lg:w-[30%] h-[220px] border rounded-lg p-6 shadow-md bg-white dark:bg-base-300 order-1 lg:order-none">
+                    <h2 className="text-2xl font-bold mb-6 text-gray-800 dark:text-base-content">
                         CART TOTALS ({cart.length})
                     </h2>
 
                     <div className="border-b pb-4 mb-4">
-                        <div className="flex justify-between text-lg font-semibold text-gray-700">
+                        <div className="flex justify-between text-lg font-semibold text-gray-700 dark:text-base-content">
                             <span>Total Price</span>
                             <span>${totalPrice.toFixed(2)}</span>
                         </div>

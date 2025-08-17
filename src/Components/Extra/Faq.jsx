@@ -34,7 +34,7 @@ const Faq = () => {
 
     const toggleFAQ = (index) => {
         if (openIndex === index) {
-            setOpenIndex(null); // close if same index is clicked
+            setOpenIndex(null);
         } else {
             setOpenIndex(index);
         }
@@ -45,7 +45,7 @@ const Faq = () => {
             <h2 className="text-2xl sm:text-4xl font-bold my-6 sm:my-10 text-center">
                 Frequently Asked Questions
             </h2>
-            <div className="lg:flex items-center lg:mx-5 2xl:mx-36 xl:mx-24">
+            <div className="lg:flex items-center lg:mx-5 xl:mx-15 ">
                 <div className="flex-1">
                     <img className="2xl:w-10/12 mx-auto" src={faqImage} alt="FAQ Illustration" />
                 </div>

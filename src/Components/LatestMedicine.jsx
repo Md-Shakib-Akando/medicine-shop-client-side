@@ -41,7 +41,7 @@ const LatestMedicine = () => {
                 {latestMedicine.map(med => (
                     <div
                         key={med._id}
-                        className="card bg-base-100 shadow-sm w-full h-full group relative overflow-hidden transition duration-500 "
+                        className="card dark:bg-base-200 shadow-sm w-full h-full group relative overflow-hidden transition duration-500 "
                     >
                         <figure className='relative p-5 '>
                             <img
@@ -71,9 +71,9 @@ const LatestMedicine = () => {
                             <div className='flex justify-between items-start gap-2'>
                                 <h2 className="card-title font-bold truncate w-2/3">{med.itemName}</h2>
                                 <div className='text-right w-1/3'>
-                                    <p className="text-gray-900 text-[17px] font-bold">
+                                    <p className="text-gray-900 dark:text-base-content text-[17px] font-bold">
                                         ${(med.price - (med.price * med.discount / 100)).toFixed(2)}
-                                        <span className="text-[15px] line-through text-gray-500 ml-1">${med.price}</span>
+                                        <span className="text-[15px] line-through text-gray-500 ml-1 dark:text-base-content">${med.price}</span>
                                     </p>
                                 </div>
                             </div>
@@ -111,10 +111,10 @@ const LatestMedicine = () => {
 
                 {detailModalMedicine && (
                     <div className="fixed inset-0 bg-black/80 bg-opacity-70 flex justify-center items-center z-50 p-6">
-                        <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-10 relative">
+                        <div className="bg-white dark:bg-base-200 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-10 relative">
                             <button
                                 onClick={() => setDetailModalMedicine(null)}
-                                className="absolute top-5 right-5 text-4xl font-extrabold text-gray-600 hover:text-gray-900 transition"
+                                className="absolute top-5 right-5 text-4xl font-extrabold text-gray-600 dark:text-base-content hover:text-gray-900 transition"
                                 aria-label="Close modal"
                             >
                                 <RxCross2 />
@@ -132,23 +132,23 @@ const LatestMedicine = () => {
 
 
                                 <div className="mt-5 flex flex-col">
-                                    <h3 className="text-4xl font-semibold mb-6 text-gray-900">{detailModalMedicine.itemName}</h3>
+                                    <h3 className="text-4xl font-semibold mb-6 dark:text-base-content text-gray-900">{detailModalMedicine.itemName}</h3>
 
-                                    <h4 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800">Medicine Information</h4>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 text-gray-700 font-medium mb-8">
-                                        <p><span className="text-gray-900 font-semibold">Generic Name:</span> {detailModalMedicine.genericName || '-'}</p>
-                                        <p><span className="text-gray-900 font-semibold">Category:</span> {detailModalMedicine.category}</p>
-                                        <p><span className="text-gray-900 font-semibold">Company:</span> {detailModalMedicine.company}</p>
-                                        <p><span className="text-gray-900 font-semibold">Mass Unit:</span> {detailModalMedicine.massUnit}</p>
-                                        <p className="text-gray-900 text-[17px] font-bold">
+                                    <h4 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800 dark:text-base-content">Medicine Information</h4>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-6 text-gray-700 font-medium mb-8 dark:text-base-content">
+                                        <p><span className="text-gray-900 font-semibold dark:text-base-content">Generic Name:</span> {detailModalMedicine.genericName || '-'}</p>
+                                        <p><span className="text-gray-900 font-semibold dark:text-base-content">Category:</span> {detailModalMedicine.category}</p>
+                                        <p><span className="text-gray-900 font-semibold dark:text-base-content">Company:</span> {detailModalMedicine.company}</p>
+                                        <p><span className="text-gray-900 font-semibold dark:text-base-content">Mass Unit:</span> {detailModalMedicine.massUnit}</p>
+                                        <p className="text-gray-900 text-[17px] font-bold dark:text-base-content">
                                             Price : ${(detailModalMedicine.price - (detailModalMedicine.price * detailModalMedicine.discount / 100)).toFixed(2)}
-                                            <span className="text-[15px] line-through text-gray-500 ml-1">${detailModalMedicine.price}</span>
+                                            <span className="text-[15px] line-through text-gray-500 ml-1 dark:text-base-content">${detailModalMedicine.price}</span>
                                         </p>
-                                        <p><span className="text-gray-900 font-semibold">Discount:</span> {detailModalMedicine.discount}%</p>
+                                        <p><span className="text-gray-900 font-semibold dark:text-base-content">Discount:</span> {detailModalMedicine.discount}%</p>
                                     </div>
 
-                                    <h4 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800">Description</h4>
-                                    <p className="text-gray-600 whitespace-pre-line leading-relaxed">
+                                    <h4 className="text-xl font-semibold mb-3 border-b border-gray-300 pb-1 text-gray-800 dark:text-base-content">Description</h4>
+                                    <p className="text-gray-600 whitespace-pre-line leading-relaxed dark:text-base-content">
                                         {detailModalMedicine.description || 'No description available.'}
                                     </p>
 

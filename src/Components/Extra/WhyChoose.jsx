@@ -3,8 +3,8 @@ import img from '../../assets/wimg.jpg'
 const WhyChoose = () => {
     return (
         <div>
-            <div className="bg-blue-100/40 dark:bg-base-200 py-12 px-4 sm:px-6 lg:px-20 2xl:px-36">
-                <div className="max-w-7xl mx-auto grid md:grid-cols-2 items-center gap-10">
+            <div className="bg-blue-100/40 dark:bg-base-200 py-12 px-4 sm:px-6 lg:px-20 2xl:px-25">
+                <div className="  grid lg:grid-cols-2 items-center gap-10 ">
                     <div>
                         <h2 className="text-3xl dark:text-base-content sm:text-4xl font-bold text-[#1B1F2A] mb-6">
                             Why Choose <span className="text-[#00AFB9]">Our Medicine Shop?</span>
